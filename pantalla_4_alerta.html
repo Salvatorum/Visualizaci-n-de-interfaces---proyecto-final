@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -119,7 +119,7 @@
 
           <div class="conflict-detail-box">
             <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; margin-bottom: 6px;">
-              <span>🔒 Materia en curso detectada:</span>
+              <span>[LOCKED] Materia en curso detectada:</span>
             </div>
             <div style="color: var(--wf-gray-800); line-height: 1.4;">
               <strong>Visualización e Interfaces (Código 3810)</strong><br>
@@ -137,7 +137,7 @@
 
           <div class="conflict-detail-box">
             <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; margin-bottom: 6px;">
-              <span>⚠️ Requisitos indispensables pendientes:</span>
+              <span>[!] Requisitos indispensables pendientes:</span>
             </div>
             <ul style="margin-left: 18px; line-height: 1.4; color: var(--wf-gray-800);">
               <li><strong>Consentimiento Digital PPS:</strong> Excluyente para la intervención formativa de practicantes de salud supervisados.</li>
@@ -146,10 +146,10 @@
           </div>
         </div>
 
-        <!-- ==================== ACCIONES DE RECUPERACIÓN (Heurística 3: Control y Libertad) ==================== -->
+        <!-- ==================== ACCIONES DE RECUPERACIÓN (Sub-heurística 5.15 de Pierotti) ==================== -->
         <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 20px;">
-          <a href="pantalla_3_formulario.html" class="wf-btn wf-btn-primary" style="padding: 10px 16px;">
-            ↺ Volver al formulario y corregir
+          <a href="pantalla_3_formulario.html" id="btnVolverYCorregir" class="wf-btn wf-btn-primary" style="padding: 10px 16px;">
+            [↺] Volver al formulario y corregir
           </a>
 
           <a href="pantalla_2_cartilla.html?mod=graduado" class="wf-btn wf-btn-secondary" style="padding: 10px 16px;">
@@ -158,7 +158,7 @@
         </div>
 
         <div style="margin-top: 14px; font-size: 11px; color: var(--wf-gray-500);">
-          Código de error: <span style="font-family: monospace;">VAL-SCHED-409</span> • UNLaM DIIT Salud
+          Código de validación: <span style="font-family: monospace;">VAL-SCHED-409</span> • UNLaM DIIT Salud
         </div>
 
       </div>
@@ -173,17 +173,21 @@
       const btnB = document.getElementById('btnCasoB');
       const contA = document.getElementById('contenidoCasoA');
       const contB = document.getElementById('contenidoCasoB');
+      const btnVolver = document.getElementById('btnVolverYCorregir');
 
       if (caso === 'A') {
         btnA.classList.add('active');
         btnB.classList.remove('active');
         contA.style.display = 'block';
         contB.style.display = 'none';
+        btnVolver.href = 'pantalla_3_formulario.html?error=solapamiento';
       } else {
         btnB.classList.add('active');
         btnA.classList.remove('active');
         contA.style.display = 'none';
         contB.style.display = 'block';
+        // Sub-heurística 5.15 de Pierotti: envía parámetro para resaltar y hacer foco en el consentimiento
+        btnVolver.href = 'pantalla_3_formulario.html?error=consentimiento';
       }
     }
 

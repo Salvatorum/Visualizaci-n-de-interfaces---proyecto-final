@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -130,6 +130,24 @@
       user-select: none;
     }
 
+    /* Celda Especial de Prueba de Conflicto (Signifier para Exposición) */
+    .time-slot-blocked-trigger {
+      border: 2px dashed var(--wf-gray-800) !important;
+      background: repeating-linear-gradient(
+        45deg,
+        #e2e8f0,
+        #e2e8f0 6px,
+        #cbd5e1 6px,
+        #cbd5e1 12px
+      ) !important;
+      cursor: pointer !important;
+      position: relative;
+    }
+    .time-slot-blocked-trigger:hover {
+      background: var(--wf-gray-800) !important;
+      color: white !important;
+    }
+
     /* Opciones estandarizadas de Motivo (Gestalt: Proximidad y Cerramiento) */
     .motivo-options-grid {
       display: grid;
@@ -234,11 +252,11 @@
       </div>
     </div>
 
-    <!-- Resumen de especialidad seleccionada (Heurística 3: Control del Usuario) -->
+    <!-- Resumen dinámico de especialidad seleccionada (Heurística 3: Control del Usuario) -->
     <div class="wf-card" style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; padding: 12px 18px;" data-heuristic="Control y Libertad (H3)">
       <div>
         <span class="wf-badge wf-badge-dark" style="margin-bottom: 4px;">Especialidad Seleccionada</span>
-        <div style="font-size: 15px; font-weight: 800;">Odontología Preventiva — Box 2 (Pabellón Salud)</div>
+        <div id="tituloEspecialidadSeleccionada" style="font-size: 15px; font-weight: 800;">Odontología Preventiva — Box 2 (Pabellón Salud)</div>
         <div style="font-size: 11px; color: var(--wf-gray-600);">Modalidad: Práctica Clínica Supervisada (PPS) • Espera estimada: &lt; 48 hs</div>
       </div>
       <a href="pantalla_2_cartilla.html" class="wf-btn wf-btn-secondary wf-btn-sm" title="Modificar especialidad elegida">Cambiar</a>
@@ -280,7 +298,7 @@
               <td>
                 <!-- Bloqueado por Cursada Martes (Sistemas Operativos) -->
                 <div class="time-slot-blocked" title="Superposición con cursada de Sistemas Operativos">
-                  <strong>🔒 Cursando</strong>
+                  <strong>[LOCKED] Cursando</strong>
                   <span>08:00 - 12:00</span>
                 </div>
               </td>
@@ -290,7 +308,7 @@
               <td>
                 <!-- Bloqueado por Cursada Jueves (Visualización e Interfaces) -->
                 <div class="time-slot-blocked" title="Superposición con cursada de Visualización e Interfaces">
-                  <strong>🔒 Cursando</strong>
+                  <strong>[LOCKED] Cursando</strong>
                   <span>08:00 - 12:00</span>
                 </div>
               </td>
@@ -308,7 +326,7 @@
               <td>
                 <!-- Bloqueado por Cursada Martes -->
                 <div class="time-slot-blocked" title="Superposición con cursada de Sistemas Operativos">
-                  <strong>🔒 Cursando</strong>
+                  <strong>[LOCKED] Cursando</strong>
                   <span>08:00 - 12:00</span>
                 </div>
               </td>
@@ -316,10 +334,10 @@
                 <button type="button" class="time-slot-btn" onclick="seleccionarSlot(this, 'Miércoles 13 - 10:30 hs')">10:30 hs</button>
               </td>
               <td>
-                <!-- Bloqueado por Cursada Jueves (Dispara Pantalla 4) -->
-                <div class="time-slot-blocked" title="Superposición con cursada de Visualización e Interfaces" onclick="simularErrorSolapamiento()">
-                  <strong>🔒 Cursando</strong>
-                  <span>08:00 - 12:00</span>
+                <!-- CELDA DE PRUEBA: Bloqueado por Cursada Jueves (Signifier de Cátedra) -->
+                <div class="time-slot-blocked time-slot-blocked-trigger" title="Clic para poner a prueba la validación de solapamiento (Pantalla 4)" onclick="simularErrorSolapamiento()">
+                  <strong>[!] Cursando</strong>
+                  <span style="font-size: 8px; text-decoration: underline;">Probar Solapamiento →</span>
                 </div>
               </td>
               <td>
@@ -370,7 +388,7 @@
         </table>
 
         <!-- Leyenda explicativa (Heurística 10) -->
-        <div style="display: flex; gap: 16px; font-size: 11px; color: var(--wf-gray-600); border-top: 1px solid var(--wf-gray-200); padding-top: 8px;">
+        <div style="display: flex; gap: 16px; font-size: 11px; color: var(--wf-gray-600); border-top: 1px solid var(--wf-gray-200); padding-top: 8px; flex-wrap: wrap;">
           <div style="display: flex; align-items: center; gap: 6px;">
             <div style="width: 14px; height: 14px; border: 1px solid var(--wf-border-strong); background: white;"></div>
             <span>Horario disponible</span>
@@ -382,6 +400,10 @@
           <div style="display: flex; align-items: center; gap: 6px;">
             <div style="width: 14px; height: 14px; background: repeating-linear-gradient(45deg,#f1f5f9,#f1f5f9 2px,#cbd5e1 2px,#cbd5e1 4px);"></div>
             <span>Bloqueado por cursada UNLaM</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <div style="width: 14px; height: 14px; border: 2px dashed black; background: #cbd5e1;"></div>
+            <span>Celda activa para prueba de error (Jue 10:30)</span>
           </div>
         </div>
       </section>
@@ -430,8 +452,14 @@
         </div>
       </section>
 
-      <!-- ==================== 4. BLOQUE DE CONSENTIMIENTO (Gestalt: Región Común Punteada) ==================== -->
-      <section class="wf-consent-box" data-gestalt="Región Común (Borde Punteado)" data-heuristic="Ayuda y Documentación (H10)">
+      <!-- ==================== 4. BLOQUE DE CONSENTIMIENTO (Sub-heurística 5.15 de Pierotti: Resaltado de Campo) ==================== -->
+      <section class="wf-consent-box" id="bloqueConsentimiento" data-gestalt="Región Común (Borde Punteado)" data-heuristic="Ayuda y Documentación (H10)">
+        
+        <!-- Banner de alerta de error contextual si viene de Pantalla 4 -->
+        <div id="alertaErrorConsentimiento" style="display: none; background: var(--wf-gray-900); color: white; padding: 6px 10px; border-radius: 3px; font-size: 11px; font-weight: 700; margin-bottom: 10px;">
+          [!] ACCIÓN REQUERIDA: Debés tildar la casilla de consentimiento para confirmar tu reserva en Práctica Supervisada.
+        </div>
+
         <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
           <span class="wf-badge wf-badge-dark">Consentimiento Digital Obligatorio</span>
           <span style="font-size: 11px; font-weight: 700; color: var(--wf-gray-800);">Programa de Prácticas Profesionales Supervisadas (PPS)</span>
@@ -459,17 +487,18 @@
         </div>
       </section>
 
-      <!-- ==================== 5. ACCIONES DEL FORMULARIO ==================== -->
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+      <!-- ==================== 5. ACCIONES DEL FORMULARIO (Ley de Proximidad Gestalt) ==================== -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px; flex-wrap: wrap; gap: 12px;">
         <a href="pantalla_2_cartilla.html" class="wf-btn wf-btn-secondary">
           ← Volver a Cartilla
         </a>
 
-        <div style="display: flex; gap: 10px;">
-          <!-- Disparador simulador de Pantalla 4 -->
-          <a href="pantalla_4_alerta.html?caso=A" class="wf-btn wf-btn-secondary" style="font-size: 11px;" title="Ver estado de alerta por superposición académica">
-            ⚠️ Simular Conflicto (Pantalla 4)
+        <!-- Separación explícita entre herramientas de cátedra y botón primario de usuario -->
+        <div style="display: flex; gap: 14px; align-items: center;">
+          <a href="pantalla_4_alerta.html?caso=A" class="wf-btn wf-btn-debug" title="Herramienta de Cátedra: Poner a prueba la ventana modal de error">
+            [Cátedra: Simular Conflicto]
           </a>
+          
           <button type="submit" class="wf-btn wf-btn-primary" style="padding: 10px 24px; font-size: 14px;">
             Confirmar Reserva de Turno →
           </button>
@@ -487,6 +516,35 @@
   </footer>
 
   <script>
+    // 1. Dinamismo de datos recibido por URL (Mapeo de Flujo de Usuario)
+    const urlParams = new URLSearchParams(window.location.search);
+    const espParam = urlParams.get('esp');
+    const boxParam = urlParams.get('box');
+
+    const catalogoNombres = {
+      'clinica': 'Clínica Médica — Box ' + (boxParam || '1') + ' (Pabellón Salud)',
+      'odontologia': 'Odontología Preventiva — Box ' + (boxParam || '2') + ' (Pabellón Salud)',
+      'oftalmologia': 'Oftalmología y Agudeza — Box ' + (boxParam || '3') + ' (Pabellón Salud)',
+      'nutricion': 'Nutrición y Antropometría — Box ' + (boxParam || '4') + ' (Pabellón Salud)',
+      'kinesiologia': 'Kinesiología y Postura — Box ' + (boxParam || '5') + ' (Pabellón Salud)'
+    };
+
+    if (espParam && catalogoNombres[espParam]) {
+      document.getElementById('tituloEspecialidadSeleccionada').textContent = catalogoNombres[espParam];
+    }
+
+    // 2. Sub-heurística 5.15 de Pierotti: Resaltado y scroll automático si viene de un error
+    const errorParam = urlParams.get('error');
+    if (errorParam === 'consentimiento') {
+      const consentBox = document.getElementById('bloqueConsentimiento');
+      consentBox.classList.add('has-error');
+      document.getElementById('alertaErrorConsentimiento').style.display = 'block';
+      setTimeout(() => {
+        consentBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 300);
+    }
+
+    // 3. Manejo de selección de horario
     let slotActual = 'Miércoles 13 - 14:00 hs';
     document.getElementById('slotElegidoTexto').textContent = slotActual;
 
@@ -505,11 +563,21 @@
       e.preventDefault();
       const check = document.getElementById('checkConsentimiento');
       if (!check.checked) {
+        // Redirige al Caso B con parámetro de error para retorno asistido
         window.location.href = 'pantalla_4_alerta.html?caso=B';
         return;
       }
       alert('¡Turno confirmado con éxito!\n' + slotActual + '\nModalidad: Práctica Clínica Supervisada.\nSe envió constancia a tcanosa@alumno.unlam.edu.ar');
       window.location.href = 'pantalla_1_home.html';
+    }
+
+    // Script del Menú Hamburguesa
+    const toggle = document.getElementById('menuToggle');
+    const nav = document.getElementById('mainNav');
+    if (toggle && nav) {
+      toggle.addEventListener('click', () => {
+        nav.classList.toggle('mobile-open');
+      });
     }
   </script>
 </body>

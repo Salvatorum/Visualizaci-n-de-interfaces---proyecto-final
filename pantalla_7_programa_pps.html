@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -317,6 +317,15 @@
   </footer>
 
   <script>
+    // Toggle menú mobile hamburguesa
+    const menuToggle = document.getElementById('menuToggle');
+    const mainNav = document.getElementById('mainNav');
+    if (menuToggle && mainNav) {
+      menuToggle.addEventListener('click', () => {
+        mainNav.classList.toggle('mobile-open');
+      });
+    }
+
     function toggleFaq(header) {
       const item = header.parentElement;
       item.classList.toggle('open');

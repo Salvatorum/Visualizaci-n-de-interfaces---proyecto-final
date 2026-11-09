@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -43,12 +43,12 @@
       font-size: 12px;
     }
     .schedule-icon-lock {
-      font-size: 13px;
-      color: var(--wf-gray-700);
-      font-weight: bold;
+      font-size: 12px;
+      color: var(--wf-gray-800);
+      font-weight: 900;
     }
 
-    /* Fila de 5 Accesos Rápidos (Gestalt: Semejanza y Simetría) */
+    /* Fila de 5 Accesos Rápidos (Gestalt: Semejanza y Simetría / Prägnanz) */
     .quick-access-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -86,9 +86,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      font-size: 14px;
       font-weight: 800;
       background: var(--wf-gray-100);
+      letter-spacing: -0.5px;
     }
 
     /* Mapa esquemático en Footer (Correspondencia mundo real) */
@@ -125,11 +126,6 @@
       border-color: var(--wf-gray-900);
     }
 
-    @media (max-width: 900px) {
-      .quick-access-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
     @media (max-width: 600px) {
       .quick-access-grid {
         grid-template-columns: 1fr;
@@ -199,6 +195,21 @@
       </div>
     </div>
 
+    <!-- ==================== BLOQUE DESTACADO MOBILE (Ley de Fitts - Hábitos de Consumo Móvil en Campus) ==================== -->
+    <div class="mobile-quick-cta-banner" data-heuristic="Flexibilidad y Eficiencia (H7)">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+        <span class="wf-badge wf-badge-dark" style="font-size: 9px;">Atención en el Campus</span>
+        <span style="font-size: 10px; font-weight: bold; color: var(--wf-gray-600);">Demora &lt; 48 hs</span>
+      </div>
+      <div style="font-weight: 800; font-size: 13px; color: var(--wf-gray-900);">¿Necesitás un turno médico hoy?</div>
+      <div style="font-size: 11px; color: var(--wf-gray-600); margin: 2px 0 10px;">
+        Reservá en 1 clic en los boxes de Práctica Supervisada compatibles con tu horario de cursada.
+      </div>
+      <a href="pantalla_2_cartilla.html" class="wf-btn wf-btn-primary wf-btn-block" style="padding: 10px;">
+        <span>[+]</span> Sacar Turno en 1 Clic
+      </a>
+    </div>
+
     <!-- ==================== BLOQUE HERO / ESTADO ACTUAL (2 COLUMNAS) ==================== -->
     <section class="hero-panel">
       <div class="grid-12">
@@ -219,22 +230,22 @@
 
             <!-- Información estructurada (Modelo Miro, Leo, Pienso) -->
             <div style="background: var(--wf-gray-50); border: 1px solid var(--wf-gray-200); padding: 12px; border-radius: var(--radius-sm); margin-bottom: 16px;">
-              <div style="font-size: 11px; font-weight: 700; color: var(--wf-gray-600); margin-bottom: 4px;">MODALIDAD DE ATENCIÓN</div>
+              <div style="font-size: 11px; font-weight: 700; color: var(--wf-gray-600); margin-bottom: 4px; text-transform: uppercase;">Modalidad de Atención</div>
               <div style="font-size: 12px; font-weight: 600; color: var(--wf-gray-900);">
                 Práctica Clínica Supervisada (PPS) — Supervisa: Dra. Gómez + 2 practicantes de medicina.
               </div>
               <div style="font-size: 11px; color: var(--wf-gray-600); margin-top: 4px;">
-                📍 Ubicación: Pabellón de Ciencias de la Salud (Planta Baja, San Justo)
+                [Box] Ubicación: Pabellón de Ciencias de la Salud (Planta Baja, San Justo)
               </div>
             </div>
 
             <!-- Acciones Directas (Affordance clara) -->
             <div style="display: flex; gap: 10px; flex-wrap: wrap;">
               <button class="wf-btn wf-btn-primary wf-btn-sm" onclick="alert('Descargando Constancia oficial de Turno (PDF)...')">
-                📄 Descargar Constancia (.PDF)
+                [PDF] Descargar Constancia (.PDF)
               </button>
               <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="confirm('¿Estás seguro de cancelar tu turno del Jueves 14 Nov 10:00 hs?')">
-                ✕ Cancelar Turno
+                [X] Cancelar Turno
               </button>
             </div>
           </div>
@@ -254,7 +265,7 @@
 
             <!-- Horario Martes -->
             <div class="schedule-item">
-              <span class="schedule-icon-lock">🔒</span>
+              <span class="schedule-icon-lock">[LOCKED]</span>
               <div style="flex: 1;">
                 <div style="font-weight: 700;">Martes: 08:00 a 12:00 hs</div>
                 <div style="color: var(--wf-gray-600); font-size: 11px;">Sistemas Operativos • Aula 204</div>
@@ -264,7 +275,7 @@
 
             <!-- Horario Jueves -->
             <div class="schedule-item">
-              <span class="schedule-icon-lock">🔒</span>
+              <span class="schedule-icon-lock">[LOCKED]</span>
               <div style="flex: 1;">
                 <div style="font-weight: 700;">Jueves: 08:00 a 12:00 hs</div>
                 <div style="color: var(--wf-gray-600); font-size: 11px;">Visualización e Interfaces • Lab 3</div>
@@ -273,7 +284,7 @@
             </div>
 
             <div style="font-size: 10px; color: var(--wf-gray-500); margin-top: 6px; line-height: 1.3;">
-              ℹ️ Los horarios de tu cursada no aparecerán disponibles para reserva en el sistema turnero.
+              [i] Los horarios de tu cursada no aparecerán disponibles para reserva en el sistema turnero.
             </div>
           </div>
         </div>
@@ -281,7 +292,7 @@
       </div>
     </section>
 
-    <!-- ==================== ACCESOS RÁPIDOS (FILA DE 5 ESPECIALIDADES) ==================== -->
+    <!-- ==================== ACCESOS RÁPIDOS (FILA DE 5 ESPECIALIDADES - Simetría / Prägnanz) ==================== -->
     <section style="margin-bottom: var(--space-6);" data-gestalt="Semejanza y Simetría (Prägnanz)" data-heuristic="Reconocimiento antes que Recuerdo (H6)">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
         <h3 style="font-size: 15px; font-weight: 800;">Especialidades de Atención Primaria</h3>
@@ -294,7 +305,7 @@
         
         <!-- Tarjeta 1: Clínica Médica -->
         <a href="pantalla_2_cartilla.html?esp=clinica" class="quick-card">
-          <div class="quick-icon-placeholder">[ + ]</div>
+          <div class="quick-icon-placeholder">[MED]</div>
           <div>
             <div style="font-weight: 800; font-size: 13px;">Clínica Médica</div>
             <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Demora: &lt; 24 hs (PPS)</div>
@@ -304,7 +315,7 @@
 
         <!-- Tarjeta 2: Odontología -->
         <a href="pantalla_2_cartilla.html?esp=odontologia" class="quick-card">
-          <div class="quick-icon-placeholder">[ 🦷 ]</div>
+          <div class="quick-icon-placeholder">[ODO]</div>
           <div>
             <div style="font-weight: 800; font-size: 13px;">Odontología</div>
             <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Demora: &lt; 48 hs (PPS)</div>
@@ -314,7 +325,7 @@
 
         <!-- Tarjeta 3: Oftalmología -->
         <a href="pantalla_2_cartilla.html?esp=oftalmologia" class="quick-card">
-          <div class="quick-icon-placeholder">[ 👁 ]</div>
+          <div class="quick-icon-placeholder">[OFT]</div>
           <div>
             <div style="font-weight: 800; font-size: 13px;">Oftalmología</div>
             <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Demora: &lt; 48 hs (PPS)</div>
@@ -324,7 +335,7 @@
 
         <!-- Tarjeta 4: Nutrición -->
         <a href="pantalla_2_cartilla.html?esp=nutricion" class="quick-card">
-          <div class="quick-icon-placeholder">[ 🥗 ]</div>
+          <div class="quick-icon-placeholder">[NUT]</div>
           <div>
             <div style="font-weight: 800; font-size: 13px;">Nutrición</div>
             <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Demora: &lt; 24 hs (PPS)</div>
@@ -332,9 +343,9 @@
           <span class="wf-badge wf-badge-dark" style="font-size: 9px;">Reservar</span>
         </a>
 
-        <!-- Tarjeta 5: Kinesiología -->
+        <!-- Tarjeta 5: Kinesiología (En tablet span 2 columnas para simetría) -->
         <a href="pantalla_2_cartilla.html?esp=kinesiologia" class="quick-card">
-          <div class="quick-icon-placeholder">[ ⚡ ]</div>
+          <div class="quick-icon-placeholder">[KIN]</div>
           <div>
             <div style="font-weight: 800; font-size: 13px;">Kinesiología</div>
             <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Demora: &lt; 24 hs (PPS)</div>
@@ -355,7 +366,7 @@
         <!-- Columna 1: Mapa esquemático del Campus San Justo (5 cols) -->
         <div class="col-5">
           <div style="font-weight: 800; font-size: 12px; margin-bottom: 8px; text-transform: uppercase;">
-            📍 Ubicación en el Campus San Justo
+            [MAPA] Ubicación en el Campus San Justo
           </div>
           <div class="campus-map-schematic">
             <div class="map-grid-preview">
@@ -379,7 +390,7 @@
         <!-- Columna 2: Horarios de Atención (4 cols) -->
         <div class="col-4">
           <div style="font-weight: 800; font-size: 12px; margin-bottom: 8px; text-transform: uppercase;">
-            🕒 Horarios de Atención Primaria
+            [HORARIOS] Atención Primaria
           </div>
           <p style="font-size: 12px; color: var(--wf-gray-700); line-height: 1.6;">
             <strong>Lunes a Viernes:</strong> 08:00 a 20:00 hs.<br>
@@ -391,19 +402,19 @@
         <!-- Columna 3: Enlaces y FAQ (3 cols) -->
         <div class="col-3">
           <div style="font-weight: 800; font-size: 12px; margin-bottom: 8px; text-transform: uppercase;">
-            ℹ️ Información y Enlaces
+            [INFO] Enlaces y FAQ
           </div>
           <ul style="list-style: none; font-size: 12px; line-height: 1.8;">
-            <li><a href="#faq" style="color: var(--wf-gray-800); text-decoration: underline;">Preguntas Frecuentes PPS</a></li>
-            <li><a href="#reglamento" style="color: var(--wf-gray-800); text-decoration: underline;">Reglamento de Consentimiento</a></li>
-            <li><a href="#contacto" style="color: var(--wf-gray-800); text-decoration: underline;">Contacto de Bienestar Estudiantil</a></li>
+            <li><a href="pantalla_7_programa_pps.html" style="color: var(--wf-gray-800); text-decoration: underline;">Preguntas Frecuentes PPS</a></li>
+            <li><a href="pantalla_7_programa_pps.html" style="color: var(--wf-gray-800); text-decoration: underline;">Reglamento de Consentimiento</a></li>
+            <li><a href="pantalla_6_historial.html" style="color: var(--wf-gray-800); text-decoration: underline;">Mis Constancias Médicas</a></li>
           </ul>
         </div>
 
       </div>
 
       <div style="margin-top: 24px; padding-top: 14px; border-top: 1px solid var(--wf-gray-300); text-align: center; font-size: 11px; color: var(--wf-gray-500);">
-        UNLaM - DIIT • Cátedra: Visualización e Interfaces (Prof. Heliana Vera) • TP Final 2026 • Alumnos: Canosa, Maidana, Serrano.
+        UNLaM - DIIT • Cátedra: Visualización e Interfaces (Prof. Heliana Vera - De Cicco) • TP Final 2026 • Canosa, Maidana, Serrano.
       </div>
     </div>
   </footer>

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -221,7 +221,7 @@
           <label class="wf-label">3. Modalidad de Atención (Prioridad PPS)</label>
           <div class="modalidad-toggle-box">
             <button type="button" class="toggle-btn active" id="btnPPS" onclick="setModalidad('pps')">
-              ✓ Práctica Supervisada (&lt; 48 hs)
+              [✓] Práctica Supervisada (&lt; 48 hs)
             </button>
             <button type="button" class="toggle-btn" id="btnGraduado" onclick="setModalidad('graduado')">
               Profesional Graduado (7-14 días)
@@ -232,20 +232,20 @@
         <!-- Botón Limpiar / Reset -->
         <div>
           <button class="wf-btn wf-btn-secondary" style="height: 38px; width: 100%;" onclick="resetFiltros()">
-            ↺ Reestablecer
+            [↺] Reestablecer
           </button>
         </div>
 
       </div>
 
-      <!-- Resumen de filtros aplicados y compatibilidad académica -->
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 10px; border-top: 1px dashed var(--wf-gray-300); font-size: 12px;">
-        <div>
+      <!-- Resumen dinámico de feedback (Heurística 1: Visibilidad del Estado & Don Norman Nivel Conductual) -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 10px; border-top: 1px dashed var(--wf-gray-300); font-size: 12px; flex-wrap: wrap; gap: 8px;">
+        <div id="conteoResultados">
           <strong>6 consultorios disponibles</strong> con horarios 100% compatibles con tus materias activas en MIeL.
         </div>
         <div style="display: flex; align-items: center; gap: 8px;">
-          <span class="wf-badge wf-badge-dark">Modalidad Activa: PPS</span>
-          <span style="font-size: 11px; color: var(--wf-gray-600);">Acredita horas docentes</span>
+          <span class="wf-badge wf-badge-dark" id="badgeModalidadActiva">Modalidad Activa: Práctica Supervisada PPS</span>
+          <span style="font-size: 11px; color: var(--wf-gray-600);" id="subtituloModalidad">Acredita horas docentes (&lt; 48 hs)</span>
         </div>
       </div>
     </section>
@@ -258,13 +258,13 @@
         <article class="consultorio-card" data-esp="clinica" data-mod="pps">
           <div class="card-line-1">
             <div class="card-title">Clínica Médica</div>
-            <div class="card-location">📍 Box 1 • PB Salud</div>
+            <div class="card-location">[Box 1] • PB Salud</div>
           </div>
           <div class="card-line-2">
             <strong>Práctica PPS:</strong> Supervisa Dr. R. Gómez + 2 alumnos avanzados de Medicina.
           </div>
           <div class="card-line-3">
-            <span>🕒 Próximo: <strong>Mañana Mié 10:30 hs</strong></span>
+            <span>[Horario] Próximo: <strong>Mañana Mié 10:30 hs</strong></span>
             <span class="wf-badge" style="font-size: 9px;">Sin solapamiento</span>
           </div>
           <div class="card-line-4">
@@ -278,13 +278,13 @@
         <article class="consultorio-card" data-esp="odontologia" data-mod="pps">
           <div class="card-line-1">
             <div class="card-title">Odontología Preventiva</div>
-            <div class="card-location">📍 Box 2 • PB Salud</div>
+            <div class="card-location">[Box 2] • PB Salud</div>
           </div>
           <div class="card-line-2">
             <strong>Práctica PPS:</strong> Supervisa Dra. M. Benítez + 2 practicantes de Odontología.
           </div>
           <div class="card-line-3">
-            <span>🕒 Próximo: <strong>Jueves 14:00 hs</strong></span>
+            <span>[Horario] Próximo: <strong>Jueves 14:00 hs</strong></span>
             <span class="wf-badge" style="font-size: 9px;">Sin solapamiento</span>
           </div>
           <div class="card-line-4">
@@ -298,13 +298,13 @@
         <article class="consultorio-card" data-esp="oftalmologia" data-mod="pps">
           <div class="card-line-1">
             <div class="card-title">Oftalmología y Agudeza</div>
-            <div class="card-location">📍 Box 3 • PB Salud</div>
+            <div class="card-location">[Box 3] • PB Salud</div>
           </div>
           <div class="card-line-2">
             <strong>Práctica PPS:</strong> Supervisa Dr. F. Rossi + 1 practicante avanzado.
           </div>
           <div class="card-line-3">
-            <span>🕒 Próximo: <strong>Viernes 09:30 hs</strong></span>
+            <span>[Horario] Próximo: <strong>Viernes 09:30 hs</strong></span>
             <span class="wf-badge" style="font-size: 9px;">Sin solapamiento</span>
           </div>
           <div class="card-line-4">
@@ -318,13 +318,13 @@
         <article class="consultorio-card" data-esp="nutricion" data-mod="pps">
           <div class="card-line-1">
             <div class="card-title">Nutrición y Antropometría</div>
-            <div class="card-location">📍 Box 4 • PB Salud</div>
+            <div class="card-location">[Box 4] • PB Salud</div>
           </div>
           <div class="card-line-2">
             <strong>Práctica PPS:</strong> Supervisa Lic. C. Morales + 2 alumnas de Nutrición.
           </div>
           <div class="card-line-3">
-            <span>🕒 Próximo: <strong>Mañana Mié 15:30 hs</strong></span>
+            <span>[Horario] Próximo: <strong>Mañana Mié 15:30 hs</strong></span>
             <span class="wf-badge" style="font-size: 9px;">Sin solapamiento</span>
           </div>
           <div class="card-line-4">
@@ -338,13 +338,13 @@
         <article class="consultorio-card" data-esp="kinesiologia" data-mod="pps">
           <div class="card-line-1">
             <div class="card-title">Kinesiología y Postura</div>
-            <div class="card-location">📍 Box 5 • PB Salud</div>
+            <div class="card-location">[Box 5] • PB Salud</div>
           </div>
           <div class="card-line-2">
             <strong>Práctica PPS:</strong> Supervisa Lic. G. López + 2 practicantes de Kinesiología.
           </div>
           <div class="card-line-3">
-            <span>🕒 Próximo: <strong>Viernes 11:30 hs</strong></span>
+            <span>[Horario] Próximo: <strong>Viernes 11:30 hs</strong></span>
             <span class="wf-badge" style="font-size: 9px;">Sin solapamiento</span>
           </div>
           <div class="card-line-4">
@@ -358,13 +358,13 @@
         <article class="consultorio-card" data-esp="clinica" data-mod="pps">
           <div class="card-line-1">
             <div class="card-title">Clínica Médica - Aptos</div>
-            <div class="card-location">📍 Box 6 • PB Salud</div>
+            <div class="card-location">[Box 6] • PB Salud</div>
           </div>
           <div class="card-line-2">
             <strong>Práctica PPS:</strong> Supervisa Dra. A. Vega + 2 practicantes de Salud.
           </div>
           <div class="card-line-3">
-            <span>🕒 Próximo: <strong>Lunes 16:00 hs</strong></span>
+            <span>[Horario] Próximo: <strong>Lunes 16:00 hs</strong></span>
             <span class="wf-badge" style="font-size: 9px;">Sin solapamiento</span>
           </div>
           <div class="card-line-4">
@@ -380,7 +380,7 @@
     <!-- Banner informativo (Diseño Emocional: Confianza y Solidaridad - Don Norman) -->
     <div style="background: var(--wf-gray-100); border: 1px dashed var(--wf-gray-500); padding: 14px 18px; border-radius: var(--radius-md); font-size: 12px; display: flex; align-items: center; justify-content: space-between; gap: 12px;">
       <div>
-        <strong>💡 ¿Por qué elegir Práctica Clínica Supervisada?</strong>
+        <strong>[INFO] ¿Por qué elegir Práctica Clínica Supervisada?</strong>
         <p style="color: var(--wf-gray-600); margin-top: 2px;">
           Obtenés atención en menos de 48 horas dentro del campus y colaborás con el trayecto formativo de estudiantes avanzados de ciencias de la salud. Todos los procedimientos son validados por el docente a cargo.
         </p>
@@ -407,16 +407,29 @@
       document.getElementById('btnPPS').classList.toggle('active', mod === 'pps');
       document.getElementById('btnGraduado').classList.toggle('active', mod === 'graduado');
 
+      const badge = document.getElementById('badgeModalidadActiva');
+      const subtitulo = document.getElementById('subtituloModalidad');
+
+      if (mod === 'graduado') {
+        badge.textContent = 'Modalidad Activa: Profesional Graduado';
+        badge.className = 'wf-badge wf-badge-outline';
+        subtitulo.textContent = 'Atención estándar permanente (7 a 14 días)';
+      } else {
+        badge.textContent = 'Modalidad Activa: Práctica Supervisada PPS';
+        badge.className = 'wf-badge wf-badge-dark';
+        subtitulo.textContent = 'Acredita horas docentes (< 48 hs)';
+      }
+
       const cards = document.querySelectorAll('.consultorio-card');
       cards.forEach(card => {
         const line2 = card.querySelector('.card-line-2');
         const line3 = card.querySelector('.card-line-3');
         if (mod === 'graduado') {
           line2.innerHTML = `<strong>Profesional Graduado:</strong> Médico de planta permanente institucional.`;
-          line3.innerHTML = `<span>🕒 Próximo: <strong>En 10 días hábiles</strong></span> <span class="wf-badge wf-badge-outline" style="font-size: 9px;">Espera estándar</span>`;
+          line3.innerHTML = `<span>[Horario] Próximo: <strong>En 10 días hábiles</strong></span> <span class="wf-badge wf-badge-outline" style="font-size: 9px;">Espera estándar</span>`;
         } else {
           line2.innerHTML = `<strong>Práctica PPS:</strong> Supervisa Docente Titular + 2 alumnos avanzados de salud.`;
-          line3.innerHTML = `<span>🕒 Próximo: <strong>En &lt; 48 hs hábiles</strong></span> <span class="wf-badge" style="font-size: 9px;">Sin solapamiento</span>`;
+          line3.innerHTML = `<span>[Horario] Próximo: <strong>En &lt; 48 hs hábiles</strong></span> <span class="wf-badge" style="font-size: 9px;">Sin solapamiento</span>`;
         }
       });
     }
@@ -424,13 +437,26 @@
     function aplicarFiltros() {
       const esp = document.getElementById('selectEspecialidad').value;
       const cards = document.querySelectorAll('.consultorio-card');
+      let visibles = 0;
+
       cards.forEach(card => {
         if (esp === 'todas' || card.getAttribute('data-esp') === esp) {
           card.style.display = 'flex';
+          visibles++;
         } else {
           card.style.display = 'none';
         }
       });
+
+      // Feedback dinámico en tiempo real (Heurística 1)
+      const conteoEl = document.getElementById('conteoResultados');
+      if (visibles === 1) {
+        conteoEl.innerHTML = `<strong>1 consultorio disponible</strong> con horarios 100% compatibles con tus materias activas en MIeL.`;
+      } else if (visibles > 1) {
+        conteoEl.innerHTML = `<strong>${visibles} consultorios disponibles</strong> con horarios 100% compatibles con tus materias activas en MIeL.`;
+      } else {
+        conteoEl.innerHTML = `<strong>No se encontraron consultorios</strong> para el criterio seleccionado.`;
+      }
     }
 
     function resetFiltros() {
@@ -438,6 +464,15 @@
       document.getElementById('selectDisponibilidad').value = 'semana';
       setModalidad('pps');
       aplicarFiltros();
+    }
+
+    // Script del Menú Hamburguesa en Mobile
+    const toggle = document.getElementById('menuToggle');
+    const nav = document.getElementById('mainNav');
+    if (toggle && nav) {
+      toggle.addEventListener('click', () => {
+        nav.classList.toggle('mobile-open');
+      });
     }
   </script>
 </body>

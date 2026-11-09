@@ -257,7 +257,7 @@
       <span class="badge-tag">UNLaM • DIIT</span>
       <div>
         <div style="font-size: 13px; font-weight: 800; color: white;">Sistema de Salud y Prácticas Clínicas (PPS)</div>
-        <div style="font-size: 11px; color: var(--ui-text-muted);">Visualización e Interfaces • Cátedra: Heliana Vera • Canosa, Maidana, Serrano</div>
+        <div style="font-size: 11px; color: var(--ui-text-muted);">Visualización e Interfaces • Cátedra: Heliana Vera • 7 Pantallas (5 requeridas + 2 complementarias de cierre de arquitectura)</div>
       </div>
     </div>
 
@@ -278,11 +278,11 @@
       <button class="screen-tab-btn" onclick="loadScreen('pantalla_5_grafico.html', 5, this)">
         5. Gráfico y KPIs
       </button>
-      <button class="screen-tab-btn" onclick="loadScreen('pantalla_6_historial.html', 6, this)">
-        6. Mi Historial
+      <button class="screen-tab-btn" onclick="loadScreen('pantalla_6_historial.html', 6, this)" title="Pantalla complementaria: Cierre de arquitectura Nivel 2">
+        6. Mi Historial [Cierre Arq]
       </button>
-      <button class="screen-tab-btn" onclick="loadScreen('pantalla_7_programa_pps.html', 7, this)">
-        7. Programa PPS
+      <button class="screen-tab-btn" onclick="loadScreen('pantalla_7_programa_pps.html', 7, this)" title="Pantalla complementaria: Cierre de arquitectura Nivel 3">
+        7. Programa PPS [Cierre Arq]
       </button>
     </nav>
 
@@ -369,11 +369,11 @@
   <!-- ==================== FOOTER INFORMATIVO ==================== -->
   <footer class="meta-footer">
     <div>
-      <span>Arquitectura Completa del Sitio: </span>
-      <strong style="color: #38bdf8;">7 Pantallas Disponibles</strong> (Home, Cartilla, Formulario, Alerta, Estadísticas, Mi Historial, Programa PPS)
+      <span>Arquitectura Completa del Prototipo: </span>
+      <strong style="color: #38bdf8;">7 Pantallas Responsivas</strong> (5 de requerimiento mínimo de cátedra + 2 complementarias de cierre de arquitectura)
     </div>
     <div>
-      <span>Grilla: </span> 12 columnas desktop / 1 col mobile • Escala de grises pura
+      <span>Grilla: </span> 12 columnas desktop / 1 col mobile apilada • Escala de grises pura (Mordecki & Norman)
     </div>
   </footer>
 
@@ -405,13 +405,15 @@
           • <em>Principio de Tufte (Data-Ink Ratio):</em> Gráfico de barras horizontales limpias con datos directos inscritos sobre la barra (1.2 d vs 8.5 d) y ahorro porcentual (-86%).<br>
           • <em>Gestalt y KPIs:</em> <strong>Simetría y Región Común</strong> en las 3 tarjetas de impacto (1.420 turnos, 3.850 hs PPS, 94.8% asistencia).`,
 
-      6: `<strong>Pantalla 6: Mi Historial Médico y Constancias (Nivel 2 y 3)</strong><br>
+      6: `<strong>Pantalla 6: Mi Historial Médico y Constancias (Pantalla Complementaria — Cierre Arq. Nivel 2)</strong><br>
           • <em>Propósito:</em> Gestión personal del estudiante para consultar atenciones previas y <strong>descargar certificados oficiales en PDF</strong> con firma digital para presentar en trabajos o clases.<br>
+          • <em>Aporte al Árbol de Navegación:</em> Cubre el 100% de los enlaces del header principal, evitando callejones sin salida en la navegación.<br>
           • <em>Heurística 3 (Control y Libertad):</em> Emisión de constancia oficial inmediata en 1 clic.<br>
           • <em>Gestalt:</em> <strong>Región Común</strong> en la ficha de estudiante y <strong>Semejanza</strong> en la tabla de atenciones pasadas.`,
 
-      7: `<strong>Pantalla 7: Programa de Prácticas PPS (Institucional y Reglamento)</strong><br>
+      7: `<strong>Pantalla 7: Programa de Prácticas PPS (Pantalla Complementaria — Cierre Arq. Nivel 3)</strong><br>
           • <em>Propósito:</em> Transparencia pedagógica, marco legal y derechos del paciente (voluntariedad, anonimato, derecho a atención exclusiva del titular).<br>
+          • <em>Aporte al Árbol de Navegación:</em> Cumple el Nivel 3 de arquitectura institucional y resuelve las dudas de consentimiento previo.<br>
           • <em>Triangulación Pedagógica:</em> Diagrama de 3 roles (Estudiante Paciente → Practicante de Salud → Docente Titular).<br>
           • <em>Nivel 3 (Reglamento):</em> Escala de horas cátedra acreditables y acordeón interactivo de preguntas frecuentes.`
     };
