@@ -1,0 +1,328 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pantalla 7: Programa de Prácticas Profesionales Supervisadas (PPS) - Wireframe UNLaM Salud</title>
+  <link rel="stylesheet" href="wireframe-system.css">
+  <style>
+    /* Estilos específicos de Programa PPS */
+    .hero-pps {
+      background: var(--wf-surface);
+      border: 1px solid var(--wf-border-strong);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      margin-bottom: var(--space-5);
+    }
+
+    /* Diagrama de Triangulación Pedagógica (Gestalt: Conectividad) */
+    .dual-care-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 16px;
+      text-align: center;
+    }
+    .dual-care-card {
+      background: var(--wf-gray-50);
+      border: 1px solid var(--wf-gray-300);
+      border-radius: var(--radius-sm);
+      padding: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .dual-care-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--wf-gray-800);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    /* Tabla de Escala de Horas */
+    .hours-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 12px;
+      background: var(--wf-surface);
+      border: 1px solid var(--wf-border-strong);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .hours-table th {
+      background: var(--wf-gray-100);
+      border-bottom: 2px solid var(--wf-gray-800);
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 700;
+    }
+    .hours-table td {
+      border-bottom: 1px solid var(--wf-gray-200);
+      padding: 10px 14px;
+    }
+
+    /* Acordeón de FAQ */
+    .faq-item {
+      border: 1px solid var(--wf-border-strong);
+      border-radius: var(--radius-sm);
+      background: var(--wf-surface);
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+    .faq-question {
+      padding: 14px 16px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--wf-surface);
+      user-select: none;
+    }
+    .faq-question:hover {
+      background: var(--wf-gray-50);
+    }
+    .faq-answer {
+      padding: 12px 16px;
+      font-size: 12px;
+      color: var(--wf-gray-700);
+      line-height: 1.5;
+      border-top: 1px solid var(--wf-gray-200);
+      background: var(--wf-gray-50);
+      display: none;
+    }
+    .faq-item.open .faq-answer {
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .dual-care-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="wf-header" data-heuristic="Consistencia y Estándares (H4)">
+    <div class="container wf-header-inner">
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <button class="wf-menu-toggle" id="menuToggle" aria-label="Abrir menú">☰</button>
+        <a href="pantalla_1_home.html" class="wf-logo">
+          <div class="wf-logo-box">UNL</div>
+          <div>
+            <div style="font-size: 13px; font-weight: 800; line-height: 1.1;">UNLaM SALUD</div>
+            <div style="font-size: 10px; color: var(--wf-gray-500); font-weight: 600;">Programa Institucional PPS</div>
+          </div>
+        </a>
+      </div>
+
+      <nav aria-label="Navegación principal">
+        <ul class="wf-nav" id="mainNav">
+          <li><a href="pantalla_1_home.html">Inicio</a></li>
+          <li><a href="pantalla_2_cartilla.html">Especialidades y Turnos</a></li>
+          <li><a href="pantalla_5_grafico.html">Estadísticas</a></li>
+          <li><a href="pantalla_6_historial.html">Mi Historial</a></li>
+          <li><a href="pantalla_7_programa_pps.html" class="active">Programa PPS</a></li>
+        </ul>
+      </nav>
+
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div class="wf-user-profile">
+          <div class="wf-avatar">TC</div>
+          <div>
+            <div style="font-weight: 700;">Tomás Canosa</div>
+            <div style="font-size: 10px; color: var(--wf-gray-500);">tcanosa@alumno.unlam.edu.ar</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== CONTENIDO PRINCIPAL ==================== -->
+  <main class="container">
+
+    <!-- Migas de pan y título -->
+    <div style="margin-bottom: 16px;">
+      <div style="font-size: 11px; color: var(--wf-gray-600); margin-bottom: 4px;">
+        <a href="pantalla_1_home.html" style="color: inherit; text-decoration: none;">Inicio</a> / Institucional
+      </div>
+      <h1 style="font-size: 20px; font-weight: 800; letter-spacing: -0.5px;">Programa de Prácticas Profesionales Supervisadas (PPS)</h1>
+      <p style="font-size: 12px; color: var(--wf-gray-600);">
+        Articulación entre la Secretaría de Bienestar Estudiantil y el Departamento de Ciencias de la Salud de la UNLaM.
+      </p>
+    </div>
+
+    <!-- ==================== BLOQUE HERO INFORMATIVO ==================== -->
+    <section class="hero-pps" data-gestalt="Región Común" data-heuristic="Ayuda y Documentación (H10)">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px;">
+        <span class="wf-badge wf-badge-dark">Modelo Pedagógico Asistencial</span>
+        <span style="font-size: 11px; color: var(--wf-gray-600);">Resolución HCS N° 142/2024</span>
+      </div>
+      <h2 style="font-size: 16px; font-weight: 800; margin-bottom: 8px;">¿En qué consiste la Atención Clínica Dual?</h2>
+      <p style="font-size: 12px; color: var(--wf-gray-700); line-height: 1.6; max-width: 900px;">
+        El Programa PPS articula el cuidado de la salud primaria de la comunidad estudiantil con la formación clínica de alumnos avanzados de Medicina, Nutrición, Kinesiología y Odontología. Los estudiantes pacientes obtienen <strong>turnos con demora inferior a 48 horas dentro del propio campus</strong>, colaborando voluntariamente con las horas de práctica hospitalaria requeridas para la graduación de sus pares.
+      </p>
+
+      <!-- Diagrama de Triangulación Pedagógica -->
+      <div class="dual-care-grid">
+        <div class="dual-care-card">
+          <div class="dual-care-icon">1</div>
+          <div style="font-weight: 800; font-size: 13px;">Estudiante Paciente</div>
+          <div style="font-size: 11px; color: var(--wf-gray-600);">
+            Accede a atención primaria gratuita sin demoras y otorga su consentimiento digital informado.
+          </div>
+        </div>
+
+        <div class="dual-care-card">
+          <div class="dual-care-icon">2</div>
+          <div style="font-weight: 800; font-size: 13px;">Estudiantes en Práctica</div>
+          <div style="font-size: 11px; color: var(--wf-gray-600);">
+            Alumnos del último año realizan la anamnesis, exploración física preliminar y acreditan horas de plan de estudio.
+          </div>
+        </div>
+
+        <div class="dual-care-card">
+          <div class="dual-care-icon">3</div>
+          <div style="font-weight: 800; font-size: 13px;">Docente Médico Titular</div>
+          <div style="font-size: 11px; color: var(--wf-gray-600);">
+            Profesional matriculado que supervisa de forma continua, valida el diagnóstico y firma los certificados oficiales.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== REGLAMENTO Y ESCALA DE HORAS ACREDITABLES (NIVEL 3) ==================== -->
+    <section style="margin-bottom: var(--space-6);" data-gestalt="Semejanza y Simetría">
+      <h3 style="font-size: 15px; font-weight: 800; margin-bottom: 6px;">Escala de Horas Acreditables por Especialidad (Nivel 3)</h3>
+      <p style="font-size: 12px; color: var(--wf-gray-600); margin-bottom: 12px;">
+        Baremos aprobados para el cómputo curricular de los practicantes de salud según la complejidad de la consulta supervisada:
+      </p>
+
+      <table class="hours-table">
+        <thead>
+          <tr>
+            <th>Carrera / Área</th>
+            <th>Tipo de Consulta Primaria</th>
+            <th>Tiempo Promedio</th>
+            <th>Horas Cátedra Acreditables</th>
+            <th>Docente a Cargo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Medicina</strong></td>
+            <td>Clínica Médica / Triage Preventivo</td>
+            <td>30 minutos</td>
+            <td><strong>2 hs cátedra</strong></td>
+            <td>Dr. Roberto Gómez (Titular)</td>
+          </tr>
+          <tr>
+            <td><strong>Odontología</strong></td>
+            <td>Profilaxis, Detección de Caries y Apto Bucal</td>
+            <td>45 minutos</td>
+            <td><strong>3 hs cátedra</strong></td>
+            <td>Dra. Mariana Benítez (Adjunta)</td>
+          </tr>
+          <tr>
+            <td><strong>Nutrición</strong></td>
+            <td>Antropometría y Plan de Hábitos Saludables</td>
+            <td>30 minutos</td>
+            <td><strong>2 hs cátedra</strong></td>
+            <td>Lic. Cecilia Morales (JTP)</td>
+          </tr>
+          <tr>
+            <td><strong>Kinesiología</strong></td>
+            <td>Evaluación Postural y Ergonomía de Estudio</td>
+            <td>40 minutos</td>
+            <td><strong>3 hs cátedra</strong></td>
+            <td>Lic. Gonzalo López (Titular)</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ==================== GARANTÍAS Y DERECHOS DEL PACIENTE (Diseño Emocional / Confianza) ==================== -->
+    <section class="wf-card" style="margin-bottom: var(--space-6); border-left: 4px solid var(--wf-gray-900);" data-heuristic="Control del Usuario (H3)">
+      <h3 style="font-size: 14px; font-weight: 800; margin-bottom: 8px;">Garantías y Derechos del Estudiante Paciente</h3>
+      <div class="grid-12" style="font-size: 12px; color: var(--wf-gray-700); line-height: 1.5;">
+        <div class="col-4">
+          <strong>1. Voluntariedad Total:</strong><br>
+          La participación en los consultorios PPS es voluntaria. En cualquier momento podés optar por la atención de un médico graduado de planta.
+        </div>
+        <div class="col-4">
+          <strong>2. Intervención Docente Inmediata:</strong><br>
+          El paciente tiene derecho a solicitar la intervención directa y exclusiva del profesional matriculado a cargo si así lo prefiere.
+        </div>
+        <div class="col-4">
+          <strong>3. Confidencialidad y Anonimato:</strong><br>
+          Los datos para acreditación de horas académicas son disociados; los practicantes no conservan copias de información personal.
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== PREGUNTAS FRECUENTES (FAQ ACORDEÓN) ==================== -->
+    <section style="margin-bottom: var(--space-6);" data-heuristic="Ayuda y Documentación (H10)">
+      <h3 style="font-size: 15px; font-weight: 800; margin-bottom: 12px;">Preguntas Frecuentes sobre las Prácticas PPS</h3>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>¿La atención en los consultorios PPS tiene algún arancel?</span>
+          <span>+</span>
+        </div>
+        <div class="faq-answer">
+          No. La atención primaria dentro del campus universitario es 100% gratuita para toda la comunidad de estudiantes regulares de la UNLaM mediante presentación de correo institucional o DNI.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>¿Un estudiante practicante puede firmar un apto físico o constancia laboral?</span>
+          <span>+</span>
+        </div>
+        <div class="faq-answer">
+          No. Todos los certificados oficiales de asistencia, aptos físicos deportivos y constancias para el trabajo son firmados y sellados exclusivamente con matrícula profesional por el médico docente a cargo.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>¿Qué sucede si un turno de práctica coincide con una fecha de examen parcial?</span>
+          <span>+</span>
+        </div>
+        <div class="faq-answer">
+          Gracias al cruce de datos con MIeL y SIU Guaraní, la plataforma bloquea automáticamente franjas incompatibles. Si tenés una mesa de examen especial, podés cancelar o reprogramar tu turno con 2 horas de anticipación desde tu panel personal.
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="wf-footer">
+    <div class="container" style="text-align: center; font-size: 11px; color: var(--wf-gray-500);">
+      UNLaM - DIIT • Visualización e Interfaces • Prototipo de Wireframe: Pantalla 7 (Programa PPS Institucional)
+    </div>
+  </footer>
+
+  <script>
+    function toggleFaq(header) {
+      const item = header.parentElement;
+      item.classList.toggle('open');
+      const icon = header.querySelector('span:last-child');
+      icon.textContent = item.classList.contains('open') ? '−' : '+';
+    }
+  </script>
+</body>
+</html>

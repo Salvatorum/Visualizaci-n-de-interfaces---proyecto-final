@@ -1,0 +1,347 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pantalla 6: Mi Historial Médico y Constancias - Wireframe UNLaM Salud</title>
+  <link rel="stylesheet" href="wireframe-system.css">
+  <style>
+    /* Estilos específicos de Historial */
+    .profile-summary-card {
+      background: var(--wf-surface);
+      border: 1px solid var(--wf-border-strong);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      margin-bottom: var(--space-5);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .history-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      font-size: 12px;
+      background: var(--wf-surface);
+      border: 1px solid var(--wf-border-strong);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .history-table th {
+      background: var(--wf-gray-100);
+      border-bottom: 2px solid var(--wf-gray-800);
+      padding: 12px 14px;
+      text-align: left;
+      font-weight: 700;
+      color: var(--wf-gray-900);
+    }
+    .history-table td {
+      border-bottom: 1px solid var(--wf-gray-200);
+      padding: 12px 14px;
+      vertical-align: middle;
+    }
+    .history-table tr:hover {
+      background: var(--wf-gray-50);
+    }
+
+    /* Modal de Detalle de Atención / Certificado */
+    .modal-cert {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(2px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .modal-cert.active {
+      display: flex;
+    }
+    .cert-paper {
+      background: white;
+      border: 2px solid var(--wf-gray-900);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      max-width: 540px;
+      width: 100%;
+      box-shadow: var(--shadow-lg);
+      font-size: 12px;
+      position: relative;
+    }
+
+    @media (max-width: 768px) {
+      .history-table thead {
+        display: none;
+      }
+      .history-table, .history-table tbody, .history-table tr, .history-table td {
+        display: block;
+        width: 100%;
+      }
+      .history-table tr {
+        margin-bottom: 14px;
+        border: 1px solid var(--wf-border-strong);
+        border-radius: var(--radius-sm);
+        padding: 10px;
+      }
+      .history-table td {
+        border-bottom: none;
+        padding: 6px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="wf-header" data-heuristic="Consistencia y Estándares (H4)">
+    <div class="container wf-header-inner">
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <button class="wf-menu-toggle" id="menuToggle" aria-label="Abrir menú">☰</button>
+        <a href="pantalla_1_home.html" class="wf-logo">
+          <div class="wf-logo-box">UNL</div>
+          <div>
+            <div style="font-size: 13px; font-weight: 800; line-height: 1.1;">UNLaM SALUD</div>
+            <div style="font-size: 10px; color: var(--wf-gray-500); font-weight: 600;">Mi Historial de Atenciones</div>
+          </div>
+        </a>
+      </div>
+
+      <nav aria-label="Navegación principal">
+        <ul class="wf-nav" id="mainNav">
+          <li><a href="pantalla_1_home.html">Inicio</a></li>
+          <li><a href="pantalla_2_cartilla.html">Especialidades y Turnos</a></li>
+          <li><a href="pantalla_5_grafico.html">Estadísticas</a></li>
+          <li><a href="pantalla_6_historial.html" class="active">Mi Historial</a></li>
+          <li><a href="pantalla_7_programa_pps.html">Programa PPS</a></li>
+        </ul>
+      </nav>
+
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div class="wf-user-profile">
+          <div class="wf-avatar">TC</div>
+          <div>
+            <div style="font-weight: 700;">Tomás Canosa</div>
+            <div style="font-size: 10px; color: var(--wf-gray-500);">tcanosa@alumno.unlam.edu.ar</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== CONTENIDO PRINCIPAL ==================== -->
+  <main class="container">
+
+    <!-- Migas de pan y título -->
+    <div style="margin-bottom: 16px;">
+      <div style="font-size: 11px; color: var(--wf-gray-600); margin-bottom: 4px;">
+        <a href="pantalla_1_home.html" style="color: inherit; text-decoration: none;">Inicio</a> / Mi Perfil y Consultas
+      </div>
+      <h1 style="font-size: 20px; font-weight: 800; letter-spacing: -0.5px;">Mi Historial Médico y Constancias</h1>
+      <p style="font-size: 12px; color: var(--wf-gray-600);">
+        Registro de consultas de atención primaria realizadas en el campus y descarga de certificados oficiales de asistencia.
+      </p>
+    </div>
+
+    <!-- ==================== FICHA RESUMEN DEL ESTUDIANTE ==================== -->
+    <section class="profile-summary-card" data-gestalt="Región Común y Cerramiento">
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--wf-gray-800); color: white; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 900;">
+          TC
+        </div>
+        <div>
+          <div style="font-size: 15px; font-weight: 800;">Tomás Salvador Canosa</div>
+          <div style="font-size: 12px; color: var(--wf-gray-700);">
+            Legajo: <strong>89421</strong> • DNI: 42.158.904 • Ing. en Informática (DIIT)
+          </div>
+          <div style="font-size: 11px; color: var(--wf-gray-500); margin-top: 2px;">
+            Cobertura declarada: Sin obra social / Asistencia exclusiva en consultorios UNLaM.
+          </div>
+        </div>
+      </div>
+
+      <!-- Métricas personales solidarias (Diseño Emocional - Don Norman) -->
+      <div style="background: var(--wf-gray-100); border: 1px solid var(--wf-gray-300); padding: 10px 14px; border-radius: var(--radius-sm); text-align: right;">
+        <div style="font-size: 11px; font-weight: 700; color: var(--wf-gray-600); text-transform: uppercase;">Aporte a la Formación PPS</div>
+        <div style="font-size: 18px; font-weight: 900; color: var(--wf-gray-900);">6 Horas Cátedra</div>
+        <div style="font-size: 10px; color: var(--wf-gray-600);">Acreditadas a estudiantes avanzados en 3 turnos</div>
+      </div>
+    </section>
+
+    <!-- ==================== LISTADO CRONOLÓGICO DE ATENCIONES (NIVEL 2 Y 3) ==================== -->
+    <section style="margin-bottom: var(--space-6);" data-gestalt="Semejanza y Proximidad" data-heuristic="Control y Libertad (H3: Descarga de Comprobantes)">
+      
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+        <h2 style="font-size: 15px; font-weight: 800;">Consultas Médicas Registradas (Año Académico 2026)</h2>
+        <span class="wf-badge wf-badge-dark">3 Atenciones Concluidas</span>
+      </div>
+
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>Fecha y Hora</th>
+            <th>Especialidad y Ubicación</th>
+            <th>Modalidad de Atención</th>
+            <th>Motivo Registrado</th>
+            <th>Estado</th>
+            <th style="text-align: right;">Comprobante</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          <!-- Consulta 1 -->
+          <tr>
+            <td>
+              <div style="font-weight: 700;">18 Oct 2026</div>
+              <div style="font-size: 11px; color: var(--wf-gray-600);">10:30 hs</div>
+            </td>
+            <td>
+              <div style="font-weight: 700;">Odontología Preventiva</div>
+              <div style="font-size: 11px; color: var(--wf-gray-600);">Box 2 • Pabellón Salud</div>
+            </td>
+            <td>
+              <span class="wf-badge" style="font-size: 10px;">Práctica PPS</span>
+              <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Dra. M. Benítez + 2 practicantes</div>
+            </td>
+            <td>Control preventivo y limpieza bucal</td>
+            <td>
+              <span class="wf-badge wf-badge-dark" style="font-size: 10px;">Completado</span>
+            </td>
+            <td style="text-align: right;">
+              <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="abrirCertificado('18/10/2026', 'Odontología Preventiva', 'Dra. M. Benítez (Mat. 48.912)', 'Control preventivo anual bucodental')">
+                📄 Certificado PDF
+              </button>
+            </td>
+          </tr>
+
+          <!-- Consulta 2 -->
+          <tr>
+            <td>
+              <div style="font-weight: 700;">02 Sep 2026</div>
+              <div style="font-size: 11px; color: var(--wf-gray-600);">14:00 hs</div>
+            </td>
+            <td>
+              <div style="font-weight: 700;">Clínica Médica</div>
+              <div style="font-size: 11px; color: var(--wf-gray-600);">Box 1 • Pabellón Salud</div>
+            </td>
+            <td>
+              <span class="wf-badge" style="font-size: 10px;">Práctica PPS</span>
+              <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Dr. R. Gómez + 2 practicantes</div>
+            </td>
+            <td>Apto físico deportivo / torneos UNLaM</td>
+            <td>
+              <span class="wf-badge wf-badge-dark" style="font-size: 10px;">Apto Aprobado</span>
+            </td>
+            <td style="text-align: right;">
+              <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="abrirCertificado('02/09/2026', 'Clínica Médica', 'Dr. Roberto Gómez (Mat. 39.401)', 'Examen clínico para apto deportivo universitario')">
+                📄 Certificado PDF
+              </button>
+            </td>
+          </tr>
+
+          <!-- Consulta 3 -->
+          <tr>
+            <td>
+              <div style="font-weight: 700;">22 Jun 2026</div>
+              <div style="font-size: 11px; color: var(--wf-gray-600);">09:00 hs</div>
+            </td>
+            <td>
+              <div style="font-weight: 700;">Oftalmología</div>
+              <div style="font-size: 11px; color: var(--wf-gray-600);">Box 3 • Pabellón Salud</div>
+            </td>
+            <td>
+              <span class="wf-badge wf-badge-outline" style="font-size: 10px;">Profesional Graduado</span>
+              <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Dr. F. Rossi (Médico de Planta)</div>
+            </td>
+            <td>Control de agudeza visual para lectura</td>
+            <td>
+              <span class="wf-badge wf-badge-dark" style="font-size: 10px;">Completado</span>
+            </td>
+            <td style="text-align: right;">
+              <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="abrirCertificado('22/06/2026', 'Oftalmología', 'Dr. Fernando Rossi (Mat. 51.203)', 'Evaluación de agudeza visual y prescripción refractiva')">
+                📄 Certificado PDF
+              </button>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+
+      <div style="margin-top: 14px; font-size: 11px; color: var(--wf-gray-500); line-height: 1.4;">
+        ℹ️ <strong>Nota de alcance institucional:</strong> Por motivos de privacidad médica y confidencialidad universitaria, la plataforma almacena únicamente comprobantes de asistencia y estados preventivos generales, sin prescripciones farmacológicas sensibles ni diagnósticos patológicos complejos.
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== MODAL DE DETALLE DE ATENCIÓN / CERTIFICADO PDF (NIVEL 3) ==================== -->
+  <div class="modal-cert" id="modalCertificado">
+    <div class="cert-paper">
+      
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid var(--wf-gray-800); padding-bottom: 12px; margin-bottom: 16px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <div class="wf-logo-box" style="width: 28px; height: 28px; font-size: 11px;">UNL</div>
+          <div>
+            <div style="font-size: 12px; font-weight: 900;">UNIVERSIDAD NACIONAL DE LA MATANZA</div>
+            <div style="font-size: 10px; color: var(--wf-gray-600);">Secretaría de Bienestar Estudiantil • Depto. Ciencias de la Salud</div>
+          </div>
+        </div>
+        <button onclick="cerrarCertificado()" style="background: none; border: none; font-size: 18px; cursor: pointer; color: var(--wf-gray-700);">✕</button>
+      </div>
+
+      <div style="text-align: center; margin-bottom: 16px;">
+        <span class="wf-badge wf-badge-dark" style="font-size: 10px;">Constancia Oficial de Asistencia Médica</span>
+        <h3 style="font-size: 15px; font-weight: 800; margin-top: 6px;">CERTIFICADO DE ATENCIÓN PRIMARIA</h3>
+      </div>
+
+      <p style="font-size: 12px; line-height: 1.6; color: var(--wf-gray-800); margin-bottom: 14px;">
+        Por la presente se hace constar que el/la estudiante <strong>Tomás Salvador Canosa</strong>, DNI N° <strong>42.158.904</strong>, Legajo N° <strong>89421</strong>, concurrió para su atención médica en los Consultorios del Campus San Justo el día <strong id="certFecha">18/10/2026</strong>.
+      </p>
+
+      <div style="background: var(--wf-gray-100); border: 1px solid var(--wf-gray-300); padding: 10px 14px; border-radius: var(--radius-sm); margin-bottom: 16px; font-size: 11px; line-height: 1.5;">
+        • <strong>Servicio:</strong> <span id="certEspecialidad">Odontología Preventiva</span><br>
+        • <strong>Profesional a Cargo:</strong> <span id="certProfesional">Dra. M. Benítez</span><br>
+        • <strong>Concepto:</strong> <span id="certConcepto">Control preventivo anual bucodental</span><br>
+        • <strong>Validez:</strong> Se extiende el presente para ser presentado ante autoridades laborales y/o académicas.
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 24px; padding-top: 12px; border-top: 1px dashed var(--wf-gray-300);">
+        <div style="font-size: 9px; color: var(--wf-gray-500); font-family: monospace;">
+          Firma Digital: UNLAM-BIENESTAR-2026-VAL-9841<br>
+          Código QR de Autenticidad Integrado
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="cerrarCertificado()">Cerrar</button>
+          <button class="wf-btn wf-btn-primary wf-btn-sm" onclick="alert('Descargando archivo PDF firmado digitalmente...')">Descargar (.PDF)</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="wf-footer">
+    <div class="container" style="text-align: center; font-size: 11px; color: var(--wf-gray-500);">
+      UNLaM - DIIT • Visualización e Interfaces • Prototipo de Wireframe: Pantalla 6 (Mi Historial y Constancias)
+    </div>
+  </footer>
+
+  <script>
+    function abrirCertificado(fecha, especialidad, profesional, concepto) {
+      document.getElementById('certFecha').textContent = fecha;
+      document.getElementById('certEspecialidad').textContent = especialidad;
+      document.getElementById('certProfesional').textContent = profesional;
+      document.getElementById('certConcepto').textContent = concepto;
+      document.getElementById('modalCertificado').classList.add('active');
+    }
+
+    function cerrarCertificado() {
+      document.getElementById('modalCertificado').classList.remove('active');
+    }
+  </script>
+</body>
+</html>

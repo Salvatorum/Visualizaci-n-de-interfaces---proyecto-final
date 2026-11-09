@@ -1,0 +1,516 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pantalla 3: Formulario de Reserva y Consentimiento Digital - Wireframe UNLaM Salud</title>
+  <link rel="stylesheet" href="wireframe-system.css">
+  <style>
+    /* Stepper Lineal (Gestalt: Buena Continuidad y Elemento Conectado) */
+    .stepper-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--space-5);
+      padding: 14px;
+      background: var(--wf-surface);
+      border: 1px solid var(--wf-border-strong);
+      border-radius: var(--radius-md);
+    }
+    .step-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--wf-gray-500);
+    }
+    .step-item.active {
+      color: var(--wf-gray-900);
+    }
+    .step-item.completed {
+      color: var(--wf-gray-700);
+    }
+    .step-badge {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid var(--wf-gray-400);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+    }
+    .step-item.active .step-badge {
+      border-color: var(--wf-gray-900);
+      background: var(--wf-gray-900);
+      color: var(--wf-white);
+    }
+    .step-item.completed .step-badge {
+      border-color: var(--wf-gray-700);
+      background: var(--wf-gray-200);
+    }
+    .step-connector {
+      flex: 1;
+      height: 2px;
+      background: var(--wf-gray-300);
+      margin: 0 16px;
+      max-width: 80px;
+    }
+
+    /* Grilla Semanal de Horarios (Heurística 5: Prevención Proactiva de Errores) */
+    .schedule-grid-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      margin-bottom: 20px;
+      font-size: 12px;
+    }
+    .schedule-grid-table th {
+      background: var(--wf-gray-100);
+      border: 1px solid var(--wf-border-strong);
+      padding: 8px 4px;
+      text-align: center;
+      font-weight: 700;
+    }
+    .schedule-grid-table td {
+      border: 1px solid var(--wf-border);
+      padding: 6px 4px;
+      text-align: center;
+      vertical-align: middle;
+      height: 48px;
+    }
+
+    .time-slot-btn {
+      width: 100%;
+      height: 100%;
+      padding: 6px 4px;
+      background: var(--wf-surface);
+      border: 1px solid var(--wf-border-strong);
+      border-radius: var(--radius-sm);
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+    .time-slot-btn:hover {
+      background: var(--wf-gray-200);
+      border-color: var(--wf-gray-900);
+    }
+    .time-slot-btn.selected {
+      background: var(--wf-gray-900);
+      color: var(--wf-white);
+      border-color: var(--wf-gray-900);
+    }
+
+    /* Slot Bloqueado por Cursada (Gestalt: Contraste de Textura Rayada) */
+    .time-slot-blocked {
+      background: repeating-linear-gradient(
+        45deg,
+        #f1f5f9,
+        #f1f5f9 6px,
+        #e2e8f0 6px,
+        #e2e8f0 12px
+      );
+      border: 1px dashed var(--wf-gray-400);
+      border-radius: var(--radius-sm);
+      padding: 4px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: var(--wf-gray-600);
+      cursor: not-allowed;
+      user-select: none;
+    }
+
+    /* Opciones estandarizadas de Motivo (Gestalt: Proximidad y Cerramiento) */
+    .motivo-options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .motivo-card {
+      border: 1px solid var(--wf-border-strong);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+      background: var(--wf-surface);
+      transition: border-color 0.15s ease, background-color 0.15s ease;
+    }
+    .motivo-card:hover {
+      background: var(--wf-gray-50);
+      border-color: var(--wf-gray-900);
+    }
+    .motivo-card input[type="radio"] {
+      margin-top: 3px;
+    }
+
+    @media (max-width: 768px) {
+      .motivo-options-grid {
+        grid-template-columns: 1fr;
+      }
+      .stepper-container {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+      }
+      .step-connector {
+        display: none;
+      }
+      .schedule-grid-table th, .schedule-grid-table td {
+        font-size: 10px;
+        padding: 4px 2px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="wf-header" data-heuristic="Consistencia y Estándares (H4)">
+    <div class="container wf-header-inner">
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <button class="wf-menu-toggle" id="menuToggle" aria-label="Abrir menú">☰</button>
+        <a href="pantalla_1_home.html" class="wf-logo">
+          <div class="wf-logo-box">UNL</div>
+          <div>
+            <div style="font-size: 13px; font-weight: 800; line-height: 1.1;">UNLaM SALUD</div>
+            <div style="font-size: 10px; color: var(--wf-gray-500); font-weight: 600;">Reserva de Turno</div>
+          </div>
+        </a>
+      </div>
+
+      <nav aria-label="Navegación principal">
+        <ul class="wf-nav" id="mainNav">
+          <li><a href="pantalla_1_home.html">Inicio</a></li>
+          <li><a href="pantalla_2_cartilla.html" class="active">Especialidades y Turnos</a></li>
+          <li><a href="pantalla_5_grafico.html">Estadísticas</a></li>
+          <li><a href="pantalla_6_historial.html">Mi Historial</a></li>
+          <li><a href="pantalla_7_programa_pps.html">Programa PPS</a></li>
+        </ul>
+      </nav>
+
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div class="wf-user-profile">
+          <div class="wf-avatar">TC</div>
+          <div>
+            <div style="font-weight: 700;">Tomás Canosa</div>
+            <div style="font-size: 10px; color: var(--wf-gray-500);">tcanosa@alumno.unlam.edu.ar</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== CONTENIDO PRINCIPAL ==================== -->
+  <main class="container" style="max-width: 900px;">
+
+    <!-- ==================== 1. INDICADOR LINEAL DE PASOS (Gestalt: Continuidad) ==================== -->
+    <div class="stepper-container" data-gestalt="Buena Continuidad y Elemento Conectado" data-heuristic="Visibilidad del Estado del Sistema (H1)">
+      <div class="step-item completed">
+        <span class="step-badge">✓</span>
+        <span>1. Especialidad Elegida</span>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step-item active">
+        <span class="step-badge">2</span>
+        <span>2. Horario y Motivo</span>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step-item">
+        <span class="step-badge">3</span>
+        <span>3. Confirmación</span>
+      </div>
+    </div>
+
+    <!-- Resumen de especialidad seleccionada (Heurística 3: Control del Usuario) -->
+    <div class="wf-card" style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; padding: 12px 18px;" data-heuristic="Control y Libertad (H3)">
+      <div>
+        <span class="wf-badge wf-badge-dark" style="margin-bottom: 4px;">Especialidad Seleccionada</span>
+        <div style="font-size: 15px; font-weight: 800;">Odontología Preventiva — Box 2 (Pabellón Salud)</div>
+        <div style="font-size: 11px; color: var(--wf-gray-600);">Modalidad: Práctica Clínica Supervisada (PPS) • Espera estimada: &lt; 48 hs</div>
+      </div>
+      <a href="pantalla_2_cartilla.html" class="wf-btn wf-btn-secondary wf-btn-sm" title="Modificar especialidad elegida">Cambiar</a>
+    </div>
+
+    <form id="reservaForm" onsubmit="handleFormSubmit(event)">
+      
+      <!-- ==================== 2. SELECTOR CON BLOQUEO ACADÉMICO (Heurística 5: Prevención de Errores) ==================== -->
+      <section class="wf-card" style="margin-bottom: 24px;" data-gestalt="Contraste de Textura y Cerramiento" data-heuristic="Prevención Proactiva de Errores (H5)">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
+          <div>
+            <h2 style="font-size: 15px; font-weight: 800;">Selección de Fecha y Horario</h2>
+            <p style="font-size: 12px; color: var(--wf-gray-600);">Semana del 11 al 15 de Noviembre 2026. Los horarios solapados con tus materias en MIeL están deshabilitados.</p>
+          </div>
+          <div style="font-size: 11px; font-weight: 700; color: var(--wf-gray-700);">
+            Turno Seleccionado: <span id="slotElegidoTexto" style="background: var(--wf-gray-800); color: white; padding: 2px 6px; border-radius: 3px;">Ninguno</span>
+          </div>
+        </div>
+
+        <!-- Tabla Grilla Semanal -->
+        <table class="schedule-grid-table">
+          <thead>
+            <tr>
+              <th style="width: 70px;">Franja</th>
+              <th>Lunes 11</th>
+              <th>Martes 12</th>
+              <th>Miércoles 13</th>
+              <th>Jueves 14</th>
+              <th>Viernes 15</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Fila 08:30 hs -->
+            <tr>
+              <td style="font-weight: 700; background: var(--wf-gray-50);">08:30 hs</td>
+              <td>
+                <button type="button" class="time-slot-btn" onclick="seleccionarSlot(this, 'Lunes 11 - 08:30 hs')">08:30 hs</button>
+              </td>
+              <td>
+                <!-- Bloqueado por Cursada Martes (Sistemas Operativos) -->
+                <div class="time-slot-blocked" title="Superposición con cursada de Sistemas Operativos">
+                  <strong>🔒 Cursando</strong>
+                  <span>08:00 - 12:00</span>
+                </div>
+              </td>
+              <td>
+                <button type="button" class="time-slot-btn" onclick="seleccionarSlot(this, 'Miércoles 13 - 08:30 hs')">08:30 hs</button>
+              </td>
+              <td>
+                <!-- Bloqueado por Cursada Jueves (Visualización e Interfaces) -->
+                <div class="time-slot-blocked" title="Superposición con cursada de Visualización e Interfaces">
+                  <strong>🔒 Cursando</strong>
+                  <span>08:00 - 12:00</span>
+                </div>
+              </td>
+              <td>
+                <button type="button" class="time-slot-btn" onclick="seleccionarSlot(this, 'Viernes 15 - 08:30 hs')">08:30 hs</button>
+              </td>
+            </tr>
+
+            <!-- Fila 10:30 hs -->
+            <tr>
+              <td style="font-weight: 700; background: var(--wf-gray-50);">10:30 hs</td>
+              <td>
+                <button type="button" class="time-slot-btn" onclick="seleccionarSlot(this, 'Lunes 11 - 10:30 hs')">10:30 hs</button>
+              </td>
+              <td>
+                <!-- Bloqueado por Cursada Martes -->
+                <div class="time-slot-blocked" title="Superposición con cursada de Sistemas Operativos">
+                  <strong>🔒 Cursando</strong>
+                  <span>08:00 - 12:00</span>
+                </div>
+              </td>
+              <td>
+                <button type="button" class="time-slot-btn" onclick="seleccionarSlot(this, 'Miércoles 13 - 10:30 hs')">10:30 hs</button>
+              </td>
+              <td>
+                <!-- Bloqueado por Cursada Jueves (Dispara Pantalla 4) -->
+                <div class="time-slot-blocked" title="Superposición con cursada de Visualización e Interfaces" onclick="simularErrorSolapamiento()">
+                  <strong>🔒 Cursando</strong>
+                  <span>08:00 - 12:00</span>
+                </div>
+              </td>
+              <td>
+                <button type="button" class="time-slot-btn" onclick="seleccionarSlot(this, 'Viernes 15 - 10:30 hs')">10:30 hs</button>
+              </td>
+            </tr>
+
+            <!-- Fila 14:00 hs -->
+            <tr>
+              <td style="font-weight: 700; background: var(--wf-gray-50);">14:00 hs</td>
+              <td>
+                <button type="button" class="time-slot-btn" onclick="seleccionarSlot(this, 'Lunes 11 - 14:00 hs')">14:00 hs</button>
+              </td>
+              <td>
+                <button type="button" class="time-slot-btn" onclick="seleccionarSlot(this, 'Martes 12 - 14:00 hs')">14:00 hs</button>
+              </td>
+              <td>
+                <button type="button" class="time-slot-btn selected" onclick="seleccionarSlot(this, 'Miércoles 13 - 14:00 hs')">14:00 hs</button>
+              </td>
+              <td>
+                <button type="button" class="time-slot-btn" onclick="seleccionarSlot(this, 'Jueves 14 - 14:00 hs')">14:00 hs</button>
+              </td>
+              <td>
+                <button type="button" class="time-slot-btn" onclick="seleccionarSlot(this, 'Viernes 15 - 14:00 hs')">14:00 hs</button>
+              </td>
+            </tr>
+
+            <!-- Fila 16:30 hs -->
+            <tr>
+              <td style="font-weight: 700; background: var(--wf-gray-50);">16:30 hs</td>
+              <td>
+                <button type="button" class="time-slot-btn" onclick="seleccionarSlot(this, 'Lunes 11 - 16:30 hs')">16:30 hs</button>
+              </td>
+              <td>
+                <button type="button" class="time-slot-btn" onclick="seleccionarSlot(this, 'Martes 12 - 16:30 hs')">16:30 hs</button>
+              </td>
+              <td>
+                <button type="button" class="time-slot-btn" onclick="seleccionarSlot(this, 'Miércoles 13 - 16:30 hs')">16:30 hs</button>
+              </td>
+              <td>
+                <button type="button" class="time-slot-btn" onclick="seleccionarSlot(this, 'Jueves 14 - 16:30 hs')">16:30 hs</button>
+              </td>
+              <td>
+                <button type="button" class="time-slot-btn" onclick="seleccionarSlot(this, 'Viernes 15 - 16:30 hs')">16:30 hs</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Leyenda explicativa (Heurística 10) -->
+        <div style="display: flex; gap: 16px; font-size: 11px; color: var(--wf-gray-600); border-top: 1px solid var(--wf-gray-200); padding-top: 8px;">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <div style="width: 14px; height: 14px; border: 1px solid var(--wf-border-strong); background: white;"></div>
+            <span>Horario disponible</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <div style="width: 14px; height: 14px; background: var(--wf-gray-900);"></div>
+            <span>Horario seleccionado</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <div style="width: 14px; height: 14px; background: repeating-linear-gradient(45deg,#f1f5f9,#f1f5f9 2px,#cbd5e1 2px,#cbd5e1 4px);"></div>
+            <span>Bloqueado por cursada UNLaM</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 3. MOTIVO DE CONSULTA (Heurística 6: Reconocimiento antes que Recuerdo) ==================== -->
+      <section class="wf-card" style="margin-bottom: 24px;" data-gestalt="Proximidad y Semejanza" data-heuristic="Reconocimiento antes que Recuerdo (H6)">
+        <h2 style="font-size: 15px; font-weight: 800; margin-bottom: 4px;">Motivo de la Consulta</h2>
+        <p style="font-size: 12px; color: var(--wf-gray-600); margin-bottom: 12px;">
+          Seleccioná una de las opciones estandarizadas de atención primaria institucional (sin descripción libre de síntomas clínicos):
+        </p>
+
+        <div class="motivo-options-grid">
+          
+          <label class="motivo-card">
+            <input type="radio" name="motivoConsulta" value="preventivo" checked>
+            <div>
+              <div style="font-weight: 700; font-size: 13px;">Control Preventivo Anual</div>
+              <div style="font-size: 11px; color: var(--wf-gray-600);">Revisión odontológica general, profilaxis y pesquisa bucodental.</div>
+            </div>
+          </label>
+
+          <label class="motivo-card">
+            <input type="radio" name="motivoConsulta" value="apto">
+            <div>
+              <div style="font-weight: 700; font-size: 13px;">Apto Físico Deportivo / Académico</div>
+              <div style="font-size: 11px; color: var(--wf-gray-600);">Certificación de salud reglamentaria para torneos universitarios o ingreso.</div>
+            </div>
+          </label>
+
+          <label class="motivo-card">
+            <input type="radio" name="motivoConsulta" value="primera_vez">
+            <div>
+              <div style="font-weight: 700; font-size: 13px;">Consulta de Primera Vez</div>
+              <div style="font-size: 11px; color: var(--wf-gray-600);">Apertura de ficha de atención en consultorios de Bienestar Estudiantil.</div>
+            </div>
+          </label>
+
+          <label class="motivo-card">
+            <input type="radio" name="motivoConsulta" value="seguimiento">
+            <div>
+              <div style="font-weight: 700; font-size: 13px;">Seguimiento de Tratamiento</div>
+              <div style="font-size: 11px; color: var(--wf-gray-600);">Control evolutivo de prácticas previas realizadas en el campus.</div>
+            </div>
+          </label>
+
+        </div>
+      </section>
+
+      <!-- ==================== 4. BLOQUE DE CONSENTIMIENTO (Gestalt: Región Común Punteada) ==================== -->
+      <section class="wf-consent-box" data-gestalt="Región Común (Borde Punteado)" data-heuristic="Ayuda y Documentación (H10)">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+          <span class="wf-badge wf-badge-dark">Consentimiento Digital Obligatorio</span>
+          <span style="font-size: 11px; font-weight: 700; color: var(--wf-gray-800);">Programa de Prácticas Profesionales Supervisadas (PPS)</span>
+        </div>
+
+        <p style="font-size: 12px; color: var(--wf-gray-800); line-height: 1.5; margin-bottom: 12px;">
+          1. La atención inicial y exploración física será efectuada por estudiantes avanzados de carreras de salud bajo la supervisión directa y matriculada de un docente universitario.<br>
+          2. Al confirmar, autorizás que la consulta compute horas académicas de práctica clínica de forma disociada y anónima para el Departamento de Ciencias de la Salud.<br>
+          3. Podés en cualquier momento revocar este consentimiento o solicitar la intervención exclusiva del médico titular a cargo sin que afecte tu atención médica.
+        </p>
+
+        <!-- Casillas de verificación con Signifiers claros -->
+        <div style="margin-bottom: 10px;">
+          <label style="display: flex; align-items: flex-start; gap: 10px; font-size: 12px; font-weight: 700; cursor: pointer;">
+            <input type="checkbox" id="checkConsentimiento" name="consentimiento" style="margin-top: 2px;">
+            <span>Acepto participar de la práctica clínica supervisada institucional (Requisito excluyente para esta modalidad)</span>
+          </label>
+        </div>
+
+        <div>
+          <label style="display: flex; align-items: flex-start; gap: 10px; font-size: 12px; color: var(--wf-gray-700); cursor: pointer;">
+            <input type="checkbox" id="checkAyuno" name="ayuno" style="margin-top: 2px;">
+            <span>Confirmo contar con 8 horas de ayuno previo en caso de requerirse toma de muestras o apto de laboratorio.</span>
+          </label>
+        </div>
+      </section>
+
+      <!-- ==================== 5. ACCIONES DEL FORMULARIO ==================== -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+        <a href="pantalla_2_cartilla.html" class="wf-btn wf-btn-secondary">
+          ← Volver a Cartilla
+        </a>
+
+        <div style="display: flex; gap: 10px;">
+          <!-- Disparador simulador de Pantalla 4 -->
+          <a href="pantalla_4_alerta.html?caso=A" class="wf-btn wf-btn-secondary" style="font-size: 11px;" title="Ver estado de alerta por superposición académica">
+            ⚠️ Simular Conflicto (Pantalla 4)
+          </a>
+          <button type="submit" class="wf-btn wf-btn-primary" style="padding: 10px 24px; font-size: 14px;">
+            Confirmar Reserva de Turno →
+          </button>
+        </div>
+      </div>
+
+    </form>
+
+  </main>
+
+  <footer class="wf-footer">
+    <div class="container" style="text-align: center; font-size: 11px; color: var(--wf-gray-500);">
+      UNLaM - DIIT • Visualización e Interfaces • Prototipo de Wireframe: Pantalla 3 (Formulario y Consentimiento)
+    </div>
+  </footer>
+
+  <script>
+    let slotActual = 'Miércoles 13 - 14:00 hs';
+    document.getElementById('slotElegidoTexto').textContent = slotActual;
+
+    function seleccionarSlot(btn, texto) {
+      document.querySelectorAll('.time-slot-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      slotActual = texto;
+      document.getElementById('slotElegidoTexto').textContent = slotActual;
+    }
+
+    function simularErrorSolapamiento() {
+      window.location.href = 'pantalla_4_alerta.html?caso=A';
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const check = document.getElementById('checkConsentimiento');
+      if (!check.checked) {
+        window.location.href = 'pantalla_4_alerta.html?caso=B';
+        return;
+      }
+      alert('¡Turno confirmado con éxito!\n' + slotActual + '\nModalidad: Práctica Clínica Supervisada.\nSe envió constancia a tcanosa@alumno.unlam.edu.ar');
+      window.location.href = 'pantalla_1_home.html';
+    }
+  </script>
+</body>
+</html>

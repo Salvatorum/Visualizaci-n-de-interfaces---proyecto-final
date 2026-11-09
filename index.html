@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Master Wireframes Suite - UNLaM Salud & PPS | Visualización e Interfaces</title>
+  <style>
+    :root {
+      --ui-bg: #0f172a;
+      --ui-bar: #1e293b;
+      --ui-border: #334155;
+      --ui-accent: #38bdf8;
+      --ui-text: #f8fafc;
+      --ui-text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--ui-bg);
+      color: var(--ui-text);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Barra Superior de Control */
+    .presenter-bar {
+      background-color: var(--ui-bar);
+      border-bottom: 1px solid var(--ui-border);
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      z-index: 1000;
+      flex-wrap: wrap;
+    }
+
+    .project-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .badge-tag {
+      background: #0284c7;
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    /* Botones selectores de pantalla */
+    .screens-nav {
+      display: flex;
+      background: #090d16;
+      border-radius: 6px;
+      padding: 3px;
+      gap: 2px;
+      border: 1px solid var(--ui-border);
+      overflow-x: auto;
+    }
+    .screen-tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--ui-text-muted);
+      padding: 6px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .screen-tab-btn:hover {
+      color: var(--ui-text);
+      background: rgba(255,255,255,0.06);
+    }
+    .screen-tab-btn.active {
+      background: #38bdf8;
+      color: #0f172a;
+      font-weight: 700;
+    }
+
+    /* Selectores de Viewport y Capas Teóricas */
+    .viewport-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .view-btn {
+      background: var(--ui-bar);
+      border: 1px solid var(--ui-border);
+      color: var(--ui-text-muted);
+      padding: 5px 9px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+    .view-btn:hover {
+      color: var(--ui-text);
+      border-color: var(--ui-accent);
+    }
+    .view-btn.active {
+      border-color: #38bdf8;
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      font-weight: 700;
+    }
+
+    .view-btn-gestalt.active {
+      border-color: #0284c7;
+      background: rgba(2, 132, 199, 0.2);
+      color: #38bdf8;
+    }
+    .view-btn-heuristic.active {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+    }
+
+    /* Área de Canvas */
+    .canvas-area {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0b0f19;
+      position: relative;
+      overflow: auto;
+      padding: 16px;
+    }
+
+    /* Frame de Contenedor */
+    .viewport-frame {
+      background: white;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+    }
+
+    /* Modo Escritorio (1200px) */
+    .viewport-frame.desktop-mode {
+      width: 1240px;
+      height: 92vh;
+      max-width: 98%;
+      border-radius: 8px;
+      border: 1px solid var(--ui-border);
+    }
+
+    /* Modo Mobile (375px iPhone frame) */
+    .viewport-frame.mobile-mode {
+      width: 375px;
+      height: 740px;
+      border-radius: 36px;
+      border: 10px solid #27272a;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.8), inset 0 0 0 2px #52525b;
+    }
+
+    /* Modo Libre (100%) */
+    .viewport-frame.full-mode {
+      width: 100%;
+      height: 100%;
+      border-radius: 0;
+      border: none;
+    }
+
+    .wireframe-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+      background-color: #f8fafc;
+    }
+
+    /* Overlay de Anotaciones UX de Cátedra */
+    .ux-annotation-drawer {
+      position: absolute;
+      bottom: 24px;
+      left: 24px;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid var(--ui-accent);
+      border-radius: 8px;
+      padding: 14px 18px;
+      max-width: 520px;
+      font-size: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      backdrop-filter: blur(8px);
+      z-index: 500;
+      display: none;
+    }
+    .ux-annotation-drawer.visible {
+      display: block;
+      animation: fadeIn 0.2s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Grilla de 12 Columnas Overlay */
+    .grid-overlay-layer {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1200px;
+      height: 100%;
+      pointer-events: none;
+      z-index: 200;
+      display: none;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 20px;
+      padding: 0 16px;
+    }
+    .grid-overlay-layer.visible {
+      display: grid;
+    }
+    .grid-overlay-col {
+      background: rgba(239, 68, 68, 0.08);
+      border-left: 1px dashed rgba(239, 68, 68, 0.35);
+      border-right: 1px dashed rgba(239, 68, 68, 0.35);
+      height: 100%;
+    }
+
+    .meta-footer {
+      background: var(--ui-bar);
+      border-top: 1px solid var(--ui-border);
+      padding: 6px 18px;
+      font-size: 11px;
+      display: flex;
+      justify-content: space-between;
+      color: var(--ui-text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== BARRA SUPERIOR DE CONTROL ==================== -->
+  <header class="presenter-bar">
+    
+    <!-- Info del Proyecto -->
+    <div class="project-info">
+      <span class="badge-tag">UNLaM • DIIT</span>
+      <div>
+        <div style="font-size: 13px; font-weight: 800; color: white;">Sistema de Salud y Prácticas Clínicas (PPS)</div>
+        <div style="font-size: 11px; color: var(--ui-text-muted);">Visualización e Interfaces • Cátedra: Heliana Vera • Canosa, Maidana, Serrano</div>
+      </div>
+    </div>
+
+    <!-- Navegación entre las 7 Pantallas del Sistema Completo -->
+    <nav class="screens-nav" aria-label="Pantallas">
+      <button class="screen-tab-btn active" onclick="loadScreen('pantalla_1_home.html', 1, this)">
+        1. Home
+      </button>
+      <button class="screen-tab-btn" onclick="loadScreen('pantalla_2_cartilla.html', 2, this)">
+        2. Cartilla
+      </button>
+      <button class="screen-tab-btn" onclick="loadScreen('pantalla_3_formulario.html', 3, this)">
+        3. Formulario
+      </button>
+      <button class="screen-tab-btn" onclick="loadScreen('pantalla_4_alerta.html', 4, this)">
+        4. Alerta / Error
+      </button>
+      <button class="screen-tab-btn" onclick="loadScreen('pantalla_5_grafico.html', 5, this)">
+        5. Gráfico y KPIs
+      </button>
+      <button class="screen-tab-btn" onclick="loadScreen('pantalla_6_historial.html', 6, this)">
+        6. Mi Historial
+      </button>
+      <button class="screen-tab-btn" onclick="loadScreen('pantalla_7_programa_pps.html', 7, this)">
+        7. Programa PPS
+      </button>
+    </nav>
+
+    <!-- Controles de Capas Teóricas & Viewport -->
+    <div class="viewport-controls">
+      <!-- Capas de Inspección Teórica de Cátedra -->
+      <button class="view-btn view-btn-gestalt" id="btnGestaltToggle" onclick="toggleGestaltLayer()" title="Resaltar Leyes de la Gestalt aplicadas en pantalla">
+        🧠 Leyes Gestalt
+      </button>
+
+      <button class="view-btn view-btn-heuristic" id="btnHeuristicToggle" onclick="toggleHeuristicLayer()" title="Resaltar Heurísticas de Usabilidad de Nielsen aplicadas">
+        🔍 Heurísticas Nielsen
+      </button>
+
+      <!-- Toggle Grilla 12 Columnas -->
+      <button class="view-btn" id="btnGridToggle" onclick="toggleGridOverlay()" title="Superponer grilla de 12 columnas">
+        ▦ Grilla 12 Cols
+      </button>
+
+      <!-- Toggle Especificaciones UX -->
+      <button class="view-btn active" id="btnNotesToggle" onclick="toggleNotes()" title="Ver justificación técnica y pedagógica">
+        💡 Criterios Cátedra
+      </button>
+
+      <span style="height: 18px; width: 1px; background: var(--ui-border); margin: 0 4px;"></span>
+
+      <!-- Modos de Vista -->
+      <button class="view-btn active" id="btnDesktop" onclick="setMode('desktop')">
+        💻 Desktop
+      </button>
+      <button class="view-btn" id="btnMobile" onclick="setMode('mobile')">
+        📱 Mobile
+      </button>
+      <button class="view-btn" id="btnFull" onclick="setMode('full')">
+        ⛶ Libre
+      </button>
+
+      <a id="btnOpenRaw" href="pantalla_1_home.html" target="_blank" class="view-btn" style="color: var(--ui-accent); text-decoration: none;">
+        ↗ Pestaña
+      </a>
+    </div>
+
+  </header>
+
+  <!-- ==================== CANVAS Y SIMULADOR DE VIEWPORT ==================== -->
+  <main class="canvas-area">
+    
+    <!-- Marco de previsualización -->
+    <div class="viewport-frame desktop-mode" id="frameContainer">
+      
+      <!-- Overlay de Grilla de 12 Columnas -->
+      <div class="grid-overlay-layer" id="gridOverlay">
+        <div class="grid-overlay-col"></div>
+        <div class="grid-overlay-col"></div>
+        <div class="grid-overlay-col"></div>
+        <div class="grid-overlay-col"></div>
+        <div class="grid-overlay-col"></div>
+        <div class="grid-overlay-col"></div>
+        <div class="grid-overlay-col"></div>
+        <div class="grid-overlay-col"></div>
+        <div class="grid-overlay-col"></div>
+        <div class="grid-overlay-col"></div>
+        <div class="grid-overlay-col"></div>
+        <div class="grid-overlay-col"></div>
+      </div>
+
+      <!-- Iframe contenedor de la pantalla activa -->
+      <iframe id="wireframeViewer" class="wireframe-iframe" src="pantalla_1_home.html" onload="onIframeLoaded()"></iframe>
+    </div>
+
+    <!-- Cajón Flotante de Especificaciones y Justificación de Cátedra -->
+    <aside class="ux-annotation-drawer visible" id="uxDrawer">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+        <span style="font-weight: 800; color: var(--ui-accent); text-transform: uppercase; font-size: 11px;">
+          📌 Fundamentación Teórica y Correcciones de Cátedra
+        </span>
+        <button onclick="toggleNotes()" style="background: none; border: none; color: var(--ui-text-muted); cursor: pointer; font-size: 14px;">✕</button>
+      </div>
+      <div id="uxDrawerContent" style="color: #cbd5e1; line-height: 1.45;"></div>
+    </aside>
+
+  </main>
+
+  <!-- ==================== FOOTER INFORMATIVO ==================== -->
+  <footer class="meta-footer">
+    <div>
+      <span>Arquitectura Completa del Sitio: </span>
+      <strong style="color: #38bdf8;">7 Pantallas Disponibles</strong> (Home, Cartilla, Formulario, Alerta, Estadísticas, Mi Historial, Programa PPS)
+    </div>
+    <div>
+      <span>Grilla: </span> 12 columnas desktop / 1 col mobile • Escala de grises pura
+    </div>
+  </footer>
+
+  <script>
+    const annotations = {
+      1: `<strong>Pantalla 1: Home con Menú Visible (Panel Estudiante)</strong><br>
+          • <em>Gestalt aplicadas:</em> <strong>Región Común y Cerramiento</strong> en la tarjeta "Mi Próximo Turno"; <strong>Semejanza y Simetría (Prägnanz)</strong> en la fila de 5 especialidades; <strong>Proximidad</strong> en la franja de cursadas sincronizadas.<br>
+          • <em>Heurísticas Nielsen:</em> <strong>Visibilidad del Estado (H1)</strong> con el tag de conexión con SIU/MIeL; <strong>Consistencia (H4)</strong> en el header institucional y <strong>Prevención de Errores (H5)</strong> al transparentar las franjas bloqueadas.<br>
+          • <em>Modelo Miro, Leo, Pienso (Mordecki):</em> <em>Miro</em> (identificación rápida de box y fecha), <em>Leo</em> (detalle docente de PPS), <em>Pienso</em> (descarga de constancia o acceso a especialidades).`,
+
+      2: `<strong>Pantalla 2: Cartilla y Filtro de Modalidad ("Filtrar Primero")</strong><br>
+          • <em>Corrección de Cátedra:</em> Barra superior para <strong>filtrar primero</strong> antes del listado (Heurística 7: Flexibilidad y Eficiencia).<br>
+          • <em>Gestalt aplicadas:</em> <strong>Región Común</strong> delimitando la barra de filtros; <strong>Semejanza</strong> en las tarjetas modulares homogéneas de 3 a 4 líneas.<br>
+          • <em>Heurísticas:</em> <strong>Reconocimiento antes que Recuerdo (H6)</strong> con el switch de modalidad preseleccionado en "Práctica Supervisada (< 48 hs)"; <strong>Diseño Estético y Minimalista (H8)</strong> con módulos compactos y directos sin ruido visual.`,
+
+      3: `<strong>Pantalla 3: Formulario de Reserva y Consentimiento Digital</strong><br>
+          • <em>Gestalt aplicadas:</em> <strong>Buena Continuidad y Elemento Conectado</strong> en el stepper lineal (1. Especialidad → 2. Horario → 3. Confirmación); <strong>Contraste de Textura Rayada</strong> en los bloques no disponibles.<br>
+          • <em>Heurística 5 (Prevención Proactiva de Errores):</em> Bloqueo de los horarios solapados con cursada ("🔒 Cursando en UNLaM") imposibilitando el error antes de que ocurra.<br>
+          • <em>Corrección Docente:</em> <strong>Sin texto libre de síntomas</strong>; reemplazado por motivos estandarizados cerrados (Heurística 6).<br>
+          • <em>Consentimiento PPS:</em> Borde punteado (Región común destacada) con explicación pedagógica en 3 líneas y checkbox obligatorio.`,
+
+      4: `<strong>Pantalla 4: Alerta / Error (Validación de Reglas de Negocio)</strong><br>
+          • <em>Gestalt aplicadas:</em> <strong>Figura y Fondo</strong> mediante oscurecimiento y desenfoque del fondo al 50%, proyectando la ventana de error como figura nítida focal.<br>
+          • <em>Heurística 9 (Diagnóstico y Recuperación de Errores):</em> Mensajes precisos que identifican la causa exacta (materia detectada en Caso A / falta de consentimiento en Caso B) sin culpar al alumno.<br>
+          • <em>Heurística 3 (Control y Libertad):</em> Salidas claras duales ("Volver al formulario y corregir" vs. "Cambiar a profesional graduado").`,
+
+      5: `<strong>Pantalla 5: Gráfico Comparativo y Métricas (Visualización de Datos)</strong><br>
+          • <em>Variables Visuales de Bertin:</em> Mapeado bidimensional de <strong>Posición</strong> (categorías en Y, días en X), <strong>Longitud</strong> (magnitud del tiempo de espera) y <strong>Valor/Brillo</strong> (barra oscura PPS vs. barra clara graduado).<br>
+          • <em>Principio de Tufte (Data-Ink Ratio):</em> Gráfico de barras horizontales limpias con datos directos inscritos sobre la barra (1.2 d vs 8.5 d) y ahorro porcentual (-86%).<br>
+          • <em>Gestalt y KPIs:</em> <strong>Simetría y Región Común</strong> en las 3 tarjetas de impacto (1.420 turnos, 3.850 hs PPS, 94.8% asistencia).`,
+
+      6: `<strong>Pantalla 6: Mi Historial Médico y Constancias (Nivel 2 y 3)</strong><br>
+          • <em>Propósito:</em> Gestión personal del estudiante para consultar atenciones previas y <strong>descargar certificados oficiales en PDF</strong> con firma digital para presentar en trabajos o clases.<br>
+          • <em>Heurística 3 (Control y Libertad):</em> Emisión de constancia oficial inmediata en 1 clic.<br>
+          • <em>Gestalt:</em> <strong>Región Común</strong> en la ficha de estudiante y <strong>Semejanza</strong> en la tabla de atenciones pasadas.`,
+
+      7: `<strong>Pantalla 7: Programa de Prácticas PPS (Institucional y Reglamento)</strong><br>
+          • <em>Propósito:</em> Transparencia pedagógica, marco legal y derechos del paciente (voluntariedad, anonimato, derecho a atención exclusiva del titular).<br>
+          • <em>Triangulación Pedagógica:</em> Diagrama de 3 roles (Estudiante Paciente → Practicante de Salud → Docente Titular).<br>
+          • <em>Nivel 3 (Reglamento):</em> Escala de horas cátedra acreditables y acordeón interactivo de preguntas frecuentes.`
+    };
+
+    let currentScreenNum = 1;
+    let gestaltActive = false;
+    let heuristicActive = false;
+
+    function loadScreen(fileUrl, screenNum, tabBtn) {
+      currentScreenNum = screenNum;
+      const iframe = document.getElementById('wireframeViewer');
+      iframe.src = fileUrl;
+
+      document.getElementById('btnOpenRaw').href = fileUrl;
+
+      document.querySelectorAll('.screen-tab-btn').forEach(b => b.classList.remove('active'));
+      if (tabBtn) tabBtn.classList.add('active');
+
+      document.getElementById('uxDrawerContent').innerHTML = annotations[screenNum];
+    }
+
+    function onIframeLoaded() {
+      applyTheoryLayersToIframe();
+    }
+
+    function toggleGestaltLayer() {
+      gestaltActive = !gestaltActive;
+      document.getElementById('btnGestaltToggle').classList.toggle('active', gestaltActive);
+      applyTheoryLayersToIframe();
+    }
+
+    function toggleHeuristicLayer() {
+      heuristicActive = !heuristicActive;
+      document.getElementById('btnHeuristicToggle').classList.toggle('active', heuristicActive);
+      applyTheoryLayersToIframe();
+    }
+
+    function applyTheoryLayersToIframe() {
+      try {
+        const iframe = document.getElementById('wireframeViewer');
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        if (!doc) return;
+
+        const gElements = doc.querySelectorAll('[data-gestalt]');
+        gElements.forEach(el => {
+          if (gestaltActive) {
+            el.classList.add('theory-highlight-gestalt');
+          } else {
+            el.classList.remove('theory-highlight-gestalt');
+          }
+        });
+
+        const hElements = doc.querySelectorAll('[data-heuristic]');
+        hElements.forEach(el => {
+          if (heuristicActive) {
+            el.classList.add('theory-highlight-heuristic');
+          } else {
+            el.classList.remove('theory-highlight-heuristic');
+          }
+        });
+      } catch (e) {
+        console.warn('Iframe layer sync:', e);
+      }
+    }
+
+    function setMode(mode) {
+      const frame = document.getElementById('frameContainer');
+      const btnDesk = document.getElementById('btnDesktop');
+      const btnMob = document.getElementById('btnMobile');
+      const btnFull = document.getElementById('btnFull');
+      const grid = document.getElementById('gridOverlay');
+
+      btnDesk.classList.remove('active');
+      btnMob.classList.remove('active');
+      btnFull.classList.remove('active');
+
+      if (mode === 'desktop') {
+        frame.className = 'viewport-frame desktop-mode';
+        btnDesk.classList.add('active');
+        grid.style.display = document.getElementById('btnGridToggle').classList.contains('active') ? 'grid' : 'none';
+      } else if (mode === 'mobile') {
+        frame.className = 'viewport-frame mobile-mode';
+        btnMob.classList.add('active');
+        grid.style.display = 'none';
+      } else {
+        frame.className = 'viewport-frame full-mode';
+        btnFull.classList.add('active');
+        grid.style.display = 'none';
+      }
+    }
+
+    function toggleGridOverlay() {
+      const grid = document.getElementById('gridOverlay');
+      const btn = document.getElementById('btnGridToggle');
+      const isVisible = grid.classList.toggle('visible');
+      btn.classList.toggle('active', isVisible);
+    }
+
+    function toggleNotes() {
+      const drawer = document.getElementById('uxDrawer');
+      const btn = document.getElementById('btnNotesToggle');
+      const isVisible = drawer.classList.toggle('visible');
+      btn.classList.toggle('active', isVisible);
+    }
+
+    document.getElementById('uxDrawerContent').innerHTML = annotations[1];
+  </script>
+</body>
+</html>
