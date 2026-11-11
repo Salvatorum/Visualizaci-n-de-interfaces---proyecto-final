@@ -301,11 +301,52 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   transition: all 0.25s ease;
 }
 
-/* Resaltado de Campo con Error (Sub-heurística 5.15 de Pierotti / González & Lorés) */
-.wf-consent-box.has-error {
-  border: 3px solid var(--wf-gray-900) !important;
+/* Resaltado de Campo con Error (Sub-heurística 5.15 de Pierotti / Validación Inline) */
+.wf-consent-box.has-error,
+.wf-section-error {
+  border: 2px solid var(--wf-gray-900) !important;
   background-color: var(--wf-gray-100) !important;
-  box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.2);
+  box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.14);
+}
+
+/* Mensaje de error adyacente al input (Inline Validation - Feedback de Cátedra) */
+.wf-inline-error {
+  display: none;
+  margin-top: 8px;
+  padding: 8px 12px;
+  background-color: var(--wf-gray-900);
+  color: var(--wf-white);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+  align-items: center;
+  gap: 8px;
+}
+.wf-inline-error.visible {
+  display: flex;
+}
+
+/* Íconos vectoriales SVG monocromáticos (Modelo Mordecki - Pureza Escala de Grises) */
+.wf-svg-icon {
+  width: 24px;
+  height: 24px;
+  stroke: var(--wf-gray-900);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+.wf-svg-icon-sm {
+  width: 15px;
+  height: 15px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
 }
 
 /* ==========================================================================

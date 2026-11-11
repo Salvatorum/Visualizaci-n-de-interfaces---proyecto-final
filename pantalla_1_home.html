@@ -30,22 +30,58 @@
       background: var(--wf-gray-800);
     }
 
-    /* Tarjetas de Cursada Sincronizada */
-    .schedule-item {
+    /* Bloque de Próximo Turno con Fecha/Hora destacada */
+    .next-appointment-layout {
       display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      padding: 10px 12px;
-      background: var(--wf-gray-50);
-      border: 1px solid var(--wf-gray-300);
-      border-radius: var(--radius-sm);
-      margin-bottom: 8px;
-      font-size: 12px;
+      justify-content: space-between;
+      align-items: stretch;
+      gap: 20px;
+      flex-wrap: wrap;
     }
-    .schedule-icon-lock {
-      font-size: 12px;
-      color: var(--wf-gray-800);
+    .next-appointment-main {
+      flex: 1;
+      min-width: 260px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .datetime-highlight-box {
+      background: var(--wf-gray-900);
+      color: var(--wf-white);
+      border-radius: var(--radius-md);
+      padding: 18px 24px;
+      min-width: 210px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border: 2px solid var(--wf-gray-900);
+      box-shadow: var(--shadow-sm);
+    }
+    .datetime-highlight-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--wf-gray-300);
+      margin-bottom: 4px;
+    }
+    .datetime-highlight-date {
+      font-size: 24px;
       font-weight: 900;
+      line-height: 1.15;
+      letter-spacing: -0.5px;
+    }
+    .datetime-highlight-time {
+      margin-top: 8px;
+      font-size: 18px;
+      font-weight: 800;
+      background: var(--wf-white);
+      color: var(--wf-gray-900);
+      padding: 4px 14px;
+      border-radius: var(--radius-sm);
+      letter-spacing: 0.3px;
     }
 
     /* Fila de 5 Accesos Rápidos (Gestalt: Semejanza y Simetría / Prägnanz) */
@@ -79,60 +115,78 @@
       border-color: var(--wf-gray-900);
     }
     .quick-icon-placeholder {
-      width: 44px;
-      height: 44px;
-      border-radius: 6px;
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
       border: 2px solid var(--wf-gray-800);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
-      font-weight: 800;
       background: var(--wf-gray-100);
-      letter-spacing: -0.5px;
     }
 
-    /* Mapa esquemático en Footer (Correspondencia mundo real) */
+    /* Modal de Ubicación del Campus San Justo */
+    .map-popup-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background-color: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(2px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .map-popup-modal.active {
+      display: flex;
+    }
     .campus-map-schematic {
-      background: var(--wf-surface);
+      background: var(--wf-gray-50);
       border: 1px dashed var(--wf-gray-500);
       border-radius: var(--radius-md);
       padding: 14px;
       font-size: 11px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
+      margin: 14px 0;
     }
     .map-grid-preview {
       display: grid;
       grid-template-columns: 2fr 1fr 1fr;
-      gap: 6px;
-      height: 90px;
+      gap: 8px;
+      height: 110px;
     }
     .map-box {
       border: 1px solid var(--wf-gray-400);
-      background: var(--wf-gray-100);
+      background: var(--wf-surface);
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 4px;
+      padding: 6px;
       font-weight: 600;
       border-radius: 3px;
     }
     .map-box.highlight {
-      background: var(--wf-gray-800);
+      background: var(--wf-gray-900);
       color: var(--wf-white);
       border-color: var(--wf-gray-900);
+    }
+
+    @media (max-width: 768px) {
+      .datetime-highlight-box {
+        width: 100%;
+      }
+      .map-grid-preview {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
     }
 
     @media (max-width: 600px) {
       .quick-access-grid {
         grid-template-columns: 1fr;
-      }
-      .map-grid-preview {
-        grid-template-columns: 1fr;
-        height: auto;
       }
     }
   </style>
@@ -183,15 +237,15 @@
   <!-- ==================== CONTENIDO PRINCIPAL ==================== -->
   <main class="container">
 
-    <!-- Notificación / Feedback del Sistema (Heurística 1: Visibilidad del Estado) -->
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;" data-heuristic="Visibilidad del Estado del Sistema (H1)">
+    <!-- Encabezado y Estado Institucional (Heurística 1: Visibilidad del Estado) -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;" data-heuristic="Visibilidad del Estado del Sistema (H1)">
       <div>
         <h1 style="font-size: 20px; font-weight: 800; letter-spacing: -0.5px;">Panel del Estudiante</h1>
-        <p style="font-size: 12px; color: var(--wf-gray-600);">Gestión integrada de consultas médicas y articulación con prácticas académicas.</p>
+        <p style="font-size: 12px; color: var(--wf-gray-600);">Gestión autónoma de turnos médicos de atención primaria en el campus UNLaM.</p>
       </div>
       <div class="status-badge">
         <span class="status-dot"></span>
-        <span>SIU Guaraní & MIeL: Conectado</span>
+        <span>Cuenta Institucional Verificada</span>
       </div>
     </div>
 
@@ -199,96 +253,63 @@
     <div class="mobile-quick-cta-banner" data-heuristic="Flexibilidad y Eficiencia (H7)">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
         <span class="wf-badge wf-badge-dark" style="font-size: 9px;">Atención en el Campus</span>
-        <span style="font-size: 10px; font-weight: bold; color: var(--wf-gray-600);">Demora &lt; 48 hs</span>
+        <span style="font-size: 10px; font-weight: bold; color: var(--wf-gray-600);">Demora: menos de 48 hs</span>
       </div>
       <div style="font-weight: 800; font-size: 13px; color: var(--wf-gray-900);">¿Necesitás un turno médico hoy?</div>
       <div style="font-size: 11px; color: var(--wf-gray-600); margin: 2px 0 10px;">
-        Reservá en 1 clic en los boxes de Práctica Supervisada compatibles con tu horario de cursada.
+        Reservá en pocos pasos en los consultorios de Práctica Supervisada dentro de la universidad.
       </div>
       <a href="pantalla_2_cartilla.html" class="wf-btn wf-btn-primary wf-btn-block" style="padding: 10px;">
-        <span>[+]</span> Sacar Turno en 1 Clic
+        <span>+</span> Sacar Turno en 1 Clic
       </a>
     </div>
 
-    <!-- ==================== BLOQUE HERO / ESTADO ACTUAL (2 COLUMNAS) ==================== -->
-    <section class="hero-panel">
-      <div class="grid-12">
-        
-        <!-- Columna Izquierda: Tarjeta "Mi Próximo Turno" (7 cols) -->
-        <div class="col-7" data-gestalt="Región Común y Cerramiento" data-heuristic="Visibilidad de Estado y Control">
-          <div class="wf-card" style="height: 100%; border-left: 4px solid var(--wf-gray-900);">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
-              <div>
-                <span class="wf-badge wf-badge-dark" style="margin-bottom: 6px;">Próximo Turno Agendado</span>
-                <h2 style="font-size: 17px; font-weight: 800; margin-top: 4px;">Clínica Médica — Box 4</h2>
-              </div>
-              <div style="text-align: right;">
-                <div style="font-size: 16px; font-weight: 800;">Jue 14 Nov</div>
-                <div style="font-size: 13px; font-weight: 700; color: var(--wf-gray-600);">10:00 hs</div>
-              </div>
-            </div>
+    <!-- ==================== BLOQUE HERO / PRÓXIMO TURNO AGENDADO ==================== -->
+    <section class="hero-panel" data-gestalt="Región Común y Cerramiento" data-heuristic="Visibilidad de Estado y Control">
+      <div class="wf-card" style="border-left: 4px solid var(--wf-gray-900); padding: 20px;">
+        <div class="next-appointment-layout">
+          
+          <!-- Información Principal Simplificada -->
+          <div class="next-appointment-main">
+            <div>
+              <span class="wf-badge wf-badge-dark" style="margin-bottom: 8px;">Próximo Turno Agendado</span>
+              <h2 style="font-size: 19px; font-weight: 800; margin-bottom: 6px; color: var(--wf-gray-900);">Clínica Médica — Box 4</h2>
 
-            <!-- Información estructurada (Modelo Miro, Leo, Pienso) -->
-            <div style="background: var(--wf-gray-50); border: 1px solid var(--wf-gray-200); padding: 12px; border-radius: var(--radius-sm); margin-bottom: 16px;">
-              <div style="font-size: 11px; font-weight: 700; color: var(--wf-gray-600); margin-bottom: 4px; text-transform: uppercase;">Modalidad de Atención</div>
-              <div style="font-size: 12px; font-weight: 600; color: var(--wf-gray-900);">
-                Práctica Clínica Supervisada (PPS) — Supervisa: Dra. Gómez + 2 practicantes de medicina.
+              <div style="font-size: 13px; font-weight: 600; color: var(--wf-gray-900); margin-bottom: 6px;">
+                Práctica Clínica Supervisada (PPS) — Supervisa: Dra. Gómez
               </div>
-              <div style="font-size: 11px; color: var(--wf-gray-600); margin-top: 4px;">
-                [Box] Ubicación: Pabellón de Ciencias de la Salud (Planta Baja, San Justo)
+
+              <div style="font-size: 12px; color: var(--wf-gray-600); display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                <svg class="wf-svg-icon-sm" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+                <span>Pabellón Ciencias de la Salud (Planta Baja, San Justo)</span>
+                <button type="button" onclick="abrirModalMapa()" style="background: none; border: none; padding: 0; font-size: 12px; font-weight: 700; color: var(--wf-gray-900); text-decoration: underline; cursor: pointer;">
+                  Ver ubicación en el mapa
+                </button>
               </div>
             </div>
 
             <!-- Acciones Directas (Affordance clara) -->
-            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px;">
               <button class="wf-btn wf-btn-primary wf-btn-sm" onclick="alert('Descargando Constancia oficial de Turno (PDF)...')">
-                [PDF] Descargar Constancia (.PDF)
+                [PDF] Descargar Constancia
               </button>
-              <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="confirm('¿Estás seguro de cancelar tu turno del Jueves 14 Nov 10:00 hs?')">
+              <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="if(confirm('¿Estás seguro de cancelar tu turno del Jueves 14 Nov 10:00 hs?')) { alert('Turno cancelado correctamente.'); }">
                 [X] Cancelar Turno
               </button>
             </div>
           </div>
-        </div>
 
-        <!-- Columna Derecha: Franja "Mis Horarios de Cursada Sincronizados" (5 cols) -->
-        <div class="col-5" data-gestalt="Proximidad y Semejanza" data-heuristic="Prevención de Errores (H5)">
-          <div class="wf-card" style="height: 100%;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-              <h3 style="font-size: 14px; font-weight: 800;">Cursada Sincronizada</h3>
-              <span class="wf-badge wf-badge-outline">2do Cuatrimestre 2026</span>
-            </div>
-            
-            <p style="font-size: 11px; color: var(--wf-gray-600); margin-bottom: 10px;">
-              Franjas protegidas automáticamente contra solapamiento de turnos médicos:
-            </p>
-
-            <!-- Horario Martes -->
-            <div class="schedule-item">
-              <span class="schedule-icon-lock">[LOCKED]</span>
-              <div style="flex: 1;">
-                <div style="font-weight: 700;">Martes: 08:00 a 12:00 hs</div>
-                <div style="color: var(--wf-gray-600); font-size: 11px;">Sistemas Operativos • Aula 204</div>
-              </div>
-              <span class="wf-badge">Bloqueado</span>
-            </div>
-
-            <!-- Horario Jueves -->
-            <div class="schedule-item">
-              <span class="schedule-icon-lock">[LOCKED]</span>
-              <div style="flex: 1;">
-                <div style="font-weight: 700;">Jueves: 08:00 a 12:00 hs</div>
-                <div style="color: var(--wf-gray-600); font-size: 11px;">Visualización e Interfaces • Lab 3</div>
-              </div>
-              <span class="wf-badge">Bloqueado</span>
-            </div>
-
-            <div style="font-size: 10px; color: var(--wf-gray-500); margin-top: 6px; line-height: 1.3;">
-              [i] Los horarios de tu cursada no aparecerán disponibles para reserva en el sistema turnero.
-            </div>
+          <!-- Bloque de Fecha y Hora Altamente Destacado (Mordecki: Miro primero) -->
+          <div class="datetime-highlight-box" aria-label="Fecha y hora del turno">
+            <div class="datetime-highlight-label">Fecha y Hora</div>
+            <div class="datetime-highlight-date">Jue 14 Nov</div>
+            <div class="datetime-highlight-time">10:00 hs</div>
           </div>
-        </div>
 
+        </div>
       </div>
     </section>
 
@@ -303,52 +324,77 @@
 
       <div class="quick-access-grid">
         
-        <!-- Tarjeta 1: Clínica Médica -->
+        <!-- Tarjeta 1: Clínica Médica (Ícono Estetoscopio) -->
         <a href="pantalla_2_cartilla.html?esp=clinica" class="quick-card">
-          <div class="quick-icon-placeholder">[MED]</div>
+          <div class="quick-icon-placeholder" aria-hidden="true">
+            <svg class="wf-svg-icon" viewBox="0 0 24 24">
+              <path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/>
+              <path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"/>
+              <circle cx="20" cy="10" r="2"/>
+            </svg>
+          </div>
           <div>
             <div style="font-weight: 800; font-size: 13px;">Clínica Médica</div>
-            <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Demora: &lt; 24 hs (PPS)</div>
+            <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Demora: menos de 24 hs</div>
           </div>
           <span class="wf-badge wf-badge-dark" style="font-size: 9px;">Reservar</span>
         </a>
 
-        <!-- Tarjeta 2: Odontología -->
+        <!-- Tarjeta 2: Odontología (Ícono Diente) -->
         <a href="pantalla_2_cartilla.html?esp=odontologia" class="quick-card">
-          <div class="quick-icon-placeholder">[ODO]</div>
+          <div class="quick-icon-placeholder" aria-hidden="true">
+            <svg class="wf-svg-icon" viewBox="0 0 24 24">
+              <path d="M7 3C4.8 3 3.5 4.8 3.5 7.2c0 2.1.8 3.7 1.4 5.6.5 1.8.8 5.2 1.8 7.1.6 1.1 1.7 1.1 2.2-.2l1.6-4.2c.4-1 1.6-1 2 0l1.6 4.2c.5 1.3 1.6 1.3 2.2.2 1-1.9 1.3-5.3 1.8-7.1.6-1.9 1.4-3.5 1.4-5.6C20.5 4.8 19.2 3 17 3c-1.8 0-3.1.9-5 .9S8.8 3 7 3z"/>
+            </svg>
+          </div>
           <div>
             <div style="font-weight: 800; font-size: 13px;">Odontología</div>
-            <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Demora: &lt; 48 hs (PPS)</div>
+            <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Demora: menos de 48 hs</div>
           </div>
           <span class="wf-badge wf-badge-dark" style="font-size: 9px;">Reservar</span>
         </a>
 
-        <!-- Tarjeta 3: Oftalmología -->
+        <!-- Tarjeta 3: Oftalmología (Ícono Ojo) -->
         <a href="pantalla_2_cartilla.html?esp=oftalmologia" class="quick-card">
-          <div class="quick-icon-placeholder">[OFT]</div>
+          <div class="quick-icon-placeholder" aria-hidden="true">
+            <svg class="wf-svg-icon" viewBox="0 0 24 24">
+              <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </div>
           <div>
             <div style="font-weight: 800; font-size: 13px;">Oftalmología</div>
-            <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Demora: &lt; 48 hs (PPS)</div>
+            <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Demora: menos de 48 hs</div>
           </div>
           <span class="wf-badge wf-badge-dark" style="font-size: 9px;">Reservar</span>
         </a>
 
-        <!-- Tarjeta 4: Nutrición -->
+        <!-- Tarjeta 4: Nutrición (Ícono Manzana) -->
         <a href="pantalla_2_cartilla.html?esp=nutricion" class="quick-card">
-          <div class="quick-icon-placeholder">[NUT]</div>
+          <div class="quick-icon-placeholder" aria-hidden="true">
+            <svg class="wf-svg-icon" viewBox="0 0 24 24">
+              <path d="M12 6c-2-1.5-6-1-7.5 2.5C3 12 4.8 19 8.5 20.5c1.5.6 2.5 0 3.5 0s2 .6 3.5 0C19.2 19 21 12 19.5 8.5 18 5 14 4.5 12 6z"/>
+              <path d="M12 6c0-2.2 1.2-3.5 3-4"/>
+              <path d="M12 4.5c-1.5-.8-3-.3-3.5.5"/>
+            </svg>
+          </div>
           <div>
             <div style="font-weight: 800; font-size: 13px;">Nutrición</div>
-            <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Demora: &lt; 24 hs (PPS)</div>
+            <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Demora: menos de 24 hs</div>
           </div>
           <span class="wf-badge wf-badge-dark" style="font-size: 9px;">Reservar</span>
         </a>
 
-        <!-- Tarjeta 5: Kinesiología (En tablet span 2 columnas para simetría) -->
+        <!-- Tarjeta 5: Kinesiología (Ícono Hueso / Aparato Locomotor) -->
         <a href="pantalla_2_cartilla.html?esp=kinesiologia" class="quick-card">
-          <div class="quick-icon-placeholder">[KIN]</div>
+          <div class="quick-icon-placeholder" aria-hidden="true">
+            <svg class="wf-svg-icon" viewBox="0 0 24 24">
+              <path d="M17 10c.7-.7 1.69 0 2.5 0a2.5 2.5 0 1 0 0-5 .5.5 0 0 1-.5-.5 2.5 2.5 0 1 0-5 0c0 .81.7 1.8 0 2.5l-7 7c-.7.7-1.69 0-2.5 0a2.5 2.5 0 0 0 0 5c.28 0 .5.22.5.5a2.5 2.5 0 1 0 5 0c0-.81-.7-1.8 0-2.5Z"/>
+            </svg>
+          </div>
           <div>
             <div style="font-weight: 800; font-size: 13px;">Kinesiología</div>
-            <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Demora: &lt; 24 hs (PPS)</div>
+            <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Demora: menos de 24 hs</div>
           </div>
           <span class="wf-badge wf-badge-dark" style="font-size: 9px;">Reservar</span>
         </a>
@@ -358,51 +404,45 @@
 
   </main>
 
-  <!-- ==================== FOOTER INSTITUCIONAL (Correspondencia Mundo Real) ==================== -->
+  <!-- ==================== FOOTER INSTITUCIONAL (Enlace a PopApp de Ubicación) ==================== -->
   <footer class="wf-footer" data-heuristic="Correspondencia con el Mundo Real (H2)" data-gestalt="Figura y Fondo">
     <div class="container">
       <div class="grid-12" style="align-items: start;">
         
-        <!-- Columna 1: Mapa esquemático del Campus San Justo (5 cols) -->
-        <div class="col-5">
+        <!-- Columna 1: Link a PopApp de Ubicación (4 cols) -->
+        <div class="col-4">
           <div style="font-weight: 800; font-size: 12px; margin-bottom: 8px; text-transform: uppercase;">
-            [MAPA] Ubicación en el Campus San Justo
+            Ubicación Campus San Justo
           </div>
-          <div class="campus-map-schematic">
-            <div class="map-grid-preview">
-              <div class="map-box highlight">
-                Pabellón Ciencias de la Salud<br>(Consultorios Boxes 1 al 6)
-              </div>
-              <div class="map-box">
-                Biblioteca Marechal
-              </div>
-              <div class="map-box">
-                Patio de las Américas
-              </div>
-            </div>
-            <div style="display: flex; justify-content: space-between; font-size: 10px; color: var(--wf-gray-600);">
-              <span>Acceso peatonal: Florencio Varela 1903</span>
-              <span style="font-weight: bold;">Planta Baja</span>
-            </div>
-          </div>
+          <p style="font-size: 12px; color: var(--wf-gray-700); line-height: 1.5; margin-bottom: 10px;">
+            <strong>Pabellón Ciencias de la Salud (PB)</strong><br>
+            Florencio Varela 1903, San Justo — Boxes 1 al 6.
+          </p>
+          <button type="button" class="wf-btn wf-btn-secondary wf-btn-sm" onclick="abrirModalMapa()">
+            <svg class="wf-svg-icon-sm" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            Ver mapa del predio UNLaM
+          </button>
         </div>
 
         <!-- Columna 2: Horarios de Atención (4 cols) -->
         <div class="col-4">
           <div style="font-weight: 800; font-size: 12px; margin-bottom: 8px; text-transform: uppercase;">
-            [HORARIOS] Atención Primaria
+            Horarios de Atención Primaria
           </div>
           <p style="font-size: 12px; color: var(--wf-gray-700); line-height: 1.6;">
             <strong>Lunes a Viernes:</strong> 08:00 a 20:00 hs.<br>
-            <strong>Guardia de Primeros Auxilios:</strong> Lunes a Sábados 08:00 a 22:00 hs.<br>
-            <strong>Consultas de Práctica PPS:</strong> Turnos programados con intervalo de 30 minutos.
+            <strong>Guardia de Primeros Auxilios:</strong> Lun a Sáb 08:00 a 22:00 hs.<br>
+            <strong>Consultas PPS:</strong> Turnos programados cada 30 min.
           </p>
         </div>
 
-        <!-- Columna 3: Enlaces y FAQ (3 cols) -->
-        <div class="col-3">
+        <!-- Columna 3: Enlaces y FAQ (4 cols) -->
+        <div class="col-4">
           <div style="font-weight: 800; font-size: 12px; margin-bottom: 8px; text-transform: uppercase;">
-            [INFO] Enlaces y FAQ
+            Información y Ayuda
           </div>
           <ul style="list-style: none; font-size: 12px; line-height: 1.8;">
             <li><a href="pantalla_7_programa_pps.html" style="color: var(--wf-gray-800); text-decoration: underline;">Preguntas Frecuentes PPS</a></li>
@@ -419,6 +459,49 @@
     </div>
   </footer>
 
+  <!-- ==================== POPAPP MODAL DE UBICACIÓN EN CAMPUS SAN JUSTO ==================== -->
+  <div class="map-popup-modal" id="modalUbicacionCampus" role="dialog" aria-modal="true" aria-labelledby="tituloModalMapa">
+    <div class="wf-modal-card">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--wf-gray-300); padding-bottom: 10px;">
+        <div>
+          <span class="wf-badge wf-badge-dark" style="font-size: 9px; margin-bottom: 4px;">Plano Esquemático UNLaM</span>
+          <h3 id="tituloModalMapa" style="font-size: 16px; font-weight: 800; color: var(--wf-gray-900);">
+            Ubicación de Consultorios — Campus San Justo
+          </h3>
+        </div>
+        <button type="button" onclick="cerrarModalMapa()" aria-label="Cerrar mapa" style="background: none; border: none; font-size: 18px; font-weight: bold; cursor: pointer; color: var(--wf-gray-700);">✕</button>
+      </div>
+
+      <div class="campus-map-schematic">
+        <div class="map-grid-preview">
+          <div class="map-box highlight">
+            Pabellón Ciencias de la Salud<br>(Consultorios Boxes 1 al 6)
+          </div>
+          <div class="map-box">
+            Biblioteca Leopoldo Marechal
+          </div>
+          <div class="map-box">
+            Patio de las Américas
+          </div>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--wf-gray-700); padding-top: 4px;">
+          <span><strong>Acceso peatonal:</strong> Av. Pres. J. D. Perón / Florencio Varela 1903</span>
+          <span><strong>Planta Baja</strong></span>
+        </div>
+      </div>
+
+      <div style="font-size: 12px; color: var(--wf-gray-700); line-height: 1.5; margin-bottom: 16px;">
+        <strong>Indicaciones de llegada:</strong> Ingresando por la entrada principal de Florencio Varela 1903, avanzar por el corredor central pasando el Patio de las Américas hasta el ala de Ciencias de la Salud (recepción en Planta Baja).
+      </div>
+
+      <div style="display: flex; justify-content: flex-end;">
+        <button type="button" class="wf-btn wf-btn-primary wf-btn-sm" onclick="cerrarModalMapa()">
+          Entendido, cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script>
     const toggle = document.getElementById('menuToggle');
     const nav = document.getElementById('mainNav');
@@ -427,6 +510,21 @@
         nav.classList.toggle('mobile-open');
       });
     }
+
+    function abrirModalMapa() {
+      document.getElementById('modalUbicacionCampus').classList.add('active');
+    }
+
+    function cerrarModalMapa() {
+      document.getElementById('modalUbicacionCampus').classList.remove('active');
+    }
+
+    // Cerrar modal al hacer clic fuera del cuadro
+    document.getElementById('modalUbicacionCampus').addEventListener('click', (e) => {
+      if (e.target.id === 'modalUbicacionCampus') {
+        cerrarModalMapa();
+      }
+    });
   </script>
 </body>
 </html>

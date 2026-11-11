@@ -273,7 +273,7 @@
         3. Formulario
       </button>
       <button class="screen-tab-btn" onclick="loadScreen('pantalla_4_alerta.html', 4, this)">
-        4. Alerta / Error
+        4. Errores Inline
       </button>
       <button class="screen-tab-btn" onclick="loadScreen('pantalla_5_grafico.html', 5, this)">
         5. Gráfico y KPIs
@@ -380,30 +380,28 @@
   <script>
     const annotations = {
       1: `<strong>Pantalla 1: Home con Menú Visible (Panel Estudiante)</strong><br>
-          • <em>Gestalt aplicadas:</em> <strong>Región Común y Cerramiento</strong> en la tarjeta "Mi Próximo Turno"; <strong>Semejanza y Simetría (Prägnanz)</strong> en la fila de 5 especialidades; <strong>Proximidad</strong> en la franja de cursadas sincronizadas.<br>
-          • <em>Heurísticas Nielsen:</em> <strong>Visibilidad del Estado (H1)</strong> con el tag de conexión con SIU/MIeL; <strong>Consistencia (H4)</strong> en el header institucional y <strong>Prevención de Errores (H5)</strong> al transparentar las franjas bloqueadas.<br>
-          • <em>Modelo Miro, Leo, Pienso (Mordecki):</em> <em>Miro</em> (identificación rápida de box y fecha), <em>Leo</em> (detalle docente de PPS), <em>Pienso</em> (descarga de constancia o acceso a especialidades).`,
+          • <em>Simplificación (Corrección Docente):</em> Se quitó el bloque redundante de "Cursada Sincronizada", se simplificó la modalidad de atención y se trasladó el mapa del campus del footer a una ventana pop-up accesible por enlace.<br>
+          • <em>Modelo Miro, Leo, Pienso (Mordecki):</em> <em>Miro</em> (fecha y hora destacadas en bloque invertido de alto contraste <strong>Jue 14 Nov — 10:00 hs</strong> + íconos vectoriales representativos en especialidades), <em>Leo</em> (demoras expresadas en lenguaje claro: "menos de 24/48 hs"), <em>Pienso</em> (descarga de constancia o acceso a especialidades).<br>
+          • <em>Gestalt aplicadas:</em> <strong>Región Común y Cerramiento</strong> en "Próximo Turno Agendado"; <strong>Semejanza y Simetría (Prägnanz)</strong> en las 5 tarjetas de especialidades.`,
 
       2: `<strong>Pantalla 2: Cartilla y Filtro de Modalidad ("Filtrar Primero")</strong><br>
-          • <em>Corrección de Cátedra:</em> Barra superior para <strong>filtrar primero</strong> antes del listado (Heurística 7: Flexibilidad y Eficiencia).<br>
+          • <em>Correcciones de Cátedra:</em> El filtro de Modalidad ahora es un <code>&lt;select&gt;</code> con <strong>Práctica Clínica Supervisada (menos de 48 hs)</strong> por defecto; además, los consultorios no se despliegan todos juntos para evitar saturación visual, apareciendo recién tras elegir una especialidad.<br>
           • <em>Gestalt aplicadas:</em> <strong>Región Común</strong> delimitando la barra de filtros; <strong>Semejanza</strong> en las tarjetas modulares homogéneas de 3 a 4 líneas.<br>
-          • <em>Heurísticas:</em> <strong>Reconocimiento antes que Recuerdo (H6)</strong> con el switch de modalidad preseleccionado en "Práctica Supervisada (< 48 hs)"; <strong>Diseño Estético y Minimalista (H8)</strong> con módulos compactos y directos sin ruido visual.`,
+          • <em>Heurísticas:</em> <strong>Visibilidad del Estado (H1)</strong> con conteo dinámico de resultados y <strong>Diseño Minimalista (H8)</strong>.`,
 
-      3: `<strong>Pantalla 3: Formulario de Reserva y Consentimiento Digital</strong><br>
-          • <em>Gestalt aplicadas:</em> <strong>Buena Continuidad y Elemento Conectado</strong> en el stepper lineal (1. Especialidad → 2. Horario → 3. Confirmación); <strong>Contraste de Textura Rayada</strong> en los bloques no disponibles.<br>
-          • <em>Heurística 5 (Prevención Proactiva de Errores):</em> Bloqueo de los horarios solapados con cursada ("🔒 Cursando en UNLaM") imposibilitando el error antes de que ocurra.<br>
-          • <em>Corrección Docente:</em> <strong>Sin texto libre de síntomas</strong>; reemplazado por motivos estandarizados cerrados (Heurística 6).<br>
-          • <em>Consentimiento PPS:</em> Borde punteado (Región común destacada) con explicación pedagógica en 3 líneas y checkbox obligatorio.`,
+      3: `<strong>Pantalla 3: Formulario de Reserva (Divulgación Progresiva + Validación Inline)</strong><br>
+          • <em>Corrección Docente:</em> Se muestra solo lo necesario: primero los días con disponibilidad, al hacer clic se despliegan abajo los horarios libres para ese día. El <strong>Motivo de Consulta</strong> se simplificó a un único <code>&lt;select&gt;</code>.<br>
+          • <em>Validación sin Popups:</em> Los errores (falta de día/horario, falta de <strong>Consentimiento Digital Obligatorio</strong> o ayuno) se muestran de forma <strong>inline adyacentes a cada input</strong> (Sub-heurística 5.15 de Pierotti).<br>
+          • <em>Legibilidad:</em> Texto de Consentimiento Digital reescrito en 3 viñetas claras y directas.`,
 
-      4: `<strong>Pantalla 4: Alerta / Error (Validación de Reglas de Negocio)</strong><br>
-          • <em>Gestalt aplicadas:</em> <strong>Figura y Fondo</strong> mediante oscurecimiento y desenfoque del fondo al 50%, proyectando la ventana de error como figura nítida focal.<br>
-          • <em>Heurística 9 (Diagnóstico y Recuperación de Errores):</em> Mensajes precisos que identifican la causa exacta (materia detectada en Caso A / falta de consentimiento en Caso B) sin culpar al alumno.<br>
-          • <em>Heurística 3 (Control y Libertad):</em> Salidas claras duales ("Volver al formulario y corregir" vs. "Cambiar a profesional graduado").`,
+      4: `<strong>Pantalla 4: Validación de Reglas y Errores Inline (Sin Popups)</strong><br>
+          • <em>Corrección de Cátedra:</em> En reemplazo de ventanas modales emergentes (popups), esta vista documenta cómo los mensajes de error se presentan <strong>adyacentes al input afectado</strong> (Caso A: horario pendiente; Caso B: consentimiento y ayuno faltantes).<br>
+          • <em>Heurística 9 (Diagnóstico y Recuperación):</em> Mensajes precisos que indican exactamente qué campo corregir sin interrumpir el contexto del formulario.`,
 
-      5: `<strong>Pantalla 5: Gráfico Comparativo y Métricas (Visualización de Datos)</strong><br>
-          • <em>Variables Visuales de Bertin:</em> Mapeado bidimensional de <strong>Posición</strong> (categorías en Y, días en X), <strong>Longitud</strong> (magnitud del tiempo de espera) y <strong>Valor/Brillo</strong> (barra oscura PPS vs. barra clara graduado).<br>
-          • <em>Principio de Tufte (Data-Ink Ratio):</em> Gráfico de barras horizontales limpias con datos directos inscritos sobre la barra (1.2 d vs 8.5 d) y ahorro porcentual (-86%).<br>
-          • <em>Gestalt y KPIs:</em> <strong>Simetría y Región Común</strong> en las 3 tarjetas de impacto (1.420 turnos, 3.850 hs PPS, 94.8% asistencia).`,
+      5: `<strong>Pantalla 5: Gráficos Comparativos Verticales y KPIs</strong><br>
+          • <em>Corrección de Cátedra:</em> Gráficos de <strong>barras verticales</strong> con <strong>1 sola barra por especialidad</strong> (sin barras dobles apiladas que dificulten la lectura) y utilizando <strong>exclusivamente valores enteros</strong> (1 a 2 días en PPS vs. 9 a 14 días en Graduado; demanda mensual en turnos).<br>
+          • <em>Principio de Tufte (Small Multiples):</em> Dos gráficos paralelos bajo la misma escala uniforme (0 a 15 días) permiten comprender la ventaja temporal en 2 segundos.<br>
+          • <em>Gestalt y KPIs:</em> <strong>Simetría y Región Común</strong> en las 3 tarjetas de impacto (1.420 turnos, 3.850 hs PPS, 95% asistencia).`,
 
       6: `<strong>Pantalla 6: Mi Historial Médico y Constancias (Pantalla Complementaria — Cierre Arq. Nivel 2)</strong><br>
           • <em>Propósito:</em> Gestión personal del estudiante para consultar atenciones previas y <strong>descargar certificados oficiales en PDF</strong> con firma digital para presentar en trabajos o clases.<br>

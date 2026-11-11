@@ -3,21 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pantalla 4: Alerta / Error (Validación de Reglas) - Wireframe UNLaM Salud</title>
+  <title>Pantalla 4: Validación de Reglas y Errores Inline - Wireframe UNLaM Salud</title>
   <link rel="stylesheet" href="wireframe-system.css">
   <style>
-    /* Estilos específicos de Pantalla 4: Modal y Estados Críticos */
     .caso-switcher {
       display: flex;
-      justify-content: center;
       gap: 10px;
       margin-bottom: 20px;
-      z-index: 1050;
-      position: relative;
+      flex-wrap: wrap;
     }
 
     .caso-btn {
-      padding: 6px 14px;
+      padding: 8px 14px;
       border: 1px solid var(--wf-gray-800);
       background: var(--wf-surface);
       color: var(--wf-gray-800);
@@ -28,144 +25,174 @@
       user-select: none;
     }
     .caso-btn.active {
-      background: var(--wf-gray-800);
+      background: var(--wf-gray-900);
       color: var(--wf-white);
     }
 
-    /* Ícono geométrico de advertencia (Gestalt: Simetría y Pregnancia) */
-    .wf-alert-icon-wrapper {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      border: 3px solid var(--wf-gray-900);
-      background: var(--wf-gray-100);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 16px;
-      font-size: 26px;
-      font-weight: 900;
-      color: var(--wf-gray-900);
+    .days-demo-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 10px;
     }
-
-    /* Caja de detalle del conflicto (Heurística 9) */
-    .conflict-detail-box {
-      background: var(--wf-gray-100);
+    .day-demo-pill {
       border: 1px solid var(--wf-border-strong);
       border-radius: var(--radius-sm);
-      padding: 14px;
-      margin: 16px 0;
-      text-align: left;
+      padding: 10px 8px;
+      text-align: center;
       font-size: 12px;
+      font-weight: 700;
+      background: var(--wf-surface);
+    }
+
+    .checkbox-row-box {
+      padding: 10px 12px;
+      background: var(--wf-surface);
+      border: 1px solid var(--wf-border);
+      border-radius: var(--radius-sm);
+      margin-top: 10px;
+    }
+    .checkbox-row-box.field-invalid {
+      border: 2px solid var(--wf-gray-900);
+    }
+
+    @media (max-width: 600px) {
+      .days-demo-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
   </style>
 </head>
-<body style="min-height: 100vh; position: relative;">
+<body>
 
-  <!-- ==================== FONDO DETRÁS DEL MODAL (Gestalt: Fondo Atenuado) ==================== -->
-  <div style="filter: blur(2px); opacity: 0.4; pointer-events: none;" aria-hidden="true">
-    <header class="wf-header">
-      <div class="container wf-header-inner">
-        <div class="wf-logo">
+  <!-- ==================== HEADER ==================== -->
+  <header class="wf-header" data-heuristic="Consistencia y Estándares (H4)">
+    <div class="container wf-header-inner">
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <button class="wf-menu-toggle" id="menuToggle" aria-label="Abrir menú">☰</button>
+        <a href="pantalla_1_home.html" class="wf-logo">
           <div class="wf-logo-box">UNL</div>
-          <div><strong>UNLaM SALUD</strong></div>
-        </div>
-      </div>
-    </header>
-    <main class="container" style="max-width: 800px; padding-top: 20px;">
-      <div class="wf-card" style="height: 400px; padding: 20px;">
-        <div style="font-weight: bold; margin-bottom: 10px;">Formulario de Reserva</div>
-        <div style="height: 30px; background: #e2e8f0; margin-bottom: 10px;"></div>
-        <div style="height: 120px; background: #f1f5f9; margin-bottom: 10px;"></div>
-        <div style="height: 80px; background: #e2e8f0;"></div>
-      </div>
-    </main>
-  </div>
-
-  <!-- ==================== VENTANA MODAL (Gestalt: Figura Nítida / Heurística 9: Diagnóstico) ==================== -->
-  <div class="wf-modal-backdrop" data-gestalt="Figura y Fondo (Diferenciación Perceptual)" data-heuristic="Diagnóstico y Recuperación de Errores (H9)">
-    
-    <div style="display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 520px;">
-      
-      <!-- Alternador de casos para la defensa del TP -->
-      <div class="caso-switcher">
-        <button type="button" class="caso-btn active" id="btnCasoA" onclick="mostrarCaso('A')">
-          Ver Caso A (Incompatibilidad horaria)
-        </button>
-        <button type="button" class="caso-btn" id="btnCasoB" onclick="mostrarCaso('B')">
-          Ver Caso B (Requisitos / Consentimiento)
-        </button>
+          <div>
+            <div style="font-size: 13px; font-weight: 800; line-height: 1.1;">UNLaM SALUD</div>
+            <div style="font-size: 10px; color: var(--wf-gray-500); font-weight: 600;">Validación Inline</div>
+          </div>
+        </a>
       </div>
 
-      <!-- Contenedor del Modal -->
-      <div class="wf-modal-card" style="text-align: center;">
-        
-        <!-- Ícono geométrico de advertencia -->
-        <div class="wf-alert-icon-wrapper" aria-hidden="true">
-          !
-        </div>
+      <nav aria-label="Navegación principal">
+        <ul class="wf-nav" id="mainNav">
+          <li><a href="pantalla_1_home.html">Inicio</a></li>
+          <li><a href="pantalla_2_cartilla.html" class="active">Especialidades y Turnos</a></li>
+          <li><a href="pantalla_5_grafico.html">Estadísticas</a></li>
+          <li><a href="pantalla_6_historial.html">Mi Historial</a></li>
+          <li><a href="pantalla_7_programa_pps.html">Programa PPS</a></li>
+        </ul>
+      </nav>
 
-        <span class="wf-badge wf-badge-dark" style="margin-bottom: 8px;">Validación de Reglas de Negocio</span>
-        
-        <h2 style="font-size: 18px; font-weight: 800; margin-top: 4px; margin-bottom: 8px; color: var(--wf-gray-900);">
-          No se pudo completar la reserva
-        </h2>
-
-        <!-- ==================== CASO A: INCOMPATIBILIDAD HORARIA ==================== -->
-        <div id="contenidoCasoA">
-          <p style="font-size: 13px; color: var(--wf-gray-800); font-weight: 600;">
-            El horario seleccionado (Jueves 10:30 hs) se superpone con tu cursada activa en MIeL/Intraconsulta.
-          </p>
-
-          <div class="conflict-detail-box">
-            <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; margin-bottom: 6px;">
-              <span>[LOCKED] Materia en curso detectada:</span>
-            </div>
-            <div style="color: var(--wf-gray-800); line-height: 1.4;">
-              <strong>Visualización e Interfaces (Código 3810)</strong><br>
-              Día y horario: Jueves de 08:00 a 12:00 hs — Laboratorio 3.<br>
-              <em>Para preservar tu regularidad académica, la plataforma de salud bloquea turnos en horarios de clase.</em>
-            </div>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div class="wf-user-profile">
+          <div class="wf-avatar">TC</div>
+          <div>
+            <div style="font-weight: 700;">Tomás Canosa</div>
+            <div style="font-size: 10px; color: var(--wf-gray-500);">tcanosa@alumno.unlam.edu.ar</div>
           </div>
         </div>
-
-        <!-- ==================== CASO B: REQUISITOS / CONSENTIMIENTO ==================== -->
-        <div id="contenidoCasoB" style="display: none;">
-          <p style="font-size: 13px; color: var(--wf-gray-800); font-weight: 600;">
-            Para reservar en esta modalidad debés tildar la casilla de consentimiento informado y confirmar las 8 hs de ayuno previo.
-          </p>
-
-          <div class="conflict-detail-box">
-            <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; margin-bottom: 6px;">
-              <span>[!] Requisitos indispensables pendientes:</span>
-            </div>
-            <ul style="margin-left: 18px; line-height: 1.4; color: var(--wf-gray-800);">
-              <li><strong>Consentimiento Digital PPS:</strong> Excluyente para la intervención formativa de practicantes de salud supervisados.</li>
-              <li><strong>Protocolo de Ayuno:</strong> Requerido por la especialidad seleccionada para eventual toma de muestras clínicas.</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- ==================== ACCIONES DE RECUPERACIÓN (Sub-heurística 5.15 de Pierotti) ==================== -->
-        <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 20px;">
-          <a href="pantalla_3_formulario.html" id="btnVolverYCorregir" class="wf-btn wf-btn-primary" style="padding: 10px 16px;">
-            [↺] Volver al formulario y corregir
-          </a>
-
-          <a href="pantalla_2_cartilla.html?mod=graduado" class="wf-btn wf-btn-secondary" style="padding: 10px 16px;">
-            Cambiar a consultorio con profesional graduado →
-          </a>
-        </div>
-
-        <div style="margin-top: 14px; font-size: 11px; color: var(--wf-gray-500);">
-          Código de validación: <span style="font-family: monospace;">VAL-SCHED-409</span> • UNLaM DIIT Salud
-        </div>
-
       </div>
+    </div>
+  </header>
 
+  <!-- ==================== CONTENIDO PRINCIPAL ==================== -->
+  <main class="container" style="max-width: 820px;">
+
+    <div style="margin-bottom: 16px;">
+      <span class="wf-badge wf-badge-dark" style="margin-bottom: 6px;">Corrección Aplicada — Sin Popups Emergentes</span>
+      <h1 style="font-size: 20px; font-weight: 800; letter-spacing: -0.5px;">Validación Inline Adyacente al Input</h1>
+      <p style="font-size: 12px; color: var(--wf-gray-600);">
+        Siguiendo la devolución de la cátedra, se reemplazaron las ventanas emergentes (popups) por mensajes de error inline ubicados directamente debajo del campo afectado.
+      </p>
     </div>
 
-  </div>
+    <!-- Alternador de casos para demostración -->
+    <div class="caso-switcher" role="tablist">
+      <button type="button" class="caso-btn active" id="btnCasoA" onclick="mostrarCaso('A')">
+        Caso A: Error de Horario (Inline)
+      </button>
+      <button type="button" class="caso-btn" id="btnCasoB" onclick="mostrarCaso('B')">
+        Caso B: Consentimiento y Ayuno Faltantes (Inline)
+      </button>
+    </div>
+
+    <!-- ==================== CASO A: ERROR ADYACENTE AL SELECTOR DE HORARIO ==================== -->
+    <section id="contenidoCasoA" class="wf-card wf-section-error" data-gestalt="Región Común Focalizada" data-heuristic="Diagnóstico y Recuperación de Errores (H9)">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+        <div>
+          <h2 style="font-size: 15px; font-weight: 800;">1. Elegí Día y Horario Disponible</h2>
+          <p style="font-size: 12px; color: var(--wf-gray-600);">Días disponibles para Odontología Preventiva — Box 2</p>
+        </div>
+        <span class="wf-badge wf-badge-dark">Estado: Pendiente</span>
+      </div>
+
+      <div class="days-demo-grid">
+        <div class="day-demo-pill">Lun 11 Nov</div>
+        <div class="day-demo-pill">Mié 13 Nov</div>
+        <div class="day-demo-pill">Jue 14 Nov</div>
+        <div class="day-demo-pill">Vie 15 Nov</div>
+      </div>
+
+      <!-- Mensaje de error inline adyacente al input -->
+      <div class="wf-inline-error visible" role="alert">
+        <span>[!]</span>
+        <span>Horario requerido: seleccioná un día disponible y luego un horario libre antes de confirmar tu reserva.</span>
+      </div>
+    </section>
+
+    <!-- ==================== CASO B: ERROR ADYACENTE AL CONSENTIMIENTO Y AYUNO ==================== -->
+    <section id="contenidoCasoB" class="wf-consent-box has-error" style="display: none;" data-gestalt="Región Común Focalizada" data-heuristic="Sub-heurística 5.15 de Pierotti (Foco en Error)">
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap;">
+        <span class="wf-badge wf-badge-dark">Consentimiento Digital Obligatorio</span>
+        <span style="font-size: 12px; font-weight: 700; color: var(--wf-gray-900);">Práctica Clínica Supervisada (PPS)</span>
+      </div>
+
+      <div class="checkbox-row-box field-invalid">
+        <label style="display: flex; align-items: flex-start; gap: 10px; font-size: 12px; font-weight: 700;">
+          <input type="checkbox" disabled style="margin-top: 2px;">
+          <span>Acepto participar de la práctica clínica supervisada institucional (Obligatorio).</span>
+        </label>
+        <div class="wf-inline-error visible" role="alert">
+          <span>[!]</span>
+          <span>Falta aceptar el Consentimiento Digital Obligatorio para reservar en esta modalidad.</span>
+        </div>
+      </div>
+
+      <div class="checkbox-row-box field-invalid">
+        <label style="display: flex; align-items: flex-start; gap: 10px; font-size: 12px; color: var(--wf-gray-800);">
+          <input type="checkbox" disabled style="margin-top: 2px;">
+          <span>Confirmo contar con 8 horas de ayuno previo para Apto Físico / Laboratorio.</span>
+        </label>
+        <div class="wf-inline-error visible" role="alert">
+          <span>[!]</span>
+          <span>Requisito clínico pendiente: debés confirmar las 8 horas de ayuno previo.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Acciones de retorno al formulario en vivo -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px; flex-wrap: wrap; gap: 12px;">
+      <a href="pantalla_2_cartilla.html?mod=graduado" class="wf-btn wf-btn-secondary">
+        Cambiar a profesional graduado
+      </a>
+      <a href="pantalla_3_formulario.html?error=horario" id="btnProbarFormulario" class="wf-btn wf-btn-primary">
+        Probar este error en el Formulario interactivo →
+      </a>
+    </div>
+
+  </main>
+
+  <footer class="wf-footer">
+    <div class="container" style="text-align: center; font-size: 11px; color: var(--wf-gray-500);">
+      UNLaM - DIIT • Visualización e Interfaces • Prototipo de Wireframe: Pantalla 4 (Validación Inline sin Popups)
+    </div>
+  </footer>
 
   <script>
     function mostrarCaso(caso) {
@@ -173,30 +200,29 @@
       const btnB = document.getElementById('btnCasoB');
       const contA = document.getElementById('contenidoCasoA');
       const contB = document.getElementById('contenidoCasoB');
-      const btnVolver = document.getElementById('btnVolverYCorregir');
+      const btnProbar = document.getElementById('btnProbarFormulario');
 
       if (caso === 'A') {
         btnA.classList.add('active');
         btnB.classList.remove('active');
         contA.style.display = 'block';
         contB.style.display = 'none';
-        btnVolver.href = 'pantalla_3_formulario.html?error=solapamiento';
+        btnProbar.href = 'pantalla_3_formulario.html?error=horario';
       } else {
         btnB.classList.add('active');
         btnA.classList.remove('active');
         contA.style.display = 'none';
         contB.style.display = 'block';
-        // Sub-heurística 5.15 de Pierotti: envía parámetro para resaltar y hacer foco en el consentimiento
-        btnVolver.href = 'pantalla_3_formulario.html?error=consentimiento';
+        btnProbar.href = 'pantalla_3_formulario.html?error=consentimiento';
       }
     }
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const casoParam = urlParams.get('caso');
-    if (casoParam === 'B' || casoParam === 'b') {
-      mostrarCaso('B');
-    } else {
-      mostrarCaso('A');
+    const toggle = document.getElementById('menuToggle');
+    const nav = document.getElementById('mainNav');
+    if (toggle && nav) {
+      toggle.addEventListener('click', () => {
+        nav.classList.toggle('mobile-open');
+      });
     }
   </script>
 </body>
