@@ -9,15 +9,23 @@
       --ui-bg: #0f172a;
       --ui-bar: #1e293b;
       --ui-border: #334155;
-      --ui-accent: #38bdf8;
+      --ui-accent: #0f9977;
       --ui-text: #f8fafc;
       --ui-text-muted: #94a3b8;
+    }
+
+    @font-face {
+      font-family: "Open Sans";
+      src: url("assets/open-sans-regular.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background-color: var(--ui-bg);
       color: var(--ui-text);
       display: flex;
@@ -45,7 +53,7 @@
       gap: 12px;
     }
     .badge-tag {
-      background: #0284c7;
+      background: var(--ui-accent);
       color: white;
       font-size: 11px;
       font-weight: 700;
@@ -81,8 +89,8 @@
       background: rgba(255,255,255,0.06);
     }
     .screen-tab-btn.active {
-      background: #38bdf8;
-      color: #0f172a;
+      background: var(--ui-accent);
+      color: white;
       font-weight: 700;
     }
 
@@ -113,9 +121,9 @@
       border-color: var(--ui-accent);
     }
     .view-btn.active {
-      border-color: #38bdf8;
-      background: rgba(56, 189, 248, 0.15);
-      color: #38bdf8;
+      border-color: var(--ui-accent);
+      background: rgba(15, 153, 119, 0.15);
+      color: #5ee0b9;
       font-weight: 700;
     }
 
@@ -373,7 +381,7 @@
       <strong style="color: #38bdf8;">7 Pantallas Responsivas</strong> (5 de requerimiento mínimo de cátedra + 2 complementarias de cierre de arquitectura)
     </div>
     <div>
-      <span>Grilla: </span> 12 columnas desktop / 1 col mobile apilada • Escala de grises pura (Mordecki & Norman)
+      <span>Grilla: </span> 12 columnas desktop / 1 col mobile apilada • Diseño UI de Alta Fidelidad — Sistema Visual UNLaM Salud & PPS
     </div>
   </footer>
 
@@ -381,7 +389,7 @@
     const annotations = {
       1: `<strong>Pantalla 1: Home con Menú Visible (Panel Estudiante)</strong><br>
           • <em>Simplificación (Corrección Docente):</em> Se quitó el bloque redundante de "Cursada Sincronizada", se simplificó la modalidad de atención y se trasladó el mapa del campus del footer a una ventana pop-up accesible por enlace.<br>
-          • <em>Modelo Miro, Leo, Pienso (Mordecki):</em> <em>Miro</em> (fecha y hora destacadas en bloque invertido de alto contraste <strong>Jue 14 Nov — 10:00 hs</strong> + íconos vectoriales representativos en especialidades), <em>Leo</em> (demoras expresadas en lenguaje claro: "menos de 24/48 hs"), <em>Pienso</em> (descarga de constancia o acceso a especialidades).<br>
+          • <em>Modelo Miro, Leo, Pienso (Mordecki):</em> <em>Miro</em> (fecha y hora destacadas con contorno verde y sin relleno <strong>Jue 14 Nov — 10:00 hs</strong> + íconos vectoriales representativos en especialidades), <em>Leo</em> (demoras expresadas en lenguaje claro: "menos de 24/48 hs"), <em>Pienso</em> (descarga de constancia o acceso a especialidades).<br>
           • <em>Gestalt aplicadas:</em> <strong>Región Común y Cerramiento</strong> en "Próximo Turno Agendado"; <strong>Semejanza y Simetría (Prägnanz)</strong> en las 5 tarjetas de especialidades.`,
 
       2: `<strong>Pantalla 2: Cartilla y Filtro de Modalidad ("Filtrar Primero")</strong><br>

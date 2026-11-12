@@ -10,29 +10,33 @@
    ========================================================================== */
 
 :root {
-  /* Escala de Grises Estricta para Wireframes Académicos (Contraste WCAG AA/AAA) */
+  /* Paleta visual inspirada en Intraconsulta UNLaM */
   --wf-white: #ffffff;
-  --wf-gray-50: #f8fafc;
-  --wf-gray-100: #f1f5f9;
-  --wf-gray-200: #e2e8f0;
-  --wf-gray-300: #cbd5e1;
-  --wf-gray-400: #94a3b8;
-  --wf-gray-500: #64748b;
-  --wf-gray-600: #475569;
-  --wf-gray-700: #334155;
-  --wf-gray-800: #1e293b;
-  --wf-gray-900: #0f172a;
+  --wf-gray-50: #f8f9fa;
+  --wf-gray-100: #f8f9fa;
+  --wf-gray-200: #e9ecef;
+  --wf-gray-300: #dee2e6;
+  --wf-gray-400: #ced4da;
+  --wf-gray-500: #adb5bd;
+  --wf-gray-600: #6c757d;
+  --wf-gray-700: #495057;
+  --wf-gray-800: #343a40;
+  --wf-gray-900: #212529;
   
   /* Semántica de Interfaz y Tokens */
-  --wf-bg: #f8fafc;
+  --wf-bg: #f4f6f9;
   --wf-surface: #ffffff;
-  --wf-border: #cbd5e1;
-  --wf-border-strong: #475569;
-  --wf-text-main: #0f172a;
-  --wf-text-muted: #475569;
-  --wf-primary: #1e293b;
-  --wf-primary-hover: #0f172a;
-  --wf-focus-ring: #0284c7;
+  --wf-border: #dee2e6;
+  --wf-border-strong: #cbd5e1;
+  --wf-divider: #dee2e6;
+  --wf-text-main: #212529;
+  --wf-text-muted: #6c757d;
+  --wf-primary: #0f9977;
+  --wf-primary-hover: #0c7a61;
+  --wf-primary-soft: #e6f5f0;
+  --wf-danger: #dc3545;
+  --wf-danger-bg: #fef2f2;
+  --wf-focus-ring: #0f9977;
   
   /* Sistema de Espaciado Modular en Base 8px */
   --space-1: 4px;
@@ -44,13 +48,24 @@
   --space-7: 48px;
 
   /* Tipografía y Escala Modular */
-  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 10px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
   --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08);
   --shadow-lg: 0 12px 24px -4px rgba(0,0,0,0.15);
+  --shadow-accent-sm: 0 1px 3px rgba(15, 153, 119, 0.16);
+  --shadow-accent-md: 0 4px 8px -1px rgba(15, 153, 119, 0.18);
+  --shadow-accent-lg: 0 12px 24px -4px rgba(15, 153, 119, 0.2);
+}
+
+@font-face {
+  font-family: "Open Sans";
+  src: url("assets/open-sans-regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
 }
 
 /* Reset y base */
@@ -61,17 +76,46 @@
 }
 
 body {
-  font-family: var(--font-family);
+  font-family: var(--font-family), sans-serif;
   background-color: var(--wf-bg);
   color: var(--wf-text-main);
   line-height: 1.5;
-  font-size: 14px;
+  font-size: 16px;
   -webkit-font-smoothing: antialiased;
 }
 
+a {
+  color: var(--wf-primary);
+}
+
+a:hover {
+  color: var(--wf-primary-hover);
+}
+
+input[type="checkbox"], input[type="radio"] {
+  accent-color: var(--wf-primary);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--wf-text-main);
+}
+
+h2, .h2 {
+  font-size: calc(1.325rem + 0.9vw);
+}
+
+@media (min-width: 1200px) {
+  h2, .h2 {
+    font-size: 2rem;
+  }
+}
+
 /* ==========================================================================
-   MODELO MORDECKI / DON NORMAN: PUREZA MONOCROMÁTICA EN WIREFRAMES
-   Filtra emojis de sistema (Windows, macOS, iOS, Android) para forzar escala de grises
+   MODELO MORDECKI / DON NORMAN: ICONOGRAFÍA Y SIGNIFIERS EN ALTA FIDELIDAD
    ========================================================================== */
 .wf-mono-icon, 
 .quick-icon-placeholder, 
@@ -79,7 +123,6 @@ body {
 .status-dot,
 [role="img"],
 .emoji-icon {
-  filter: grayscale(100%) contrast(130%);
   display: inline-block;
   vertical-align: middle;
 }
@@ -93,9 +136,28 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 /* Grilla de 12 Columnas Responsiva */
 .container {
   width: 100%;
-  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 0 12px;
+}
+
+@media (min-width: 576px) {
+  .container { max-width: 540px; }
+}
+
+@media (min-width: 768px) {
+  .container { max-width: 720px; }
+}
+
+@media (min-width: 992px) {
+  .container { max-width: 960px; }
+}
+
+@media (min-width: 1200px) {
+  .container { max-width: 1140px; }
+}
+
+@media (min-width: 1400px) {
+  .container { max-width: 1320px; }
 }
 
 .grid-12 {
@@ -123,10 +185,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
    ========================================================================== */
 .wf-card {
   background: var(--wf-surface);
-  border: 1px solid var(--wf-border);
+  border: 1px solid var(--wf-border-strong);
   border-radius: var(--radius-md);
   padding: var(--space-4);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
   position: relative;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
@@ -135,8 +197,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   cursor: pointer;
 }
 .wf-card-interactive:hover {
-  border-color: var(--wf-border-strong);
-  box-shadow: var(--shadow-md);
+  border-color: var(--wf-primary);
+  box-shadow: var(--shadow-accent-md);
 }
 
 /* ==========================================================================
@@ -181,7 +243,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 }
 .wf-btn-secondary:hover {
   background-color: var(--wf-gray-100);
-  border-color: var(--wf-gray-800);
+  border-color: var(--wf-primary);
+  color: var(--wf-primary-hover);
 }
 
 /* Signifier: Botón de Cátedra / Debug (Diferenciado por Proximidad Gestalt) */
@@ -222,15 +285,21 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 }
 
 .wf-badge-dark {
-  background: var(--wf-gray-800);
-  color: var(--wf-white);
-  border-color: var(--wf-gray-800);
+  background: var(--wf-primary-soft);
+  color: var(--wf-primary-hover);
+  border-color: var(--wf-primary);
 }
 
 .wf-badge-outline {
   background: transparent;
   border: 1px dashed var(--wf-border-strong);
   color: var(--wf-gray-700);
+}
+
+.wf-badge-outline-green {
+  background: transparent;
+  border-color: var(--wf-primary);
+  color: var(--wf-primary);
 }
 
 /* ==========================================================================
@@ -263,8 +332,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 }
 
 .wf-select:focus, .wf-input:focus {
-  outline: 2px solid var(--wf-gray-900);
-  border-color: var(--wf-gray-900);
+  outline: 2px solid var(--wf-focus-ring);
+  border-color: var(--wf-focus-ring);
 }
 
 /* Toggle Switch de Modalidad con Signifiers Claros */
@@ -304,9 +373,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 /* Resaltado de Campo con Error (Sub-heurística 5.15 de Pierotti / Validación Inline) */
 .wf-consent-box.has-error,
 .wf-section-error {
-  border: 2px solid var(--wf-gray-900) !important;
-  background-color: var(--wf-gray-100) !important;
-  box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.14);
+  border: 2px solid var(--wf-danger) !important;
+  background-color: var(--wf-danger-bg) !important;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
 }
 
 /* Mensaje de error adyacente al input (Inline Validation - Feedback de Cátedra) */
@@ -314,8 +383,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   display: none;
   margin-top: 8px;
   padding: 8px 12px;
-  background-color: var(--wf-gray-900);
-  color: var(--wf-white);
+  background-color: var(--wf-danger-bg);
+  color: #991b1b;
+  border: 1px solid #f87171;
   border-radius: var(--radius-sm);
   font-size: 12px;
   font-weight: 600;
@@ -327,11 +397,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   display: flex;
 }
 
-/* Íconos vectoriales SVG monocromáticos (Modelo Mordecki - Pureza Escala de Grises) */
+/* Íconos vectoriales SVG institucionales */
 .wf-svg-icon {
   width: 24px;
   height: 24px;
-  stroke: var(--wf-gray-900);
+  stroke: currentColor;
   fill: none;
   stroke-width: 1.8;
   stroke-linecap: round;
@@ -366,12 +436,12 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 
 .wf-modal-card {
   background: var(--wf-surface);
-  border: 2px solid var(--wf-gray-900);
+  border: 1px solid var(--wf-primary);
   border-radius: var(--radius-lg);
   max-width: 520px;
   width: 100%;
   padding: 24px;
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-accent-lg);
   animation: wfModalFade 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -385,9 +455,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
    ========================================================================== */
 .wf-header {
   background: var(--wf-surface);
-  border-bottom: 2px solid var(--wf-gray-800);
+  border-bottom: 1px solid var(--wf-divider);
   padding: 12px 0;
   margin-bottom: var(--space-5);
+  box-shadow: var(--shadow-sm);
 }
 
 .wf-header-inner {
@@ -408,11 +479,19 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   color: var(--wf-gray-900);
 }
 
+.wf-logo-image {
+  display: block;
+  width: 110px;
+  height: auto;
+  flex-shrink: 0;
+}
+
 .wf-logo-box {
   width: 34px;
   height: 34px;
-  background: var(--wf-gray-800);
-  color: var(--wf-white);
+  background: transparent;
+  border: 1px solid var(--wf-primary);
+  color: var(--wf-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -440,8 +519,19 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 }
 
 .wf-nav a:hover, .wf-nav a.active {
-  color: var(--wf-gray-900);
-  border-bottom-color: var(--wf-gray-900);
+  color: var(--wf-primary);
+  border-bottom-color: var(--wf-primary);
+}
+
+.wf-nav a.active {
+  color: var(--wf-white);
+  background: var(--wf-primary);
+  border-radius: var(--radius-sm);
+}
+
+.wf-nav a.active:hover {
+  color: var(--wf-white);
+  background: var(--wf-primary-hover);
 }
 
 .wf-user-profile {
@@ -484,7 +574,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .wf-footer {
   margin-top: var(--space-7);
   background: var(--wf-gray-100);
-  border-top: 1px solid var(--wf-border-strong);
+  border-top: 1px solid var(--wf-divider);
   padding: 32px 0 20px;
 }
 
@@ -494,11 +584,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .mobile-quick-cta-banner {
   display: none;
   background: var(--wf-surface);
-  border: 2px solid var(--wf-gray-900);
+  border: 2px solid var(--wf-primary);
   border-radius: var(--radius-md);
   padding: 14px;
   margin-bottom: 18px;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-accent-sm);
 }
 
 /* ==========================================================================
@@ -590,7 +680,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
     left: 0;
     right: 0;
     background: var(--wf-surface);
-    border-bottom: 2px solid var(--wf-gray-800);
+    border-bottom: 1px solid var(--wf-border);
     padding: 16px;
     z-index: 100;
     box-shadow: var(--shadow-md);
