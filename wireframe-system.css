@@ -226,8 +226,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   color: var(--wf-white);
   border-color: var(--wf-primary);
 }
-.wf-btn-primary:hover {
+.wf-btn-primary:hover,
+a.wf-btn-primary:hover {
   background-color: var(--wf-primary-hover);
+  color: var(--wf-white) !important;
   transform: translateY(-1px);
   box-shadow: var(--shadow-sm);
 }
