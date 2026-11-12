@@ -166,18 +166,20 @@
       transition: border-color 0.15s ease;
     }
     .checkbox-row-box.field-invalid {
-      border: 2px solid var(--wf-gray-900);
+      border: 2px solid var(--wf-danger);
+      background-color: #fff5f5;
     }
 
     /* Tarjeta de Confirmación Exitosa Inline */
     .success-summary-card {
       display: none;
       background: var(--wf-surface);
-      border: 2px solid var(--wf-gray-900);
+      border: 2px solid var(--wf-primary);
       border-radius: var(--radius-md);
       padding: 28px;
       text-align: center;
       margin-bottom: var(--space-6);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
     }
     .success-summary-card.visible {
       display: block;
@@ -269,7 +271,7 @@
 
     <!-- ==================== CONFIRMACIÓN EXITOSA INLINE ==================== -->
     <section id="confirmacionExitosa" class="success-summary-card">
-      <div style="width: 48px; height: 48px; border-radius: 50%; background: transparent; border: 1px solid var(--wf-primary); color: var(--wf-primary); display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; margin: 0 auto 14px;">
+      <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--wf-primary-soft); border: 2px solid var(--wf-primary); color: var(--wf-primary); display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; margin: 0 auto 14px;">
         ✓
       </div>
       <span class="wf-badge wf-badge-dark" style="margin-bottom: 8px;">Reserva Registrada</span>
@@ -333,7 +335,11 @@
 
         <!-- Mensaje de error INLINE adyacente al selector de horario -->
         <div class="wf-inline-error" id="errorHorario" role="alert">
-          <span>[!]</span>
+          <svg class="wf-svg-icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="color: #dc2626;">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
           <span>Falta elegir fecha y horario: seleccioná un día disponible y luego uno de los horarios desplegados.</span>
         </div>
       </section>
@@ -375,7 +381,11 @@
             <span>Acepto participar de la práctica clínica supervisada institucional (Obligatorio).</span>
           </label>
           <div class="wf-inline-error" id="errorConsentimiento" role="alert">
-            <span>[!]</span>
+            <svg class="wf-svg-icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="color: #dc2626;">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
             <span>Debés aceptar el Consentimiento Digital Obligatorio para poder confirmar el turno.</span>
           </div>
         </div>
@@ -387,7 +397,11 @@
             <span>Confirmo contar con 8 horas de ayuno previo (obligatorio únicamente si solicitás Apto Físico o análisis).</span>
           </label>
           <div class="wf-inline-error" id="errorAyuno" role="alert">
-            <span>[!]</span>
+            <svg class="wf-svg-icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="color: #dc2626;">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
             <span>Como seleccionaste "Apto físico", debés confirmar que asistirás con 8 horas de ayuno previo.</span>
           </div>
         </div>

@@ -24,16 +24,18 @@
   --wf-gray-900: #212529;
   
   /* Semántica de Interfaz y Tokens */
-  --wf-bg: #ffffff;
+  --wf-bg: #f4f6f9;
   --wf-surface: #ffffff;
   --wf-border: #dee2e6;
-  --wf-border-strong: #ced4da;
+  --wf-border-strong: #cbd5e1;
   --wf-divider: #dee2e6;
   --wf-text-main: #212529;
   --wf-text-muted: #6c757d;
   --wf-primary: #0f9977;
   --wf-primary-hover: #0c7a61;
+  --wf-primary-soft: #e6f5f0;
   --wf-danger: #dc3545;
+  --wf-danger-bg: #fef2f2;
   --wf-focus-ring: #0f9977;
   
   /* Sistema de Espaciado Modular en Base 8px */
@@ -113,8 +115,7 @@ h2, .h2 {
 }
 
 /* ==========================================================================
-   MODELO MORDECKI / DON NORMAN: PUREZA MONOCROMÁTICA EN WIREFRAMES
-   Filtra emojis de sistema (Windows, macOS, iOS, Android) para forzar escala de grises
+   MODELO MORDECKI / DON NORMAN: ICONOGRAFÍA Y SIGNIFIERS EN ALTA FIDELIDAD
    ========================================================================== */
 .wf-mono-icon, 
 .quick-icon-placeholder, 
@@ -122,7 +123,6 @@ h2, .h2 {
 .status-dot,
 [role="img"],
 .emoji-icon {
-  filter: grayscale(100%) contrast(130%);
   display: inline-block;
   vertical-align: middle;
 }
@@ -185,10 +185,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
    ========================================================================== */
 .wf-card {
   background: var(--wf-surface);
-  border: 1px solid var(--wf-primary);
+  border: 1px solid var(--wf-border-strong);
   border-radius: var(--radius-md);
   padding: var(--space-4);
-  box-shadow: var(--shadow-accent-sm);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
   position: relative;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
@@ -197,7 +197,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   cursor: pointer;
 }
 .wf-card-interactive:hover {
-  border-color: var(--wf-primary-hover);
+  border-color: var(--wf-primary);
   box-shadow: var(--shadow-accent-md);
 }
 
@@ -285,8 +285,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 }
 
 .wf-badge-dark {
-  background: transparent;
-  color: var(--wf-primary);
+  background: var(--wf-primary-soft);
+  color: var(--wf-primary-hover);
   border-color: var(--wf-primary);
 }
 
@@ -373,9 +373,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 /* Resaltado de Campo con Error (Sub-heurística 5.15 de Pierotti / Validación Inline) */
 .wf-consent-box.has-error,
 .wf-section-error {
-  border: 2px solid var(--wf-gray-900) !important;
-  background-color: var(--wf-gray-100) !important;
-  box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.14);
+  border: 2px solid var(--wf-danger) !important;
+  background-color: var(--wf-danger-bg) !important;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
 }
 
 /* Mensaje de error adyacente al input (Inline Validation - Feedback de Cátedra) */
@@ -383,9 +383,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   display: none;
   margin-top: 8px;
   padding: 8px 12px;
-  background-color: transparent;
-  color: var(--wf-danger);
-  border: 1px solid var(--wf-danger);
+  background-color: var(--wf-danger-bg);
+  color: #991b1b;
+  border: 1px solid #f87171;
   border-radius: var(--radius-sm);
   font-size: 12px;
   font-weight: 600;
@@ -397,11 +397,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   display: flex;
 }
 
-/* Íconos vectoriales SVG monocromáticos (Modelo Mordecki - Pureza Escala de Grises) */
+/* Íconos vectoriales SVG institucionales */
 .wf-svg-icon {
   width: 24px;
   height: 24px;
-  stroke: var(--wf-gray-900);
+  stroke: currentColor;
   fill: none;
   stroke-width: 1.8;
   stroke-linecap: round;

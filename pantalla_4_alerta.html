@@ -54,7 +54,8 @@
       margin-top: 10px;
     }
     .checkbox-row-box.field-invalid {
-      border: 2px solid var(--wf-gray-900);
+      border: 2px solid var(--wf-danger);
+      background-color: #fff5f5;
     }
 
     @media (max-width: 600px) {
@@ -142,7 +143,11 @@
 
       <!-- Mensaje de error inline adyacente al input -->
       <div class="wf-inline-error visible" role="alert">
-        <span>[!]</span>
+        <svg class="wf-svg-icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="color: #dc2626;">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
         <span>Horario requerido: seleccioná un día disponible y luego un horario libre antes de confirmar tu reserva.</span>
       </div>
     </section>
@@ -160,7 +165,11 @@
           <span>Acepto participar de la práctica clínica supervisada institucional (Obligatorio).</span>
         </label>
         <div class="wf-inline-error visible" role="alert">
-          <span>[!]</span>
+          <svg class="wf-svg-icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="color: #dc2626;">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
           <span>Falta aceptar el Consentimiento Digital Obligatorio para reservar en esta modalidad.</span>
         </div>
       </div>
@@ -171,7 +180,11 @@
           <span>Confirmo contar con 8 horas de ayuno previo para Apto Físico / Laboratorio.</span>
         </label>
         <div class="wf-inline-error visible" role="alert">
-          <span>[!]</span>
+          <svg class="wf-svg-icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="color: #dc2626;">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
           <span>Requisito clínico pendiente: debés confirmar las 8 horas de ayuno previo.</span>
         </div>
       </div>

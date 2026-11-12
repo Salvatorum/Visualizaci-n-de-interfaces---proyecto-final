@@ -9,10 +9,11 @@
     /* Estilos específicos de Programa PPS */
     .hero-pps {
       background: var(--wf-surface);
-      border: 1px solid var(--wf-primary);
+      border: 1px solid var(--wf-border-strong);
       border-radius: var(--radius-md);
       padding: 24px;
       margin-bottom: var(--space-5);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
     }
 
     /* Diagrama de Triangulación Pedagógica (Gestalt: Conectividad) */
@@ -25,19 +26,20 @@
     }
     .dual-care-card {
       background: var(--wf-gray-50);
-      border: 1px solid var(--wf-primary);
+      border: 1px solid var(--wf-border-strong);
       border-radius: var(--radius-sm);
       padding: 16px 12px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 8px;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
     }
     .dual-care-icon {
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background: transparent;
+      background: var(--wf-primary-soft);
       border: 1px solid var(--wf-primary);
       color: var(--wf-primary);
       display: flex;
@@ -54,9 +56,10 @@
       margin-top: 12px;
       font-size: 12px;
       background: var(--wf-surface);
-      border: 1px solid var(--wf-primary);
+      border: 1px solid var(--wf-border-strong);
       border-radius: var(--radius-md);
       overflow: hidden;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
     }
     .hours-table th {
       background: var(--wf-gray-100);
@@ -72,11 +75,16 @@
 
     /* Acordeón de FAQ */
     .faq-item {
-      border: 1px solid var(--wf-primary);
+      border: 1px solid var(--wf-border-strong);
       border-radius: var(--radius-sm);
       background: var(--wf-surface);
       margin-bottom: 10px;
       overflow: hidden;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
+      transition: border-color 0.15s ease;
+    }
+    .faq-item.open {
+      border-color: var(--wf-primary);
     }
     .faq-question {
       padding: 14px 16px;
