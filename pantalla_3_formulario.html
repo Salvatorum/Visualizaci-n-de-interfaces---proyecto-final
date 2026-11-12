@@ -290,7 +290,7 @@
         <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
           <div>
             <h2 style="font-size: 15px; font-weight: 800;">1. Elegí Día y Horario Disponible</h2>
-            <p style="font-size: 12px; color: var(--wf-gray-600);">Se muestran únicamente los días con turnos libres. Seleccioná un día para ver sus horarios.</p>
+            <p style="font-size: 12px; color: var(--wf-gray-600);">Preseleccionamos el próximo turno libre del consultorio elegido. Si lo necesitás, podés cambiar de día u horario haciendo clic abajo.</p>
           </div>
           <div style="font-size: 11px; font-weight: 700; color: var(--wf-gray-700);">
             Seleccionado: <span id="slotElegidoTexto" class="wf-badge wf-badge-outline-green" style="text-transform: none; letter-spacing: 0;">Pendiente</span>
@@ -435,6 +435,8 @@
     const espParam = urlParams.get('esp');
     const boxParam = urlParams.get('box');
     const modParam = urlParams.get('mod');
+    const diaParam = urlParams.get('dia');
+    const horaParam = urlParams.get('hora');
     const errorParam = urlParams.get('error');
 
     const catalogoNombres = {
@@ -485,6 +487,12 @@
     }
 
     function seleccionarHora(btn, hora) {
+      if (btn.classList.contains('selected')) {
+        btn.classList.remove('selected');
+        horaSeleccionada = null;
+        document.getElementById('slotElegidoTexto').textContent = `${diaSeleccionado} (elegí horario)`;
+        return;
+      }
       document.querySelectorAll('.time-slot-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       horaSeleccionada = hora;
@@ -568,6 +576,36 @@
       `;
       document.getElementById('confirmacionExitosa').classList.add('visible');
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Preselección inteligente de día y horario (Heurísticas 6 y 7), salvo demostración de error de horario
+    function preseleccionarTurno(diaTarget, horaTarget) {
+      const dayBtns = document.querySelectorAll('.day-card-btn');
+      let matchedDayBtn = null;
+      dayBtns.forEach(btn => {
+        const nameEl = btn.querySelector('.day-card-name');
+        if (nameEl && nameEl.textContent.trim() === diaTarget) {
+          matchedDayBtn = btn;
+        }
+      });
+      if (!matchedDayBtn) return;
+
+      matchedDayBtn.click();
+
+      if (horaTarget) {
+        const timeBtns = document.querySelectorAll('#gridBotonesHorarios .time-slot-btn');
+        timeBtns.forEach(tb => {
+          if (tb.textContent.trim() === horaTarget) {
+            seleccionarHora(tb, horaTarget);
+          }
+        });
+      }
+    }
+
+    if (errorParam !== 'horario') {
+      const diaInicial = diaParam || 'Jue 14 Nov';
+      const horaInicial = horaParam || (diaParam ? null : '14:00 hs');
+      preseleccionarTurno(diaInicial, horaInicial);
     }
 
     // Mostrar estado inline pre-activado si llega por URL de demostración (?error=...)
