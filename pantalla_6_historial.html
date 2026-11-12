@@ -9,7 +9,7 @@
     /* Estilos específicos de Historial */
     .profile-summary-card {
       background: var(--wf-surface);
-      border: 1px solid var(--wf-border-strong);
+      border: 1px solid var(--wf-primary);
       border-radius: var(--radius-md);
       padding: var(--space-4);
       margin-bottom: var(--space-5);
@@ -26,20 +26,20 @@
       margin-top: 14px;
       font-size: 12px;
       background: var(--wf-surface);
-      border: 1px solid var(--wf-border-strong);
+      border: 1px solid var(--wf-primary);
       border-radius: var(--radius-md);
       overflow: hidden;
     }
     .history-table th {
       background: var(--wf-gray-100);
-      border-bottom: 2px solid var(--wf-gray-800);
+      border-bottom: 2px solid var(--wf-divider);
       padding: 12px 14px;
       text-align: left;
       font-weight: 700;
       color: var(--wf-gray-900);
     }
     .history-table td {
-      border-bottom: 1px solid var(--wf-gray-200);
+      border-bottom: 1px solid var(--wf-divider);
       padding: 12px 14px;
       vertical-align: middle;
     }
@@ -64,12 +64,12 @@
     }
     .cert-paper {
       background: white;
-      border: 2px solid var(--wf-gray-900);
+      border: 1px solid var(--wf-primary);
       border-radius: var(--radius-md);
       padding: 28px;
       max-width: 540px;
       width: 100%;
-      box-shadow: var(--shadow-lg);
+      box-shadow: var(--shadow-accent-lg);
       font-size: 12px;
       position: relative;
     }
@@ -84,7 +84,7 @@
       }
       .history-table tr {
         margin-bottom: 14px;
-        border: 1px solid var(--wf-border-strong);
+        border: 1px solid var(--wf-primary);
         border-radius: var(--radius-sm);
         padding: 10px;
       }
@@ -103,7 +103,7 @@
       <div style="display: flex; align-items: center; gap: 14px;">
         <button class="wf-menu-toggle" id="menuToggle" aria-label="Abrir menú">☰</button>
         <a href="pantalla_1_home.html" class="wf-logo">
-          <div class="wf-logo-box">UNL</div>
+          <img class="wf-logo-image" src="assets/logo-unlam-negro-300x68.png" alt="Universidad Nacional de La Matanza">
           <div>
             <div style="font-size: 13px; font-weight: 800; line-height: 1.1;">UNLaM SALUD</div>
             <div style="font-size: 10px; color: var(--wf-gray-500); font-weight: 600;">Mi Historial de Atenciones</div>
@@ -150,7 +150,7 @@
     <!-- ==================== FICHA RESUMEN DEL ESTUDIANTE ==================== -->
     <section class="profile-summary-card" data-gestalt="Región Común y Cerramiento">
       <div style="display: flex; align-items: center; gap: 14px;">
-        <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--wf-gray-800); color: white; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 900;">
+        <div style="width: 48px; height: 48px; border-radius: 50%; background: transparent; border: 1px solid var(--wf-primary); color: var(--wf-primary); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 900;">
           TC
         </div>
         <div>
@@ -282,7 +282,7 @@
   <div class="modal-cert" id="modalCertificado">
     <div class="cert-paper">
       
-      <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid var(--wf-gray-800); padding-bottom: 12px; margin-bottom: 16px;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid var(--wf-divider); padding-bottom: 12px; margin-bottom: 16px;">
         <div style="display: flex; align-items: center; gap: 8px;">
           <div class="wf-logo-box" style="width: 28px; height: 28px; font-size: 11px;">UNL</div>
           <div>

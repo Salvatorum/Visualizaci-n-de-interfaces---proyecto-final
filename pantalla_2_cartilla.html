@@ -9,11 +9,11 @@
     /* Barra de filtros superior ("Filtrar primero" - Heurística 7) */
     .filter-bar-container {
       background: var(--wf-surface);
-      border: 1px solid var(--wf-border-strong);
+      border: 1px solid var(--wf-primary);
       border-radius: var(--radius-md);
       padding: var(--space-4);
       margin-bottom: var(--space-5);
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--shadow-accent-sm);
     }
 
     .filter-grid {
@@ -51,9 +51,9 @@
       transition: all 0.15s ease;
     }
     .pill-filter-btn:hover {
-      background: var(--wf-gray-900);
-      color: var(--wf-white);
-      border-color: var(--wf-gray-900);
+      background: transparent;
+      color: var(--wf-primary);
+      border-color: var(--wf-primary);
     }
 
     /* Grilla de resultados modular (Gestalt: Semejanza) */
@@ -67,7 +67,7 @@
     /* Tarjeta modular de 3-4 líneas exactas (Modelo Miro, Leo, Pienso) */
     .consultorio-card {
       background: var(--wf-surface);
-      border: 1px solid var(--wf-border-strong);
+      border: 1px solid var(--wf-primary);
       border-radius: var(--radius-md);
       padding: 16px;
       display: flex;
@@ -78,7 +78,7 @@
     }
     .consultorio-card:hover {
       transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
+      box-shadow: var(--shadow-accent-md);
     }
 
     /* Línea 1: Título y ubicación (Miro) */
@@ -102,7 +102,7 @@
     /* Línea 2: Etiqueta distintiva de modalidad (Leo) */
     .card-line-2 {
       background: var(--wf-gray-100);
-      border-left: 3px solid var(--wf-gray-800);
+      border-left: 3px solid var(--wf-primary);
       padding: 6px 8px;
       border-radius: 2px;
       font-size: 11px;
@@ -150,7 +150,7 @@
       <div style="display: flex; align-items: center; gap: 14px;">
         <button class="wf-menu-toggle" id="menuToggle" aria-label="Abrir menú">☰</button>
         <a href="pantalla_1_home.html" class="wf-logo">
-          <div class="wf-logo-box">UNL</div>
+          <img class="wf-logo-image" src="assets/logo-unlam-negro-300x68.png" alt="Universidad Nacional de La Matanza">
           <div>
             <div style="font-size: 13px; font-weight: 800; line-height: 1.1;">UNLaM SALUD</div>
             <div style="font-size: 10px; color: var(--wf-gray-500); font-weight: 600;">Cartilla de Atención</div>

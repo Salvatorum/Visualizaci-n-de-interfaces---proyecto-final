@@ -9,7 +9,7 @@
     /* Pestañas de Criterio */
     .tabs-wrapper {
       display: flex;
-      border-bottom: 2px solid var(--wf-gray-300);
+      border-bottom: 2px solid var(--wf-divider);
       margin-bottom: var(--space-5);
       gap: 8px;
       flex-wrap: wrap;
@@ -31,23 +31,23 @@
       color: var(--wf-gray-900);
     }
     .tab-item.active {
-      color: var(--wf-gray-900);
-      border-bottom-color: var(--wf-gray-900);
+      color: var(--wf-primary);
+      border-bottom-color: var(--wf-primary);
     }
 
     /* Contenedor de Gráfico Vertical */
     .chart-card {
       background: var(--wf-surface);
-      border: 1px solid var(--wf-border-strong);
+      border: 1px solid var(--wf-primary);
       border-radius: var(--radius-md);
       padding: 20px;
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--shadow-accent-sm);
       height: 100%;
     }
     .chart-headline-banner {
       background: var(--wf-gray-100);
       border: 1px solid var(--wf-border-strong);
-      border-left: 4px solid var(--wf-gray-900);
+      border-left: 4px solid var(--wf-primary);
       border-radius: var(--radius-sm);
       padding: 12px 16px;
       margin-bottom: 20px;
@@ -136,7 +136,9 @@
       transition: height 0.35s ease;
     }
     .vbar-fill-pps {
-      background: var(--wf-gray-900);
+      background: transparent;
+      border: 1px solid var(--wf-primary);
+      border-bottom: none;
     }
     .vbar-fill-graduado {
       background: var(--wf-gray-300);
@@ -165,11 +167,11 @@
     }
     .kpi-card {
       background: var(--wf-surface);
-      border: 1px solid var(--wf-border-strong);
+      border: 1px solid var(--wf-primary);
       border-radius: var(--radius-md);
       padding: 20px;
       text-align: center;
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--shadow-accent-sm);
     }
     .kpi-value {
       font-size: 32px;
@@ -213,7 +215,7 @@
       <div style="display: flex; align-items: center; gap: 14px;">
         <button class="wf-menu-toggle" id="menuToggle" aria-label="Abrir menú">☰</button>
         <a href="pantalla_1_home.html" class="wf-logo">
-          <div class="wf-logo-box">UNL</div>
+          <img class="wf-logo-image" src="assets/logo-unlam-negro-300x68.png" alt="Universidad Nacional de La Matanza">
           <div>
             <div style="font-size: 13px; font-weight: 800; line-height: 1.1;">UNLaM SALUD</div>
             <div style="font-size: 10px; color: var(--wf-gray-500); font-weight: 600;">Estadísticas e Impacto</div>

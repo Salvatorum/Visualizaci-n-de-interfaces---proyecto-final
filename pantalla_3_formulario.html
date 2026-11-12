@@ -26,7 +26,7 @@
       color: var(--wf-gray-500);
     }
     .step-item.active {
-      color: var(--wf-gray-900);
+      color: var(--wf-primary);
     }
     .step-item.completed {
       color: var(--wf-gray-700);
@@ -42,13 +42,14 @@
       font-size: 11px;
     }
     .step-item.active .step-badge {
-      border-color: var(--wf-gray-900);
-      background: var(--wf-gray-900);
+      border-color: var(--wf-primary);
+      background: var(--wf-primary);
       color: var(--wf-white);
     }
     .step-item.completed .step-badge {
-      border-color: var(--wf-gray-700);
-      background: var(--wf-gray-200);
+      border-color: var(--wf-primary);
+      background: #e6f5f0;
+      color: var(--wf-primary-hover);
     }
     .step-connector {
       flex: 1;
@@ -82,9 +83,9 @@
       border-color: var(--wf-gray-900);
     }
     .day-card-btn.selected {
-      background: var(--wf-gray-900);
+      background: var(--wf-primary);
       color: var(--wf-white);
-      border-color: var(--wf-gray-900);
+      border-color: var(--wf-primary);
     }
     .day-card-name {
       font-size: 13px;
@@ -95,7 +96,7 @@
       color: var(--wf-gray-600);
     }
     .day-card-btn.selected .day-card-meta {
-      color: var(--wf-gray-300);
+      color: #e6f5f0;
     }
 
     /* Paso 2: Contenedor Desplegable de Horarios para el Día Seleccionado */
@@ -128,9 +129,9 @@
       border-color: var(--wf-gray-900);
     }
     .time-slot-btn.selected {
-      background: var(--wf-gray-900);
+      background: var(--wf-primary);
       color: var(--wf-white);
-      border-color: var(--wf-gray-900);
+      border-color: var(--wf-primary);
     }
 
     /* Lista fácil de leer para el Consentimiento PPS */
@@ -205,7 +206,7 @@
       <div style="display: flex; align-items: center; gap: 14px;">
         <button class="wf-menu-toggle" id="menuToggle" aria-label="Abrir menú">☰</button>
         <a href="pantalla_1_home.html" class="wf-logo">
-          <div class="wf-logo-box">UNL</div>
+          <img class="wf-logo-image" src="assets/logo-unlam-negro-300x68.png" alt="Universidad Nacional de La Matanza">
           <div>
             <div style="font-size: 13px; font-weight: 800; line-height: 1.1;">UNLaM SALUD</div>
             <div style="font-size: 10px; color: var(--wf-gray-500); font-weight: 600;">Reserva de Turno</div>
@@ -268,7 +269,7 @@
 
     <!-- ==================== CONFIRMACIÓN EXITOSA INLINE ==================== -->
     <section id="confirmacionExitosa" class="success-summary-card">
-      <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--wf-gray-900); color: white; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; margin: 0 auto 14px;">
+      <div style="width: 48px; height: 48px; border-radius: 50%; background: transparent; border: 1px solid var(--wf-primary); color: var(--wf-primary); display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; margin: 0 auto 14px;">
         ✓
       </div>
       <span class="wf-badge wf-badge-dark" style="margin-bottom: 8px;">Reserva Registrada</span>
@@ -290,7 +291,7 @@
             <p style="font-size: 12px; color: var(--wf-gray-600);">Se muestran únicamente los días con turnos libres. Seleccioná un día para ver sus horarios.</p>
           </div>
           <div style="font-size: 11px; font-weight: 700; color: var(--wf-gray-700);">
-            Seleccionado: <span id="slotElegidoTexto" style="background: var(--wf-gray-800); color: white; padding: 2px 8px; border-radius: 3px;">Pendiente</span>
+            Seleccionado: <span id="slotElegidoTexto" class="wf-badge wf-badge-outline-green" style="text-transform: none; letter-spacing: 0;">Pendiente</span>
           </div>
         </div>
 
