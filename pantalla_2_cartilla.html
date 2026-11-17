@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,6 +33,7 @@
       text-align: center;
       margin-bottom: var(--space-6);
     }
+
     .quick-filter-pills {
       display: flex;
       justify-content: center;
@@ -39,6 +41,7 @@
       gap: 10px;
       margin-top: 16px;
     }
+
     .pill-filter-btn {
       background: var(--wf-gray-100);
       border: 1px solid var(--wf-border-strong);
@@ -50,6 +53,7 @@
       cursor: pointer;
       transition: all 0.15s ease;
     }
+
     .pill-filter-btn:hover {
       background: transparent;
       color: var(--wf-primary);
@@ -77,6 +81,7 @@
       box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
       transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
     }
+
     .consultorio-card:hover {
       transform: translateY(-2px);
       border-color: var(--wf-primary);
@@ -90,11 +95,13 @@
       align-items: center;
       gap: 8px;
     }
+
     .card-title {
       font-size: 14px;
       font-weight: 800;
       color: var(--wf-gray-900);
     }
+
     .card-location {
       font-size: 11px;
       font-weight: 600;
@@ -135,20 +142,24 @@
       .catalog-grid {
         grid-template-columns: repeat(2, 1fr);
       }
+
       .filter-grid {
         grid-template-columns: 1fr 1fr;
       }
     }
+
     @media (max-width: 600px) {
       .catalog-grid {
         grid-template-columns: 1fr;
       }
+
       .filter-grid {
         grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
+
 <body>
 
   <!-- ==================== HEADER SUPERIOR ==================== -->
@@ -193,16 +204,19 @@
     <!-- Título de Sección y migas de pan (Heurística 1) -->
     <div style="margin-bottom: 16px;">
       <div style="font-size: 11px; color: var(--wf-gray-600); margin-bottom: 4px;">
-        <a href="pantalla_1_home.html" style="color: inherit; text-decoration: none;">Inicio</a> / Especialidades y Turnos
+        <a href="pantalla_1_home.html" style="color: inherit; text-decoration: none;">Inicio</a> / Especialidades y
+        Turnos
       </div>
-      <h1 style="font-size: 20px; font-weight: 800; letter-spacing: -0.5px;">Cartilla de Consultorios y Especialidades</h1>
-      <p style="font-size: 12px; color: var(--wf-gray-600);">Seleccioná el servicio médico y la modalidad de tu preferencia para desplegar los consultorios disponibles.</p>
+      <h1 style="font-size: 20px; font-weight: 800; letter-spacing: -0.5px;">Cartilla de Consultorios y Especialidades
+      </h1>
+      <p style="font-size: 12px; color: var(--wf-gray-600);">Seleccioná el servicio médico y la modalidad de tu
+        preferencia para desplegar los consultorios disponibles.</p>
     </div>
 
     <!-- ==================== BARRA DE FILTROS INTERACTIVA ("Filtrar primero" - Heurística 7) ==================== -->
     <section class="filter-bar-container" data-gestalt="Región Común" data-heuristic="Flexibilidad y Eficiencia (H7)">
       <div class="filter-grid">
-        
+
         <!-- Filtro 1: Selector de Especialidad -->
         <div>
           <label class="wf-label" for="selectEspecialidad">1. Especialidad Médica</label>
@@ -217,13 +231,27 @@
           </select>
         </div>
 
-        <!-- Filtro 2: Disponibilidad -->
+        <!-- Filtro 2: Día y Mes -->
         <div>
-          <label class="wf-label" for="selectDisponibilidad">2. Disponibilidad</label>
-          <select id="selectDisponibilidad" class="wf-select" onchange="aplicarFiltros()">
-            <option value="semana">Esta semana (menos de 48 hs)</option>
-            <option value="15dias">Próximos 15 días</option>
-            <option value="mes">Todo el mes</option>
+          <label class="wf-label" for="selectDiaMes">2. Día y Mes</label>
+          <select id="selectDiaMes" class="wf-select" onchange="aplicarFiltros()">
+            <option value="">-- Todos los días y meses --</option>
+            <optgroup label="Esta semana">
+              <option value="Lun 23 Nov">Lunes 231 de Noviembre</option>
+              <option value="Mié 25 Nov">Miércoles 25 de Noviembre</option>
+              <option value="Jue 26 Nov">Jueves 26 de Noviembre</option>
+              <option value="Vie 27 Nov">Viernes 27 de Noviembre</option>
+            </optgroup>
+            <optgroup label="Por Día">
+              <option value="lunes">Todos los Lunes</option>
+              <option value="miercoles">Todos los Miércoles</option>
+              <option value="jueves">Todos los Jueves</option>
+              <option value="viernes">Todos los Viernes</option>
+            </optgroup>
+            <optgroup label="Por Mes Completo">
+              <option value="noviembre">Todo Noviembre 2026</option>
+              <option value="diciembre">Diciembre 2026 (Próximos turnos)</option>
+            </optgroup>
           </select>
         </div>
 
@@ -238,10 +266,11 @@
 
         <!-- Botón Limpiar / Reset -->
         <div>
-          <button type="button" class="wf-btn wf-btn-secondary" style="height: 38px; width: 100%;" onclick="resetFiltros()">
+          <button type="button" class="wf-btn wf-btn-secondary" style="height: 38px; width: 100%;"
+            onclick="resetFiltros()">
             <svg class="wf-svg-icon-sm" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-              <path d="M3 3v5h5"/>
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+              <path d="M3 3v5h5" />
             </svg>
             Limpiar
           </button>
@@ -250,13 +279,15 @@
       </div>
 
       <!-- Resumen dinámico de feedback (Heurística 1: Visibilidad del Estado & Don Norman Nivel Conductual) -->
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 10px; border-top: 1px dashed var(--wf-gray-300); font-size: 12px; flex-wrap: wrap; gap: 8px;">
+      <div
+        style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 10px; border-top: 1px dashed var(--wf-gray-300); font-size: 12px; flex-wrap: wrap; gap: 8px;">
         <div id="conteoResultados">
           Elegí una especialidad en el filtro superior para ver los consultorios disponibles.
         </div>
         <div style="display: flex; align-items: center; gap: 8px;">
           <span class="wf-badge wf-badge-dark" id="badgeModalidadActiva">Modalidad: Práctica Supervisada (PPS)</span>
-          <span style="font-size: 11px; color: var(--wf-gray-600);" id="subtituloModalidad">Espera en menos de 48 hs</span>
+          <span style="font-size: 11px; color: var(--wf-gray-600);" id="subtituloModalidad">Espera en menos de 48
+            hs</span>
         </div>
       </div>
     </section>
@@ -267,7 +298,8 @@
         ¿Qué especialidad médica necesitás consultar?
       </div>
       <p style="font-size: 12px; color: var(--wf-gray-600); max-width: 520px; margin: 0 auto;">
-        Para evitar saturar la pantalla con múltiples tarjetas, elegí un servicio en el desplegable superior o hacé clic en un acceso directo:
+        Para evitar saturar la pantalla con múltiples tarjetas, elegí un servicio en el desplegable superior o hacé clic
+        en un acceso directo:
       </p>
       <div class="quick-filter-pills">
         <button type="button" class="pill-filter-btn" onclick="seleccionarRapido('clinica')">Clínica Médica</button>
@@ -279,11 +311,13 @@
     </section>
 
     <!-- ==================== GRILLA DE RESULTADOS (Se despliega al filtrar - Heurística 8) ==================== -->
-    <section id="seccionResultados" style="display: none;" data-gestalt="Semejanza y Proximidad" data-heuristic="Diseño Minimalista (H8)">
+    <section id="seccionResultados" style="display: none;" data-gestalt="Semejanza y Proximidad"
+      data-heuristic="Diseño Minimalista (H8)">
       <div class="catalog-grid" id="catalogCards">
 
         <!-- Tarjeta 1: Clínica Médica -->
-        <article class="consultorio-card" data-esp="clinica" data-box="1" data-doctor="Dr. R. Gómez" data-slot-pps="Mié 13 Nov — 10:30 hs" data-dia="Mié 13 Nov" data-hora="10:30 hs">
+        <article class="consultorio-card" data-esp="clinica" data-box="1" data-doctor="Dr. R. Gómez"
+          data-slot-pps="Mié 13 Nov — 10:30 hs" data-dia="Mié 13 Nov" data-hora="10:30 hs">
           <div class="card-line-1">
             <div class="card-title">Clínica Médica</div>
             <div class="card-location">Box 1 • PB Salud</div>
@@ -296,14 +330,16 @@
             <span class="wf-badge" style="font-size: 9px;">Disponible</span>
           </div>
           <div class="card-line-4">
-            <a href="pantalla_3_formulario.html?esp=clinica&box=1&mod=pps&dia=Mi%C3%A9%2013%20Nov&hora=10%3A30%20hs" class="wf-btn wf-btn-primary wf-btn-block">
+            <a href="pantalla_3_formulario.html?esp=clinica&box=1&mod=pps&dia=Mi%C3%A9%2013%20Nov&hora=10%3A30%20hs"
+              class="wf-btn wf-btn-primary wf-btn-block">
               Continuar con este turno →
             </a>
           </div>
         </article>
 
         <!-- Tarjeta 2: Odontología -->
-        <article class="consultorio-card" data-esp="odontologia" data-box="2" data-doctor="Dra. M. Benítez" data-slot-pps="Jue 14 Nov — 14:00 hs" data-dia="Jue 14 Nov" data-hora="14:00 hs">
+        <article class="consultorio-card" data-esp="odontologia" data-box="2" data-doctor="Dra. M. Benítez"
+          data-slot-pps="Jue 14 Nov — 14:00 hs" data-dia="Jue 14 Nov" data-hora="14:00 hs">
           <div class="card-line-1">
             <div class="card-title">Odontología Preventiva</div>
             <div class="card-location">Box 2 • PB Salud</div>
@@ -316,14 +352,16 @@
             <span class="wf-badge" style="font-size: 9px;">Disponible</span>
           </div>
           <div class="card-line-4">
-            <a href="pantalla_3_formulario.html?esp=odontologia&box=2&mod=pps&dia=Jue%2014%20Nov&hora=14%3A00%20hs" class="wf-btn wf-btn-primary wf-btn-block">
+            <a href="pantalla_3_formulario.html?esp=odontologia&box=2&mod=pps&dia=Jue%2014%20Nov&hora=14%3A00%20hs"
+              class="wf-btn wf-btn-primary wf-btn-block">
               Continuar con este turno →
             </a>
           </div>
         </article>
 
         <!-- Tarjeta 3: Oftalmología -->
-        <article class="consultorio-card" data-esp="oftalmologia" data-box="3" data-doctor="Dr. F. Rossi" data-slot-pps="Vie 15 Nov — 09:30 hs" data-dia="Vie 15 Nov" data-hora="09:30 hs">
+        <article class="consultorio-card" data-esp="oftalmologia" data-box="3" data-doctor="Dr. F. Rossi"
+          data-slot-pps="Vie 15 Nov — 09:30 hs" data-dia="Vie 15 Nov" data-hora="09:30 hs">
           <div class="card-line-1">
             <div class="card-title">Oftalmología y Agudeza</div>
             <div class="card-location">Box 3 • PB Salud</div>
@@ -336,14 +374,16 @@
             <span class="wf-badge" style="font-size: 9px;">Disponible</span>
           </div>
           <div class="card-line-4">
-            <a href="pantalla_3_formulario.html?esp=oftalmologia&box=3&mod=pps&dia=Vie%2015%20Nov&hora=09%3A30%20hs" class="wf-btn wf-btn-primary wf-btn-block">
+            <a href="pantalla_3_formulario.html?esp=oftalmologia&box=3&mod=pps&dia=Vie%2015%20Nov&hora=09%3A30%20hs"
+              class="wf-btn wf-btn-primary wf-btn-block">
               Continuar con este turno →
             </a>
           </div>
         </article>
 
         <!-- Tarjeta 4: Nutrición y Antropometría -->
-        <article class="consultorio-card" data-esp="nutricion" data-box="4" data-doctor="Lic. C. Morales" data-slot-pps="Jue 14 Nov — 15:30 hs" data-dia="Jue 14 Nov" data-hora="15:30 hs">
+        <article class="consultorio-card" data-esp="nutricion" data-box="4" data-doctor="Lic. C. Morales"
+          data-slot-pps="Jue 14 Nov — 15:30 hs" data-dia="Jue 14 Nov" data-hora="15:30 hs">
           <div class="card-line-1">
             <div class="card-title">Nutrición y Antropometría</div>
             <div class="card-location">Box 4 • PB Salud</div>
@@ -356,14 +396,16 @@
             <span class="wf-badge" style="font-size: 9px;">Disponible</span>
           </div>
           <div class="card-line-4">
-            <a href="pantalla_3_formulario.html?esp=nutricion&box=4&mod=pps&dia=Jue%2014%20Nov&hora=15%3A30%20hs" class="wf-btn wf-btn-primary wf-btn-block">
+            <a href="pantalla_3_formulario.html?esp=nutricion&box=4&mod=pps&dia=Jue%2014%20Nov&hora=15%3A30%20hs"
+              class="wf-btn wf-btn-primary wf-btn-block">
               Continuar con este turno →
             </a>
           </div>
         </article>
 
         <!-- Tarjeta 5: Kinesiología y Postura -->
-        <article class="consultorio-card" data-esp="kinesiologia" data-box="5" data-doctor="Lic. G. López" data-slot-pps="Vie 15 Nov — 11:30 hs" data-dia="Vie 15 Nov" data-hora="11:30 hs">
+        <article class="consultorio-card" data-esp="kinesiologia" data-box="5" data-doctor="Lic. G. López"
+          data-slot-pps="Vie 15 Nov — 11:30 hs" data-dia="Vie 15 Nov" data-hora="11:30 hs">
           <div class="card-line-1">
             <div class="card-title">Kinesiología y Postura</div>
             <div class="card-location">Box 5 • PB Salud</div>
@@ -376,14 +418,16 @@
             <span class="wf-badge" style="font-size: 9px;">Disponible</span>
           </div>
           <div class="card-line-4">
-            <a href="pantalla_3_formulario.html?esp=kinesiologia&box=5&mod=pps&dia=Vie%2015%20Nov&hora=11%3A30%20hs" class="wf-btn wf-btn-primary wf-btn-block">
+            <a href="pantalla_3_formulario.html?esp=kinesiologia&box=5&mod=pps&dia=Vie%2015%20Nov&hora=11%3A30%20hs"
+              class="wf-btn wf-btn-primary wf-btn-block">
               Continuar con este turno →
             </a>
           </div>
         </article>
 
         <!-- Tarjeta 6: Clínica Médica B (Control y Apto) -->
-        <article class="consultorio-card" data-esp="clinica" data-box="6" data-doctor="Dra. A. Vega" data-slot-pps="Lun 11 Nov — 16:30 hs" data-dia="Lun 11 Nov" data-hora="16:30 hs">
+        <article class="consultorio-card" data-esp="clinica" data-box="6" data-doctor="Dra. A. Vega"
+          data-slot-pps="Lun 11 Nov — 16:30 hs" data-dia="Lun 11 Nov" data-hora="16:30 hs">
           <div class="card-line-1">
             <div class="card-title">Clínica Médica — Aptos</div>
             <div class="card-location">Box 6 • PB Salud</div>
@@ -396,7 +440,8 @@
             <span class="wf-badge" style="font-size: 9px;">Disponible</span>
           </div>
           <div class="card-line-4">
-            <a href="pantalla_3_formulario.html?esp=clinica&box=6&mod=pps&dia=Lun%2011%20Nov&hora=16%3A30%20hs" class="wf-btn wf-btn-primary wf-btn-block">
+            <a href="pantalla_3_formulario.html?esp=clinica&box=6&mod=pps&dia=Lun%2011%20Nov&hora=16%3A30%20hs"
+              class="wf-btn wf-btn-primary wf-btn-block">
               Continuar con este turno →
             </a>
           </div>
@@ -406,11 +451,13 @@
     </section>
 
     <!-- Banner informativo (Diseño Emocional: Confianza y Solidaridad - Don Norman) -->
-    <div style="background: var(--wf-gray-100); border: 1px dashed var(--wf-gray-500); padding: 14px 18px; border-radius: var(--radius-md); font-size: 12px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
+    <div
+      style="background: var(--wf-gray-100); border: 1px dashed var(--wf-gray-500); padding: 14px 18px; border-radius: var(--radius-md); font-size: 12px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
       <div>
         <strong>¿Por qué elegir Práctica Clínica Supervisada?</strong>
         <p style="color: var(--wf-gray-600); margin-top: 2px;">
-          Obtenés atención en menos de 48 horas dentro del campus y colaborás con la formación de estudiantes avanzados de ciencias de la salud bajo validación docente.
+          Obtenés atención en menos de 48 horas dentro del campus y colaborás con la formación de estudiantes avanzados
+          de ciencias de la salud bajo validación docente.
         </p>
       </div>
       <a href="pantalla_5_grafico.html" class="wf-btn wf-btn-secondary wf-btn-sm" style="white-space: nowrap;">
@@ -435,7 +482,7 @@
 
     function aplicarFiltros() {
       const esp = document.getElementById('selectEspecialidad').value;
-      const disp = document.getElementById('selectDisponibilidad').value;
+      const diaMes = document.getElementById('selectDiaMes').value;
       const mod = document.getElementById('selectModalidad').value;
 
       const estadoInicial = document.getElementById('estadoInicialCartilla');
@@ -455,11 +502,11 @@
         subtitulo.textContent = 'Espera en menos de 48 hs';
       }
 
-      // Si aún no se seleccionó especialidad, ocultar tarjetas para evitar saturación visual
-      if (!esp) {
+      // Si aún no se seleccionó ni especialidad ni fecha, mostrar estado inicial guiado
+      if (!esp && !diaMes) {
         estadoInicial.style.display = 'block';
         seccionResultados.style.display = 'none';
-        conteoEl.innerHTML = 'Elegí una especialidad en el filtro superior para ver los consultorios disponibles.';
+        conteoEl.innerHTML = 'Elegí una especialidad o fecha en los filtros superiores para ver los consultorios disponibles.';
         return;
       }
 
@@ -474,10 +521,34 @@
         const boxNum = card.getAttribute('data-box');
         const doctor = card.getAttribute('data-doctor');
         const slotPps = card.getAttribute('data-slot-pps');
-        const diaCard = card.getAttribute('data-dia');
-        const horaCard = card.getAttribute('data-hora');
+        const diaCard = card.getAttribute('data-dia') || '';
+        const horaCard = card.getAttribute('data-hora') || '';
 
-        if (esp === 'todas' || cardEsp === esp) {
+        // Filtro de Especialidad
+        const matchEsp = (!esp || esp === 'todas' || cardEsp === esp);
+
+        // Filtro de Día y Mes
+        let matchDiaMes = true;
+        if (diaMes) {
+          if (diaMes === 'noviembre' || diaMes === 'mes-nov') {
+            matchDiaMes = diaCard.includes('Nov');
+          } else if (diaMes === 'diciembre' || diaMes === 'mes-dic') {
+            matchDiaMes = diaCard.includes('Dic');
+          } else if (diaMes === 'lunes') {
+            matchDiaMes = diaCard.includes('Lun');
+          } else if (diaMes === 'miercoles') {
+            matchDiaMes = diaCard.includes('Mié');
+          } else if (diaMes === 'jueves') {
+            matchDiaMes = diaCard.includes('Jue');
+          } else if (diaMes === 'viernes') {
+            matchDiaMes = diaCard.includes('Vie');
+          } else {
+            // Coincidencia exacta con fecha (ej: "Mié 13 Nov")
+            matchDiaMes = (diaCard === diaMes);
+          }
+        }
+
+        if (matchEsp && matchDiaMes) {
           card.style.display = 'flex';
           visibles++;
 
@@ -490,8 +561,7 @@
             line3.innerHTML = `<span>Próximo turno: <strong>En 10 días hábiles</strong></span> <span class="wf-badge wf-badge-outline" style="font-size: 9px;">Estándar</span>`;
           } else {
             line2.innerHTML = `<strong>Práctica PPS:</strong> Supervisa ${doctor} + practicantes avanzados.`;
-            const textoFecha = (disp === '15dias' || disp === 'mes') ? `${slotPps} (y fechas próximas)` : slotPps;
-            line3.innerHTML = `<span>Próximo turno: <strong>${textoFecha}</strong></span> <span class="wf-badge" style="font-size: 9px;">Disponible</span>`;
+            line3.innerHTML = `<span>Próximo turno: <strong>${slotPps}</strong></span> <span class="wf-badge" style="font-size: 9px;">Disponible</span>`;
           }
 
           linkBtn.href = "pantalla_3_formulario.html?esp=" + cardEsp + "&box=" + boxNum + "&mod=" + mod + "&dia=" + encodeURIComponent(diaCard) + "&hora=" + encodeURIComponent(horaCard);
@@ -501,30 +571,34 @@
       });
 
       if (visibles === 1) {
-        conteoEl.innerHTML = `<strong>1 consultorio disponible</strong> según tu selección.`;
+        conteoEl.innerHTML = `<strong>1 consultorio disponible</strong> según tus criterios de búsqueda.`;
       } else if (visibles > 1) {
-        conteoEl.innerHTML = `<strong>${visibles} consultorios disponibles</strong> según tu selección.`;
+        conteoEl.innerHTML = `<strong>${visibles} consultorios disponibles</strong> según tus criterios de búsqueda.`;
       } else {
-        conteoEl.innerHTML = `<strong>No se encontraron consultorios</strong> para el criterio seleccionado.`;
+        conteoEl.innerHTML = `<strong>No se encontraron consultorios</strong> para la especialidad y fecha seleccionadas.`;
       }
     }
 
     function resetFiltros() {
       document.getElementById('selectEspecialidad').value = '';
-      document.getElementById('selectDisponibilidad').value = 'semana';
+      document.getElementById('selectDiaMes').value = '';
       document.getElementById('selectModalidad').value = 'pps';
       aplicarFiltros();
     }
 
-    // Leer parámetros iniciales desde Home u otra pantalla (?esp= y ?mod=)
+    // Leer parámetros iniciales desde Home u otra pantalla (?esp=, ?mod=, ?dia=)
     const params = new URLSearchParams(window.location.search);
     const espUrl = params.get('esp');
     const modUrl = params.get('mod');
+    const diaUrl = params.get('dia');
     if (modUrl === 'graduado' || modUrl === 'pps') {
       document.getElementById('selectModalidad').value = modUrl;
     }
     if (espUrl) {
       document.getElementById('selectEspecialidad').value = espUrl;
+    }
+    if (diaUrl) {
+      document.getElementById('selectDiaMes').value = diaUrl;
     }
     aplicarFiltros();
 
@@ -538,4 +612,5 @@
     }
   </script>
 </body>
+
 </html>

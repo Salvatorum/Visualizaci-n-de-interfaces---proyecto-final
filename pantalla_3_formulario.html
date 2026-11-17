@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,6 +18,7 @@
       border: 1px solid var(--wf-border-strong);
       border-radius: var(--radius-md);
     }
+
     .step-item {
       display: flex;
       align-items: center;
@@ -25,12 +27,15 @@
       font-weight: 700;
       color: var(--wf-gray-500);
     }
+
     .step-item.active {
       color: var(--wf-primary);
     }
+
     .step-item.completed {
       color: var(--wf-gray-700);
     }
+
     .step-badge {
       width: 24px;
       height: 24px;
@@ -41,16 +46,19 @@
       justify-content: center;
       font-size: 11px;
     }
+
     .step-item.active .step-badge {
       border-color: var(--wf-primary);
       background: var(--wf-primary);
       color: var(--wf-white);
     }
+
     .step-item.completed .step-badge {
       border-color: var(--wf-primary);
       background: #e6f5f0;
       color: var(--wf-primary-hover);
     }
+
     .step-connector {
       flex: 1;
       height: 2px;
@@ -66,6 +74,7 @@
       gap: 12px;
       margin-top: 10px;
     }
+
     .day-card-btn {
       background: var(--wf-surface);
       border: 1px solid var(--wf-border-strong);
@@ -78,23 +87,28 @@
       flex-direction: column;
       gap: 4px;
     }
+
     .day-card-btn:hover {
       background: var(--wf-gray-100);
       border-color: var(--wf-gray-900);
     }
+
     .day-card-btn.selected {
       background: var(--wf-primary);
       color: var(--wf-white);
       border-color: var(--wf-primary);
     }
+
     .day-card-name {
       font-size: 13px;
       font-weight: 800;
     }
+
     .day-card-meta {
       font-size: 11px;
       color: var(--wf-gray-600);
     }
+
     .day-card-btn.selected .day-card-meta {
       color: #e6f5f0;
     }
@@ -107,12 +121,14 @@
       border: 1px solid var(--wf-gray-300);
       border-radius: var(--radius-sm);
     }
+
     .times-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 10px;
       margin-top: 10px;
     }
+
     .time-slot-btn {
       padding: 10px 8px;
       background: var(--wf-surface);
@@ -124,10 +140,12 @@
       text-align: center;
       transition: all 0.15s ease;
     }
+
     .time-slot-btn:hover {
       background: var(--wf-gray-200);
       border-color: var(--wf-gray-900);
     }
+
     .time-slot-btn.selected {
       background: var(--wf-primary);
       color: var(--wf-white);
@@ -142,6 +160,7 @@
       flex-direction: column;
       gap: 8px;
     }
+
     .consent-list li {
       font-size: 12px;
       color: var(--wf-gray-800);
@@ -149,6 +168,7 @@
       padding-left: 14px;
       position: relative;
     }
+
     .consent-list li::before {
       content: "•";
       position: absolute;
@@ -165,6 +185,7 @@
       margin-bottom: 10px;
       transition: border-color 0.15s ease;
     }
+
     .checkbox-row-box.field-invalid {
       border: 2px solid var(--wf-danger);
       background-color: #fff5f5;
@@ -181,25 +202,35 @@
       margin-bottom: var(--space-6);
       box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
     }
+
     .success-summary-card.visible {
       display: block;
     }
 
+    .ocultar {
+      display: none;
+    }
+
     @media (max-width: 768px) {
-      .days-selector-grid, .times-grid {
+
+      .days-selector-grid,
+      .times-grid {
         grid-template-columns: repeat(2, 1fr);
       }
+
       .stepper-container {
         flex-direction: column;
         gap: 8px;
         align-items: flex-start;
       }
+
       .step-connector {
         display: none;
       }
     }
   </style>
 </head>
+
 <body>
 
   <!-- ==================== HEADER ==================== -->
@@ -242,7 +273,8 @@
   <main class="container" style="max-width: 860px;">
 
     <!-- ==================== 1. INDICADOR LINEAL DE PASOS (Gestalt: Continuidad) ==================== -->
-    <div class="stepper-container" data-gestalt="Buena Continuidad y Elemento Conectado" data-heuristic="Visibilidad del Estado del Sistema (H1)">
+    <div class="stepper-container" data-gestalt="Buena Continuidad y Elemento Conectado"
+      data-heuristic="Visibilidad del Estado del Sistema (H1)">
       <div class="step-item completed">
         <span class="step-badge">✓</span>
         <span>1. Especialidad</span>
@@ -260,23 +292,31 @@
     </div>
 
     <!-- Resumen de especialidad seleccionada (Heurística 3: Control del Usuario) -->
-    <div class="wf-card" style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; padding: 12px 18px; flex-wrap: wrap; gap: 10px;" data-heuristic="Control y Libertad (H3)">
+    <div class="wf-card"
+      style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; padding: 12px 18px; flex-wrap: wrap; gap: 10px;"
+      data-heuristic="Control y Libertad (H3)">
       <div>
         <span class="wf-badge wf-badge-dark" style="margin-bottom: 4px;">Especialidad Seleccionada</span>
-        <div id="tituloEspecialidadSeleccionada" style="font-size: 15px; font-weight: 800;">Odontología Preventiva — Box 2 (Pabellón Salud)</div>
-        <div id="subtituloModalidad" style="font-size: 11px; color: var(--wf-gray-600);">Modalidad: Práctica Clínica Supervisada (PPS) • Espera estimada: menos de 48 hs</div>
+        <div id="tituloEspecialidadSeleccionada" style="font-size: 15px; font-weight: 800;">Odontología Preventiva — Box
+          2 (Pabellón Salud)</div>
+        <div id="subtituloModalidad" style="font-size: 11px; color: var(--wf-gray-600);">Modalidad: Práctica Clínica
+          Supervisada (PPS) • Espera estimada: menos de 48 hs</div>
       </div>
-      <a href="pantalla_2_cartilla.html" class="wf-btn wf-btn-secondary wf-btn-sm" title="Modificar especialidad elegida">Cambiar</a>
+      <a href="pantalla_2_cartilla.html" class="wf-btn wf-btn-secondary wf-btn-sm"
+        title="Modificar especialidad elegida">Cambiar</a>
     </div>
 
     <!-- ==================== CONFIRMACIÓN EXITOSA INLINE ==================== -->
     <section id="confirmacionExitosa" class="success-summary-card">
-      <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--wf-primary-soft); border: 2px solid var(--wf-primary); color: var(--wf-primary); display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; margin: 0 auto 14px;">
+      <div
+        style="width: 48px; height: 48px; border-radius: 50%; background: var(--wf-primary-soft); border: 2px solid var(--wf-primary); color: var(--wf-primary); display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; margin: 0 auto 14px;">
         ✓
       </div>
       <span class="wf-badge wf-badge-dark" style="margin-bottom: 8px;">Reserva Registrada</span>
       <h2 style="font-size: 18px; font-weight: 800; margin-bottom: 8px;">¡Tu turno médico fue confirmado!</h2>
-      <p id="resumenTurnoConfirmado" style="font-size: 13px; color: var(--wf-gray-700); max-width: 500px; margin: 0 auto 18px; line-height: 1.5;"></p>
+      <p id="resumenTurnoConfirmado"
+        style="font-size: 13px; color: var(--wf-gray-700); max-width: 500px; margin: 0 auto 18px; line-height: 1.5;">
+      </p>
       <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
         <a href="pantalla_1_home.html" class="wf-btn wf-btn-primary">Volver al Panel de Inicio</a>
         <a href="pantalla_6_historial.html" class="wf-btn wf-btn-secondary">Ver Mis Turnos</a>
@@ -284,37 +324,44 @@
     </section>
 
     <form id="reservaForm" onsubmit="handleFormSubmit(event)" novalidate>
-      
+
       <!-- ==================== 2. SELECTOR PROGRESIVO DE DÍA Y HORARIO (Solo lo necesario) ==================== -->
-      <section class="wf-card" id="bloqueHorario" style="margin-bottom: 20px;" data-gestalt="Cerramiento y Proximidad" data-heuristic="Diseño Minimalista y Prevención (H8 y H5)">
+      <section class="wf-card" id="bloqueHorario" style="margin-bottom: 20px;" data-gestalt="Cerramiento y Proximidad"
+        data-heuristic="Diseño Minimalista y Prevención (H8 y H5)">
         <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
           <div>
             <h2 style="font-size: 15px; font-weight: 800;">1. Elegí Día y Horario Disponible</h2>
-            <p style="font-size: 12px; color: var(--wf-gray-600);">Preseleccionamos el próximo turno libre del consultorio elegido. Si lo necesitás, podés cambiar de día u horario haciendo clic abajo.</p>
+            <p style="font-size: 12px; color: var(--wf-gray-600);">Preseleccionamos el próximo turno libre del
+              consultorio elegido. Si lo necesitás, podés cambiar de día u horario haciendo clic abajo.</p>
           </div>
           <div style="font-size: 11px; font-weight: 700; color: var(--wf-gray-700);">
-            Seleccionado: <span id="slotElegidoTexto" class="wf-badge wf-badge-outline-green" style="text-transform: none; letter-spacing: 0;">Pendiente</span>
+            Seleccionado: <span id="slotElegidoTexto" class="wf-badge wf-badge-outline-green"
+              style="text-transform: none; letter-spacing: 0;">Pendiente</span>
           </div>
         </div>
 
         <!-- Sub-paso A: Solo los días con disponibilidad -->
         <div class="days-selector-grid" role="group" aria-label="Días con disponibilidad">
-          <button type="button" class="day-card-btn" onclick="seleccionarDia(this, 'Lun 11 Nov', ['09:00 hs', '10:30 hs', '14:00 hs', '16:30 hs'])">
+          <button type="button" class="day-card-btn"
+            onclick="seleccionarDia(this, 'Lun 11 Nov', ['09:00 hs', '10:30 hs', '14:00 hs', '16:30 hs'])">
             <span class="day-card-name">Lun 11 Nov</span>
             <span class="day-card-meta">4 horarios libres</span>
           </button>
 
-          <button type="button" class="day-card-btn" onclick="seleccionarDia(this, 'Mié 13 Nov', ['08:30 hs', '10:30 hs', '14:00 hs'])">
+          <button type="button" class="day-card-btn"
+            onclick="seleccionarDia(this, 'Mié 13 Nov', ['08:30 hs', '10:30 hs', '14:00 hs'])">
             <span class="day-card-name">Mié 13 Nov</span>
             <span class="day-card-meta">3 horarios libres</span>
           </button>
 
-          <button type="button" class="day-card-btn" onclick="seleccionarDia(this, 'Jue 14 Nov', ['14:00 hs', '15:30 hs', '17:00 hs'])">
+          <button type="button" class="day-card-btn"
+            onclick="seleccionarDia(this, 'Jue 14 Nov', ['14:00 hs', '15:30 hs', '17:00 hs'])">
             <span class="day-card-name">Jue 14 Nov</span>
             <span class="day-card-meta">3 horarios libres</span>
           </button>
 
-          <button type="button" class="day-card-btn" onclick="seleccionarDia(this, 'Vie 15 Nov', ['09:30 hs', '11:30 hs', '16:00 hs'])">
+          <button type="button" class="day-card-btn"
+            onclick="seleccionarDia(this, 'Vie 15 Nov', ['09:30 hs', '11:30 hs', '16:00 hs'])">
             <span class="day-card-name">Vie 15 Nov</span>
             <span class="day-card-meta">3 horarios libres</span>
           </button>
@@ -322,7 +369,8 @@
 
         <!-- Sub-paso B: Horarios desplegados dinámicamente al elegir el día -->
         <div class="times-reveal-box" id="contenedorHorariosDia">
-          <div id="promptSinDia" style="font-size: 12px; color: var(--wf-gray-600); text-align: center; padding: 8px 0;">
+          <div id="promptSinDia"
+            style="font-size: 12px; color: var(--wf-gray-600); text-align: center; padding: 8px 0;">
             ↑ Seleccioná uno de los días disponibles para desplegar sus horarios.
           </div>
           <div id="zonaHorariosActiva" style="display: none;">
@@ -336,17 +384,20 @@
         <!-- Mensaje de error INLINE adyacente al selector de horario -->
         <div class="wf-inline-error" id="errorHorario" role="alert">
           <svg class="wf-svg-icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="color: #dc2626;">
-            <circle cx="12" cy="12" r="10"/>
-            <line x1="12" y1="8" x2="12" y2="12"/>
-            <line x1="12" y1="16" x2="12.01" y2="16"/>
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="8" x2="12" y2="12" />
+            <line x1="12" y1="16" x2="12.01" y2="16" />
           </svg>
-          <span>Falta elegir fecha y horario: seleccioná un día disponible y luego uno de los horarios desplegados.</span>
+          <span>Falta elegir fecha y horario: seleccioná un día disponible y luego uno de los horarios
+            desplegados.</span>
         </div>
       </section>
 
       <!-- ==================== 3. MOTIVO DE CONSULTA (Select simplificado - Heurística 6) ==================== -->
-      <section class="wf-card" style="margin-bottom: 20px;" data-gestalt="Proximidad" data-heuristic="Reconocimiento antes que Recuerdo (H6)">
-        <label class="wf-label" for="selectMotivo" style="font-size: 13px; text-transform: none; color: var(--wf-gray-900); margin-bottom: 6px;">
+      <section class="wf-card" style="margin-bottom: 20px;" data-gestalt="Proximidad"
+        data-heuristic="Reconocimiento antes que Recuerdo (H6)">
+        <label class="wf-label" for="selectMotivo"
+          style="font-size: 13px; text-transform: none; color: var(--wf-gray-900); margin-bottom: 6px;">
           2. Motivo de la Consulta
         </label>
         <select id="selectMotivo" class="wf-select" onchange="actualizarMotivo()">
@@ -361,30 +412,39 @@
       </section>
 
       <!-- ==================== 4. CONSENTIMIENTO DIGITAL OBLIGATORIO (Lectura clara + Errores Inline) ==================== -->
-      <section class="wf-consent-box" id="bloqueConsentimiento" data-gestalt="Región Común (Borde Punteado)" data-heuristic="Ayuda y Documentación (H10)">
-        
+      <section class="wf-consent-box" id="bloqueConsentimiento" data-gestalt="Región Común (Borde Punteado)"
+        data-heuristic="Ayuda y Documentación (H10)">
+
         <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap;">
           <span class="wf-badge wf-badge-dark">Consentimiento Digital Obligatorio</span>
-          <span style="font-size: 12px; font-weight: 700; color: var(--wf-gray-900);">¿Cómo funciona la atención en Práctica Supervisada?</span>
+          <button type="button" onclick="toggleConsentimiento()" style=" background: none; border: none; padding: 0; font:
+            inherit; text-decoration: underline; cursor: pointer; font-size: 12px; font-weight: 700; color:
+            var(--wf-gray-900);">¿Cómo
+            funciona la atención en Práctica Supervisada? (Click para desplegar)</a>
         </div>
 
-        <ul class="consent-list">
-          <li><strong>Atención dual:</strong> Un estudiante avanzado realiza la revisión inicial supervisado directamente por el médico docente.</li>
-          <li><strong>Uso académico anónimo:</strong> Tu turno acredita horas de práctica clínica sin exponer tus datos personales.</li>
-          <li><strong>Control en todo momento:</strong> Podés pedir la intervención exclusiva del médico titular cuando lo desees.</li>
+        <ul class="consent-list ocultar">
+          <li><strong>Atención dual:</strong> Un estudiante avanzado realiza la revisión inicial supervisado
+            directamente por el médico docente.</li>
+          <li><strong>Uso académico anónimo:</strong> Tu turno acredita horas de práctica clínica sin exponer tus datos
+            personales.</li>
+          <li><strong>Control en todo momento:</strong> Podés pedir la intervención exclusiva del médico titular cuando
+            lo desees.</li>
         </ul>
 
         <!-- Checkbox Consentimiento Obligatorio + Error Inline Adyacente -->
         <div class="checkbox-row-box" id="rowCheckConsentimiento">
-          <label style="display: flex; align-items: flex-start; gap: 10px; font-size: 12px; font-weight: 700; cursor: pointer;">
-            <input type="checkbox" id="checkConsentimiento" name="consentimiento" style="margin-top: 2px;" onchange="limpiarErrorConsentimiento()">
+          <label
+            style="display: flex; align-items: flex-start; gap: 10px; font-size: 12px; font-weight: 700; cursor: pointer;">
+            <input type="checkbox" id="checkConsentimiento" name="consentimiento" style="margin-top: 2px;"
+              onchange="limpiarErrorConsentimiento()">
             <span>Acepto participar de la práctica clínica supervisada institucional (Obligatorio).</span>
           </label>
           <div class="wf-inline-error" id="errorConsentimiento" role="alert">
             <svg class="wf-svg-icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="color: #dc2626;">
-              <circle cx="12" cy="12" r="10"/>
-              <line x1="12" y1="8" x2="12" y2="12"/>
-              <line x1="12" y1="16" x2="12.01" y2="16"/>
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="8" x2="12" y2="12" />
+              <line x1="12" y1="16" x2="12.01" y2="16" />
             </svg>
             <span>Debés aceptar el Consentimiento Digital Obligatorio para poder confirmar el turno.</span>
           </div>
@@ -392,15 +452,17 @@
 
         <!-- Checkbox Ayuno + Error Inline Adyacente -->
         <div class="checkbox-row-box" id="rowCheckAyuno" style="margin-bottom: 0;">
-          <label style="display: flex; align-items: flex-start; gap: 10px; font-size: 12px; color: var(--wf-gray-800); cursor: pointer;">
+          <label
+            style="display: flex; align-items: flex-start; gap: 10px; font-size: 12px; color: var(--wf-gray-800); cursor: pointer;">
             <input type="checkbox" id="checkAyuno" name="ayuno" style="margin-top: 2px;" onchange="limpiarErrorAyuno()">
-            <span>Confirmo contar con 8 horas de ayuno previo (obligatorio únicamente si solicitás Apto Físico o análisis).</span>
+            <span>Confirmo contar con 8 horas de ayuno previo (obligatorio únicamente si solicitás Apto Físico o
+              análisis).</span>
           </label>
           <div class="wf-inline-error" id="errorAyuno" role="alert">
             <svg class="wf-svg-icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="color: #dc2626;">
-              <circle cx="12" cy="12" r="10"/>
-              <line x1="12" y1="8" x2="12" y2="12"/>
-              <line x1="12" y1="16" x2="12.01" y2="16"/>
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="8" x2="12" y2="12" />
+              <line x1="12" y1="16" x2="12.01" y2="16" />
             </svg>
             <span>Como seleccionaste "Apto físico", debés confirmar que asistirás con 8 horas de ayuno previo.</span>
           </div>
@@ -409,7 +471,8 @@
       </section>
 
       <!-- ==================== 5. ACCIONES DEL FORMULARIO ==================== -->
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 22px; flex-wrap: wrap; gap: 12px;">
+      <div
+        style="display: flex; justify-content: space-between; align-items: center; margin-top: 22px; flex-wrap: wrap; gap: 12px;">
         <a href="pantalla_2_cartilla.html" class="wf-btn wf-btn-secondary">
           ← Volver a Cartilla
         </a>
@@ -626,6 +689,13 @@
         nav.classList.toggle('mobile-open');
       });
     }
+
+    // Script toggle consentimiento
+    const listConsentimiento = document.querySelector(".consent-list");
+    function toggleConsentimiento() {
+      listConsentimiento.classList.toggle("ocultar");
+    }
   </script>
 </body>
+
 </html>
