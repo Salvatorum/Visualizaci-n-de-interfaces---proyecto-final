@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +15,7 @@
       gap: 8px;
       flex-wrap: wrap;
     }
+
     .tab-item {
       padding: 10px 18px;
       font-size: 13px;
@@ -27,9 +29,11 @@
       transition: all 0.15s ease;
       user-select: none;
     }
+
     .tab-item:hover {
       color: var(--wf-gray-900);
     }
+
     .tab-item.active {
       color: var(--wf-primary);
       border-bottom-color: var(--wf-primary);
@@ -44,6 +48,7 @@
       box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
       height: 100%;
     }
+
     .chart-headline-banner {
       background: var(--wf-gray-100);
       border: 1px solid var(--wf-border-strong);
@@ -67,6 +72,7 @@
       gap: 10px;
       margin-top: 16px;
     }
+
     .vchart-yaxis {
       display: flex;
       flex-direction: column-reverse;
@@ -80,11 +86,13 @@
       min-width: 34px;
       user-select: none;
     }
+
     .vchart-plot-area {
       flex: 1;
       display: flex;
       flex-direction: column;
     }
+
     .vchart-bars-zone {
       position: relative;
       height: 210px;
@@ -94,22 +102,19 @@
       justify-content: space-around;
       align-items: flex-end;
       padding: 0 8px;
-      background-image: repeating-linear-gradient(
-        to top,
-        transparent,
-        transparent calc(33.333% - 1px),
-        var(--wf-gray-200) calc(33.333% - 1px),
-        var(--wf-gray-200) 33.333%
-      );
+      background-image: repeating-linear-gradient(to top,
+          transparent,
+          transparent calc(33.333% - 1px),
+          var(--wf-gray-200) calc(33.333% - 1px),
+          var(--wf-gray-200) 33.333%);
     }
+
     .vchart-bars-zone.monthly-grid {
-      background-image: repeating-linear-gradient(
-        to top,
-        transparent,
-        transparent calc(20% - 1px),
-        var(--wf-gray-200) calc(20% - 1px),
-        var(--wf-gray-200) 20%
-      );
+      background-image: repeating-linear-gradient(to top,
+          transparent,
+          transparent calc(20% - 1px),
+          var(--wf-gray-200) calc(20% - 1px),
+          var(--wf-gray-200) 20%);
     }
 
     .vbar-col {
@@ -122,6 +127,7 @@
       padding: 0 4px;
       position: relative;
     }
+
     .vbar-value-top {
       font-size: 11px;
       font-weight: 900;
@@ -129,17 +135,20 @@
       margin-bottom: 4px;
       white-space: nowrap;
     }
+
     .vbar-fill {
       width: 36px;
       max-width: 80%;
       border-radius: 3px 3px 0 0;
       transition: height 0.35s ease;
     }
+
     .vbar-fill-pps {
       background: linear-gradient(180deg, #10b981 0%, #0f9977 100%);
       border: 1px solid #0b7a5e;
       border-bottom: none;
     }
+
     .vbar-fill-graduado {
       background: #94a3b8;
       border: 1px solid #64748b;
@@ -151,6 +160,7 @@
       justify-content: space-around;
       padding: 8px 8px 0;
     }
+
     .vchart-xlabel {
       flex: 1;
       text-align: center;
@@ -165,6 +175,7 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
     }
+
     .kpi-card {
       background: var(--wf-surface);
       border: 1px solid var(--wf-border-strong);
@@ -174,6 +185,7 @@
       text-align: center;
       box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
     }
+
     .kpi-value {
       font-size: 32px;
       font-weight: 900;
@@ -181,6 +193,7 @@
       line-height: 1.1;
       margin-bottom: 6px;
     }
+
     .kpi-title {
       font-size: 12px;
       font-weight: 700;
@@ -189,6 +202,7 @@
       letter-spacing: 0.5px;
       margin-bottom: 6px;
     }
+
     .kpi-desc {
       font-size: 11px;
       color: var(--wf-gray-600);
@@ -199,15 +213,51 @@
       .kpi-grid {
         grid-template-columns: 1fr;
       }
+
       .vbar-fill {
         width: 24px;
       }
+
       .vchart-xlabel {
         font-size: 10px;
       }
     }
+
+    /* Barra de alternancia de modalidad (Mismos estilos y radio estándar que el sistema) */
+    .modality-toggle-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      background: var(--wf-surface);
+      border: 1px solid var(--wf-border);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      margin-bottom: var(--space-4);
+    }
+
+    /* Centrado en modo individual (col-12) */
+    .col-12.chart-toggle-pane .chart-card {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .col-12.chart-toggle-pane .vchart-wrapper {
+      max-width: 720px;
+      margin: 20px auto 0;
+    }
+
+    @media (max-width: 768px) {
+      .modality-toggle-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+    }
   </style>
 </head>
+
 <body>
 
   <!-- ==================== HEADER ==================== -->
@@ -254,7 +304,8 @@
       <div style="font-size: 11px; color: var(--wf-gray-600); margin-bottom: 4px;">
         <a href="pantalla_1_home.html" style="color: inherit; text-decoration: none;">Inicio</a> / Estadísticas
       </div>
-      <h1 style="font-size: 20px; font-weight: 800; letter-spacing: -0.5px;">Estadísticas de Atención y Tiempos de Espera</h1>
+      <h1 style="font-size: 20px; font-weight: 800; letter-spacing: -0.5px;">Estadísticas de Atención y Tiempos de
+        Espera</h1>
       <p style="font-size: 12px; color: var(--wf-gray-600);">
         Visualización clara de días de espera por especialidad según modalidad y demanda mensual de turnos.
       </p>
@@ -271,28 +322,47 @@
     </div>
 
     <!-- ==================== VISTA 1: GRÁFICOS VERTICALES DE 1 BARRA POR ESPECIALIDAD (ESCALA 0-15 DÍAS ENTEROS) ==================== -->
-    <section id="vistaEspera" style="margin-bottom: var(--space-5);" data-gestalt="Semejanza y Región Común" data-heuristic="Diseño Minimalista (H8)">
-      
-      <!-- Conclusión inmediata en 1 frase -->
-      <div class="chart-headline-banner">
-        <div>
-          <strong>¿Cuántos días esperás para conseguir turno?</strong>
-          Con <strong>Práctica Supervisada (PPS)</strong> te atendés en <strong>1 o 2 días</strong>, frente a <strong>9 a 14 días</strong> con Profesional Graduado.
+    <section id="vistaEspera" style="margin-bottom: var(--space-5);" data-gestalt="Semejanza y Región Común"
+      data-heuristic="Diseño Minimalista (H8)">
+
+      <!-- Conclusión dinámica según la modalidad seleccionada -->
+      <div class="chart-headline-banner" id="bannerEspera">
+        <div id="bannerEsperaText">
+          <strong>Modalidad Activa: Práctica Supervisada (PPS)</strong> — Tiempo de espera de <strong>1 o 2 días</strong> con alumnos avanzados bajo tutoría docente.
         </div>
-        <span class="wf-badge wf-badge-dark">Escala uniforme: 0 a 15 días</span>
+        <span class="wf-badge wf-badge-dark" id="badgeEspera">1 a 2 días de espera</span>
       </div>
 
-      <!-- Dos gráficos verticales simples lado a lado (1 sola barra por especialidad en cada uno) -->
-      <div class="grid-12">
+      <!-- Barra de alternancia de modalidad (Misma forma y clases de botones del sistema) -->
+      <div class="modality-toggle-bar" data-heuristic="Control y Libertad del Usuario (H3)">
+        <span style="font-size: 12px; font-weight: 700; color: var(--wf-gray-700);">
+          Visualizar por modalidad:
+        </span>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button type="button" class="wf-btn wf-btn-primary wf-btn-sm" id="btnTogglePPS" onclick="setModalidadGrafico('pps')">
+            Práctica Supervisada (PPS)
+          </button>
+          <button type="button" class="wf-btn wf-btn-secondary wf-btn-sm" id="btnToggleGraduado" onclick="setModalidadGrafico('graduado')">
+            Profesional Graduado
+          </button>
+          <button type="button" class="wf-btn wf-btn-secondary wf-btn-sm" id="btnToggleAmbos" onclick="setModalidadGrafico('ambos')">
+            Comparar Ambos
+          </button>
+        </div>
+      </div>
 
-        <!-- Gráfico A (Izquierda - 6 cols): Modalidad PPS -->
-        <div class="col-6">
+      <!-- Gráficos verticales dinámicos -->
+      <div class="grid-12" id="contenedorGraficosEspera">
+
+        <!-- Gráfico A: Modalidad PPS (Visible por defecto en 12 cols centrado) -->
+        <div class="col-12 chart-toggle-pane" id="colGraficoPPS">
           <div class="chart-card">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
               <h2 style="font-size: 14px; font-weight: 800;">Práctica Supervisada (PPS)</h2>
               <span class="wf-badge wf-badge-dark" style="font-size: 10px;">1 a 2 días</span>
             </div>
-            <p style="font-size: 11px; color: var(--wf-gray-600);">Días de espera promedio por especialidad (valores enteros)</p>
+            <p style="font-size: 11px; color: var(--wf-gray-600);">Días de espera promedio por especialidad (valores
+              enteros)</p>
 
             <div class="vchart-wrapper">
               <div class="vchart-yaxis" aria-hidden="true">
@@ -341,14 +411,15 @@
           </div>
         </div>
 
-        <!-- Gráfico B (Derecha - 6 cols): Modalidad Profesional Graduado -->
-        <div class="col-6">
+        <!-- Gráfico B: Modalidad Profesional Graduado (Oculto por defecto en modo dinámico) -->
+        <div class="col-12 chart-toggle-pane" id="colGraficoGraduado" style="display: none;">
           <div class="chart-card">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
               <h2 style="font-size: 14px; font-weight: 800;">Profesional Graduado</h2>
               <span class="wf-badge wf-badge-outline" style="font-size: 10px;">9 a 14 días</span>
             </div>
-            <p style="font-size: 11px; color: var(--wf-gray-600);">Días de espera promedio por especialidad (valores enteros)</p>
+            <p style="font-size: 11px; color: var(--wf-gray-600);">Días de espera promedio por especialidad (valores
+              enteros)</p>
 
             <div class="vchart-wrapper">
               <div class="vchart-yaxis" aria-hidden="true">
@@ -401,12 +472,15 @@
     </section>
 
     <!-- ==================== VISTA 2: DEMANDA MENSUAL DE TURNOS (1 BARRA VERTICAL POR MES) ==================== -->
-    <section id="vistaDemanda" style="display: none; margin-bottom: var(--space-5);" data-gestalt="Buena Continuidad" data-heuristic="Diseño Minimalista (H8)">
+    <section id="vistaDemanda" style="display: none; margin-bottom: var(--space-5);" data-gestalt="Buena Continuidad"
+      data-heuristic="Diseño Minimalista (H8)">
       <div class="chart-card">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 8px;">
+        <div
+          style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 8px;">
           <div>
             <h2 style="font-size: 15px; font-weight: 800;">Cantidad Total de Turnos Atendidos por Mes</h2>
-            <p style="font-size: 11px; color: var(--wf-gray-600);">Evolución de consultas realizadas en el campus durante el 2do Cuatrimestre 2026 (valores enteros).</p>
+            <p style="font-size: 11px; color: var(--wf-gray-600);">Evolución de consultas realizadas en el campus
+              durante el 2do Cuatrimestre 2026 (valores enteros).</p>
           </div>
           <span class="wf-badge wf-badge-dark">Escala: 0 a 500 turnos</span>
         </div>
@@ -456,10 +530,11 @@
 
     <!-- ==================== TARJETAS DE MÉTRICAS (KPIS INFERIORES EN ENTEROS) ==================== -->
     <section style="margin-bottom: var(--space-6);" data-gestalt="Simetría y Región Común">
-      <h3 style="font-size: 14px; font-weight: 800; margin-bottom: 14px;">Impacto Institucional del Programa Universitario</h3>
+      <h3 style="font-size: 14px; font-weight: 800; margin-bottom: 14px;">Impacto Institucional del Programa
+        Universitario</h3>
 
       <div class="kpi-grid">
-        
+
         <!-- KPI 1 -->
         <div class="kpi-card">
           <div class="kpi-value">1.420</div>
@@ -509,6 +584,73 @@
   </footer>
 
   <script>
+    // Alternancia dinámica entre gráficos de modalidad (PPS por defecto con botones estándar del sistema)
+    function setModalidadGrafico(modalidad) {
+      const btnPPS = document.getElementById('btnTogglePPS');
+      const btnGraduado = document.getElementById('btnToggleGraduado');
+      const btnAmbos = document.getElementById('btnToggleAmbos');
+      const colPPS = document.getElementById('colGraficoPPS');
+      const colGraduado = document.getElementById('colGraficoGraduado');
+      const bannerText = document.getElementById('bannerEsperaText');
+      const badge = document.getElementById('badgeEspera');
+
+      if (!btnPPS || !btnGraduado || !colPPS || !colGraduado) return;
+
+      if (modalidad === 'pps') {
+        btnPPS.className = 'wf-btn wf-btn-primary wf-btn-sm';
+        btnGraduado.className = 'wf-btn wf-btn-secondary wf-btn-sm';
+        if (btnAmbos) btnAmbos.className = 'wf-btn wf-btn-secondary wf-btn-sm';
+
+        colPPS.style.display = 'block';
+        colPPS.className = 'col-12 chart-toggle-pane';
+        colGraduado.style.display = 'none';
+
+        if (bannerText) {
+          bannerText.innerHTML = '<strong>Modalidad Activa: Práctica Supervisada (PPS)</strong> — Tiempo de espera de <strong>1 o 2 días</strong> con alumnos avanzados bajo tutoría docente.';
+        }
+        if (badge) {
+          badge.className = 'wf-badge wf-badge-dark';
+          badge.textContent = '1 a 2 días de espera';
+        }
+      } else if (modalidad === 'graduado') {
+        btnPPS.className = 'wf-btn wf-btn-secondary wf-btn-sm';
+        btnGraduado.className = 'wf-btn wf-btn-primary wf-btn-sm';
+        if (btnAmbos) btnAmbos.className = 'wf-btn wf-btn-secondary wf-btn-sm';
+
+        colPPS.style.display = 'none';
+        colGraduado.style.display = 'block';
+        colGraduado.className = 'col-12 chart-toggle-pane';
+
+        if (bannerText) {
+          bannerText.innerHTML = '<strong>Modalidad Activa: Profesional Graduado</strong> — Tiempo de espera promedio de <strong>9 a 14 días</strong> según especialidad médica.';
+        }
+        if (badge) {
+          badge.className = 'wf-badge wf-badge-outline';
+          badge.textContent = '9 a 14 días de espera';
+        }
+      } else {
+        btnPPS.className = 'wf-btn wf-btn-secondary wf-btn-sm';
+        btnGraduado.className = 'wf-btn wf-btn-secondary wf-btn-sm';
+        if (btnAmbos) btnAmbos.className = 'wf-btn wf-btn-primary wf-btn-sm';
+
+        colPPS.style.display = 'block';
+        colPPS.className = 'col-6 chart-toggle-pane';
+        colGraduado.style.display = 'block';
+        colGraduado.className = 'col-6 chart-toggle-pane';
+
+        if (bannerText) {
+          bannerText.innerHTML = '<strong>Comparativa Simultánea:</strong> Con <strong>Práctica Supervisada (PPS)</strong> te atendés en <strong>1 o 2 días</strong>, frente a <strong>9 a 14 días</strong> con Profesional Graduado.';
+        }
+        if (badge) {
+          badge.className = 'wf-badge wf-badge-dark';
+          badge.textContent = 'Escala uniforme: 0 a 15 días';
+        }
+      }
+    }
+
+    // Inicializar modalidad por defecto (Práctica Supervisada)
+    setModalidadGrafico('pps');
+
     function cambiarVista(vista) {
       const tabEspera = document.getElementById('tabEspera');
       const tabDemanda = document.getElementById('tabDemanda');
@@ -538,4 +680,5 @@
     }
   </script>
 </body>
+
 </html>
