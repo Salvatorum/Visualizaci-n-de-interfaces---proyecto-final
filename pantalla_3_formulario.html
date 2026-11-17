@@ -405,6 +405,7 @@
           <option value="apto">Apto físico deportivo / académico (requiere 8 hs de ayuno)</option>
           <option value="primera_vez">Consulta de primera vez</option>
           <option value="seguimiento">Seguimiento de tratamiento</option>
+          <option value="otro">Otro</option>
         </select>
         <p style="font-size: 11px; color: var(--wf-gray-600); margin-top: 6px;">
           Seleccioná una categoría estandarizada (no es necesario describir síntomas por escrito).
@@ -634,7 +635,7 @@
       document.getElementById('resumenTurnoConfirmado').innerHTML = `
         <strong>${espNombre}</strong><br>
         Fecha y hora: <strong>${diaSeleccionado} a las ${horaSeleccionada}</strong><br>
-        Motivo: ${motivoTexto}<br>
+        Motivo: ${motivoTexto}<br><br>
         Comprobante enviado a <strong>tcanosa@alumno.unlam.edu.ar</strong>.
       `;
       document.getElementById('confirmacionExitosa').classList.add('visible');
