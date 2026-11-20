@@ -236,10 +236,10 @@
 
       <div style="display: flex; align-items: center; gap: 12px;">
         <div class="wf-user-profile">
-          <div class="wf-avatar">TC</div>
+          <div class="wf-avatar">JP</div>
           <div>
-            <div style="font-weight: 700;">Tomás Canosa</div>
-            <div style="font-size: 10px; color: var(--wf-gray-500);">tcanosa@alumno.unlam.edu.ar</div>
+            <div style="font-weight: 700;">José Pérez</div>
+            <div style="font-size: 10px; color: var(--wf-gray-500);">jose@alumno.unlam.edu.ar</div>
           </div>
         </div>
       </div>
@@ -279,124 +279,73 @@
           <strong>¿Cuántos días esperás para conseguir turno?</strong>
           Con <strong>Práctica Supervisada (PPS)</strong> te atendés en <strong>1 o 2 días</strong>, frente a <strong>9 a 14 días</strong> con Profesional Graduado.
         </div>
-        <span class="wf-badge wf-badge-dark">Escala uniforme: 0 a 15 días</span>
+        <span class="wf-badge wf-badge-dark">Escala uniforme: Hasta 15 días</span>
       </div>
 
-      <!-- Dos gráficos verticales simples lado a lado (1 sola barra por especialidad en cada uno) -->
-      <div class="grid-12">
+      <!-- Selector segmentado de modalidad (Heurística 7: Flexibilidad y Heurística 8: Diseño Minimalista) -->
+      <div style="display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap;" role="group" aria-label="Modalidad del gráfico">
+        <button type="button" class="wf-btn wf-btn-primary wf-btn-sm" id="btnModPPS" onclick="alternarModalidadGrafico('pps')">
+          Ver Práctica Supervisada (PPS) — 1 a 2 días
+        </button>
+        <button type="button" class="wf-btn wf-btn-secondary wf-btn-sm" id="btnModGraduado" onclick="alternarModalidadGrafico('graduado')">
+          Ver Profesional Graduado — 9 a 14 días
+        </button>
+      </div>
 
-        <!-- Gráfico A (Izquierda - 6 cols): Modalidad PPS -->
-        <div class="col-6">
-          <div class="chart-card">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-              <h2 style="font-size: 14px; font-weight: 800;">Práctica Supervisada (PPS)</h2>
-              <span class="wf-badge wf-badge-dark" style="font-size: 10px;">1 a 2 días</span>
+      <!-- Gráfico vertical único de gran escala centrado -->
+      <div class="chart-card" style="max-width: 760px; margin: 0 auto;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; flex-wrap: wrap; gap: 8px;">
+          <h2 id="tituloGraficoMod" style="font-size: 15px; font-weight: 800;">Práctica Supervisada (PPS)</h2>
+          <span class="wf-badge wf-badge-dark" id="badgeGraficoMod" style="font-size: 11px;">1 a 2 días</span>
+        </div>
+        <p id="subtituloGraficoMod" style="font-size: 11px; color: var(--wf-gray-600); margin-bottom: 14px;">
+          Días de espera promedio por especialidad (valores enteros sobre escala uniforme de hasta 15 días)
+        </p>
+
+        <div class="vchart-wrapper">
+          <div class="vchart-yaxis" aria-hidden="true">
+            <span>0 d</span>
+            <span>5 d</span>
+            <span>10 d</span>
+            <span>15 d</span>
+          </div>
+          <div class="vchart-plot-area">
+            <div class="vchart-bars-zone" id="barsZoneModalidad">
+              <!-- Clínica: 1 día -->
+              <div class="vbar-col">
+                <span class="vbar-value-top" id="valBar1">1 día</span>
+                <div class="vbar-fill vbar-fill-pps" id="bar1" style="height: 7%;"></div>
+              </div>
+              <!-- Kinesio: 1 día -->
+              <div class="vbar-col">
+                <span class="vbar-value-top" id="valBar2">1 día</span>
+                <div class="vbar-fill vbar-fill-pps" id="bar2" style="height: 7%;"></div>
+              </div>
+              <!-- Nutrición: 1 día -->
+              <div class="vbar-col">
+                <span class="vbar-value-top" id="valBar3">1 día</span>
+                <div class="vbar-fill vbar-fill-pps" id="bar3" style="height: 7%;"></div>
+              </div>
+              <!-- Odonto: 2 días -->
+              <div class="vbar-col">
+                <span class="vbar-value-top" id="valBar4">2 días</span>
+                <div class="vbar-fill vbar-fill-pps" id="bar4" style="height: 13%;"></div>
+              </div>
+              <!-- Oftalmo: 2 días -->
+              <div class="vbar-col">
+                <span class="vbar-value-top" id="valBar5">2 días</span>
+                <div class="vbar-fill vbar-fill-pps" id="bar5" style="height: 13%;"></div>
+              </div>
             </div>
-            <p style="font-size: 11px; color: var(--wf-gray-600);">Días de espera promedio por especialidad (valores enteros)</p>
-
-            <div class="vchart-wrapper">
-              <div class="vchart-yaxis" aria-hidden="true">
-                <span>0 d</span>
-                <span>5 d</span>
-                <span>10 d</span>
-                <span>15 d</span>
-              </div>
-              <div class="vchart-plot-area">
-                <div class="vchart-bars-zone">
-                  <!-- Clínica: 1 día (1/15 = 6.7%) -->
-                  <div class="vbar-col">
-                    <span class="vbar-value-top">1 día</span>
-                    <div class="vbar-fill vbar-fill-pps" style="height: 7%;"></div>
-                  </div>
-                  <!-- Kinesio: 1 día -->
-                  <div class="vbar-col">
-                    <span class="vbar-value-top">1 día</span>
-                    <div class="vbar-fill vbar-fill-pps" style="height: 7%;"></div>
-                  </div>
-                  <!-- Nutrición: 1 día -->
-                  <div class="vbar-col">
-                    <span class="vbar-value-top">1 día</span>
-                    <div class="vbar-fill vbar-fill-pps" style="height: 7%;"></div>
-                  </div>
-                  <!-- Odonto: 2 días (2/15 = 13.3%) -->
-                  <div class="vbar-col">
-                    <span class="vbar-value-top">2 días</span>
-                    <div class="vbar-fill vbar-fill-pps" style="height: 13%;"></div>
-                  </div>
-                  <!-- Oftalmo: 2 días -->
-                  <div class="vbar-col">
-                    <span class="vbar-value-top">2 días</span>
-                    <div class="vbar-fill vbar-fill-pps" style="height: 13%;"></div>
-                  </div>
-                </div>
-                <div class="vchart-xaxis-labels">
-                  <span class="vchart-xlabel">Clínica</span>
-                  <span class="vchart-xlabel">Kinesio</span>
-                  <span class="vchart-xlabel">Nutrición</span>
-                  <span class="vchart-xlabel">Odonto</span>
-                  <span class="vchart-xlabel">Oftalmo</span>
-                </div>
-              </div>
+            <div class="vchart-xaxis-labels">
+              <span class="vchart-xlabel">Clínica</span>
+              <span class="vchart-xlabel">Kinesio</span>
+              <span class="vchart-xlabel">Nutrición</span>
+              <span class="vchart-xlabel">Odonto</span>
+              <span class="vchart-xlabel">Oftalmo</span>
             </div>
           </div>
         </div>
-
-        <!-- Gráfico B (Derecha - 6 cols): Modalidad Profesional Graduado -->
-        <div class="col-6">
-          <div class="chart-card">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-              <h2 style="font-size: 14px; font-weight: 800;">Profesional Graduado</h2>
-              <span class="wf-badge wf-badge-outline" style="font-size: 10px;">9 a 14 días</span>
-            </div>
-            <p style="font-size: 11px; color: var(--wf-gray-600);">Días de espera promedio por especialidad (valores enteros)</p>
-
-            <div class="vchart-wrapper">
-              <div class="vchart-yaxis" aria-hidden="true">
-                <span>0 d</span>
-                <span>5 d</span>
-                <span>10 d</span>
-                <span>15 d</span>
-              </div>
-              <div class="vchart-plot-area">
-                <div class="vchart-bars-zone">
-                  <!-- Clínica: 9 días (9/15 = 60%) -->
-                  <div class="vbar-col">
-                    <span class="vbar-value-top">9 días</span>
-                    <div class="vbar-fill vbar-fill-graduado" style="height: 60%;"></div>
-                  </div>
-                  <!-- Kinesio: 11 días (11/15 = 73%) -->
-                  <div class="vbar-col">
-                    <span class="vbar-value-top">11 días</span>
-                    <div class="vbar-fill vbar-fill-graduado" style="height: 73%;"></div>
-                  </div>
-                  <!-- Nutrición: 9 días -->
-                  <div class="vbar-col">
-                    <span class="vbar-value-top">9 días</span>
-                    <div class="vbar-fill vbar-fill-graduado" style="height: 60%;"></div>
-                  </div>
-                  <!-- Odonto: 12 días (12/15 = 80%) -->
-                  <div class="vbar-col">
-                    <span class="vbar-value-top">12 días</span>
-                    <div class="vbar-fill vbar-fill-graduado" style="height: 80%;"></div>
-                  </div>
-                  <!-- Oftalmo: 14 días (14/15 = 93%) -->
-                  <div class="vbar-col">
-                    <span class="vbar-value-top">14 días</span>
-                    <div class="vbar-fill vbar-fill-graduado" style="height: 93%;"></div>
-                  </div>
-                </div>
-                <div class="vchart-xaxis-labels">
-                  <span class="vchart-xlabel">Clínica</span>
-                  <span class="vchart-xlabel">Kinesio</span>
-                  <span class="vchart-xlabel">Nutrición</span>
-                  <span class="vchart-xlabel">Odonto</span>
-                  <span class="vchart-xlabel">Oftalmo</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
     </section>
 
@@ -509,6 +458,82 @@
   </footer>
 
   <script>
+    function alternarModalidadGrafico(modo) {
+      const btnPPS = document.getElementById('btnModPPS');
+      const btnGrad = document.getElementById('btnModGraduado');
+      const titulo = document.getElementById('tituloGraficoMod');
+      const badge = document.getElementById('badgeGraficoMod');
+      const subtitulo = document.getElementById('subtituloGraficoMod');
+
+      const b1 = document.getElementById('bar1');
+      const b2 = document.getElementById('bar2');
+      const b3 = document.getElementById('bar3');
+      const b4 = document.getElementById('bar4');
+      const b5 = document.getElementById('bar5');
+
+      const v1 = document.getElementById('valBar1');
+      const v2 = document.getElementById('valBar2');
+      const v3 = document.getElementById('valBar3');
+      const v4 = document.getElementById('valBar4');
+      const v5 = document.getElementById('valBar5');
+
+      if (modo === 'graduado') {
+        btnPPS.className = 'wf-btn wf-btn-secondary wf-btn-sm';
+        btnGrad.className = 'wf-btn wf-btn-primary wf-btn-sm';
+        titulo.textContent = 'Profesional Graduado (Médico de Planta)';
+        badge.textContent = '9 a 14 días';
+        badge.className = 'wf-badge wf-badge-outline';
+        subtitulo.textContent = 'Días de espera promedio por especialidad con profesional de planta (valores enteros)';
+
+        b1.className = 'vbar-fill vbar-fill-graduado';
+        b1.style.height = '60%';
+        v1.textContent = '9 días';
+
+        b2.className = 'vbar-fill vbar-fill-graduado';
+        b2.style.height = '73%';
+        v2.textContent = '11 días';
+
+        b3.className = 'vbar-fill vbar-fill-graduado';
+        b3.style.height = '60%';
+        v3.textContent = '9 días';
+
+        b4.className = 'vbar-fill vbar-fill-graduado';
+        b4.style.height = '80%';
+        v4.textContent = '12 días';
+
+        b5.className = 'vbar-fill vbar-fill-graduado';
+        b5.style.height = '93%';
+        v5.textContent = '14 días';
+      } else {
+        btnPPS.className = 'wf-btn wf-btn-primary wf-btn-sm';
+        btnGrad.className = 'wf-btn wf-btn-secondary wf-btn-sm';
+        titulo.textContent = 'Práctica Supervisada (PPS)';
+        badge.textContent = '1 a 2 días';
+        badge.className = 'wf-badge wf-badge-dark';
+        subtitulo.textContent = 'Días de espera promedio por especialidad en consultorios formativos (valores enteros)';
+
+        b1.className = 'vbar-fill vbar-fill-pps';
+        b1.style.height = '7%';
+        v1.textContent = '1 día';
+
+        b2.className = 'vbar-fill vbar-fill-pps';
+        b2.style.height = '7%';
+        v2.textContent = '1 día';
+
+        b3.className = 'vbar-fill vbar-fill-pps';
+        b3.style.height = '7%';
+        v3.textContent = '1 día';
+
+        b4.className = 'vbar-fill vbar-fill-pps';
+        b4.style.height = '13%';
+        v4.textContent = '2 días';
+
+        b5.className = 'vbar-fill vbar-fill-pps';
+        b5.style.height = '13%';
+        v5.textContent = '2 días';
+      }
+    }
+
     function cambiarVista(vista) {
       const tabEspera = document.getElementById('tabEspera');
       const tabDemanda = document.getElementById('tabDemanda');

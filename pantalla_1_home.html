@@ -230,10 +230,10 @@
       <!-- Perfil autenticado y Botón Primario (Heurística 7: Flexibilidad y Atajo) -->
       <div style="display: flex; align-items: center; gap: 12px;">
         <div class="wf-user-profile" title="Sesión activa con credenciales universitarias">
-          <div class="wf-avatar">TC</div>
+          <div class="wf-avatar">JP</div>
           <div>
-            <div style="font-weight: 700; line-height: 1;">Tomás Canosa</div>
-            <div style="font-size: 10px; color: var(--wf-gray-500);">tcanosa@alumno.unlam.edu.ar</div>
+            <div style="font-weight: 700; line-height: 1;">José Pérez</div>
+            <div style="font-size: 10px; color: var(--wf-gray-500);">jose@alumno.unlam.edu.ar</div>
           </div>
         </div>
         <a href="pantalla_2_cartilla.html" class="wf-btn wf-btn-primary" style="white-space: nowrap;">
@@ -274,7 +274,7 @@
     </div>
 
     <!-- ==================== BLOQUE HERO / PRÓXIMO TURNO AGENDADO ==================== -->
-    <section class="hero-panel" data-gestalt="Región Común y Cerramiento" data-heuristic="Visibilidad de Estado y Control">
+    <section class="hero-panel" id="heroPanelTurnos" data-gestalt="Región Común y Cerramiento" data-heuristic="Visibilidad de Estado y Control">
       <div class="wf-card" style="border-left: 4px solid var(--wf-primary); padding: 20px;">
         <div class="next-appointment-layout">
           
@@ -527,6 +527,190 @@
   </div>
 
   <script>
+    // Gestión dinámica y persistente de turnos (localStorage)
+    const TURNO_DEFAULT = {
+      id: 1,
+      especialidad: 'Clínica Médica — Box 4',
+      modalidad: 'Práctica Clínica Supervisada (PPS)',
+      profesional: 'Supervisa: Dra. Gómez',
+      fecha: 'Jue 14 Nov',
+      hora: '10:00 hs',
+      motivo: 'Control preventivo anual',
+      estado: 'PENDIENTE'
+    };
+
+    function obtenerTurnosPendientes() {
+      const guardados = localStorage.getItem('unlam_turnos_pendientes');
+      if (guardados === null) {
+        const iniciales = [TURNO_DEFAULT];
+        localStorage.setItem('unlam_turnos_pendientes', JSON.stringify(iniciales));
+        return iniciales;
+      }
+      try {
+        const parsed = JSON.parse(guardados);
+        if (Array.isArray(parsed)) return parsed;
+      } catch (e) {
+        console.error(e);
+      }
+      return [];
+    }
+
+    function guardarTurnosPendientes(turnos) {
+      localStorage.setItem('unlam_turnos_pendientes', JSON.stringify(turnos));
+    }
+
+    function cancelarTurnoHome(id, fecha, hora) {
+      if (confirm(`¿Estás seguro de cancelar tu turno del ${fecha} a las ${hora}?`)) {
+        let turnos = obtenerTurnosPendientes();
+        turnos = turnos.filter(t => t.id !== id);
+        guardarTurnosPendientes(turnos);
+        renderizarTurnosHome();
+        alert('Turno cancelado correctamente. El consultorio fue liberado.');
+      }
+    }
+
+    function renderizarTurnosHome() {
+      const container = document.getElementById('heroPanelTurnos');
+      if (!container) return;
+
+      const turnos = obtenerTurnosPendientes();
+
+      if (turnos.length === 0) {
+        container.innerHTML = `
+          <div class="wf-card" style="border-left: 4px solid var(--wf-border-strong); padding: 24px; text-align: center;">
+            <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--wf-gray-100); color: var(--wf-gray-500); display: flex; align-items: center; justify-content: center; font-size: 20px; margin: 0 auto 12px;">
+              <svg class="wf-svg-icon" viewBox="0 0 24 24" style="width: 24px; height: 24px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
+            <h2 style="font-size: 16px; font-weight: 800; color: var(--wf-gray-900); margin-bottom: 6px;">No tenés turnos médicos pendientes</h2>
+            <p style="font-size: 12px; color: var(--wf-gray-600); max-width: 440px; margin: 0 auto 16px;">
+              Podés solicitar una consulta en los consultorios de atención primaria dentro del campus con demora inferior a 48 hs.
+            </p>
+            <a href="pantalla_2_cartilla.html" class="wf-btn wf-btn-primary" style="display: inline-flex; align-items: center; gap: 6px;">
+              <span>+</span> Sacar Nuevo Turno
+            </a>
+          </div>
+        `;
+        return;
+      }
+
+      const t0 = turnos[0];
+      const otrosTurnos = turnos.slice(1);
+
+      let html = `
+        <div class="wf-card" style="border-left: 4px solid var(--wf-primary); padding: 20px;">
+          <div class="next-appointment-layout">
+            
+            <!-- Información Principal Simplificada -->
+            <div class="next-appointment-main">
+              <div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <span class="wf-badge wf-badge-outline-green">Próximo Turno Agendado</span>
+                  <span class="wf-badge wf-badge-dark" style="font-size: 9px; padding: 2px 6px;">${t0.estado || 'PENDIENTE'}</span>
+                </div>
+                <h2 style="font-size: 19px; font-weight: 800; margin-bottom: 6px; color: var(--wf-gray-900);">${t0.especialidad}</h2>
+
+                <div style="font-size: 13px; font-weight: 600; color: var(--wf-gray-900); margin-bottom: 6px;">
+                  ${t0.modalidad} — ${t0.profesional}
+                </div>
+
+                <div style="font-size: 12px; color: var(--wf-gray-600); margin-bottom: 6px;">
+                  Motivo declarado: <strong>${t0.motivo || 'Consulta general'}</strong>
+                </div>
+
+                <div style="font-size: 12px; color: var(--wf-gray-600); display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                  <svg class="wf-svg-icon-sm" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                  </svg>
+                  <span>Pabellón Ciencias de la Salud (Planta Baja, San Justo)</span>
+                  <button type="button" onclick="abrirModalMapa()" style="background: none; border: none; padding: 0; font-size: 12px; font-weight: 700; color: #0c7a61; text-decoration: underline; cursor: pointer;">
+                    Ver ubicación en el mapa
+                  </button>
+                </div>
+              </div>
+
+              <!-- Acciones Directas -->
+              <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px;">
+                <button class="wf-btn wf-btn-primary wf-btn-sm" onclick="alert('Descargando Constancia oficial de Turno (PDF)...')">
+                  <svg class="wf-svg-icon-sm" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <path d="M12 18v-6"/>
+                    <path d="m9.5 15.5 2.5 2.5 2.5-2.5"/>
+                  </svg>
+                  Descargar Constancia
+                </button>
+                <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="cancelarTurnoHome(${t0.id}, '${t0.fecha}', '${t0.hora}')">
+                  <svg class="wf-svg-icon-sm" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="15" y1="9" x2="9" y2="15"/>
+                    <line x1="9" y1="9" x2="15" y2="15"/>
+                  </svg>
+                  Cancelar Turno
+                </button>
+              </div>
+            </div>
+
+            <!-- Bloque de Fecha y Hora Altamente Destacado -->
+            <div class="datetime-highlight-box" aria-label="Fecha y hora del turno">
+              <div class="datetime-highlight-label">Fecha y Hora</div>
+              <div class="datetime-highlight-date">${t0.fecha}</div>
+              <div class="datetime-highlight-time">${t0.hora}</div>
+            </div>
+
+          </div>
+        </div>
+      `;
+
+      if (otrosTurnos.length > 0) {
+        html += `
+          <div style="margin-top: 14px; background: var(--wf-surface); border: 1px solid var(--wf-border-strong); border-radius: var(--radius-md); padding: 16px; box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+              <div style="font-size: 13px; font-weight: 800; color: var(--wf-gray-900); display: flex; align-items: center; gap: 8px;">
+                <span>Otros turnos pendientes agendados</span>
+                <span class="wf-badge wf-badge-dark" style="font-size: 10px;">${otrosTurnos.length} ${otrosTurnos.length === 1 ? 'adicional' : 'adicionales'}</span>
+              </div>
+              <a href="pantalla_6_historial.html" style="font-size: 11px; font-weight: 700; color: #0c7a61; text-decoration: underline;">Ver todos en Mi Historial →</a>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+        `;
+
+        otrosTurnos.forEach(t => {
+          html += `
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--wf-gray-50); border: 1px solid var(--wf-border-strong); border-radius: var(--radius-sm); flex-wrap: wrap; gap: 10px;">
+              <div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="font-weight: 800; font-size: 13px; color: var(--wf-gray-900);">${t.especialidad}</span>
+                  <span class="wf-badge wf-badge-dark" style="font-size: 9px; padding: 2px 6px;">${t.estado || 'PENDIENTE'}</span>
+                </div>
+                <div style="font-size: 11px; color: var(--wf-gray-600); margin-top: 2px;">
+                  <strong>${t.fecha} — ${t.hora}</strong> • ${t.profesional} • Motivo: ${t.motivo}
+                </div>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="alert('Descargando constancia para ${t.especialidad}...')">
+                  Descargar Constancia
+                </button>
+                <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="cancelarTurnoHome(${t.id}, '${t.fecha}', '${t.hora}')" style="color: #dc2626; border-color: #fca5a5;">
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          `;
+        });
+
+        html += `
+            </div>
+          </div>
+        `;
+      }
+
+      container.innerHTML = html;
+    }
+
+    // Inicializar renderizado dinámico al cargar la página
+    renderizarTurnosHome();
+
     const toggle = document.getElementById('menuToggle');
     const nav = document.getElementById('mainNav');
     if (toggle && nav) {

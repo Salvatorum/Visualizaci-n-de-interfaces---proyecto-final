@@ -228,10 +228,10 @@
 
       <div style="display: flex; align-items: center; gap: 12px;">
         <div class="wf-user-profile">
-          <div class="wf-avatar">TC</div>
+          <div class="wf-avatar">JP</div>
           <div>
-            <div style="font-weight: 700;">Tomás Canosa</div>
-            <div style="font-size: 10px; color: var(--wf-gray-500);">tcanosa@alumno.unlam.edu.ar</div>
+            <div style="font-weight: 700;">José Pérez</div>
+            <div style="font-size: 10px; color: var(--wf-gray-500);">jose@alumno.unlam.edu.ar</div>
           </div>
         </div>
       </div>
@@ -354,6 +354,7 @@
           <option value="apto">Apto físico deportivo / académico (requiere 8 hs de ayuno)</option>
           <option value="primera_vez">Consulta de primera vez</option>
           <option value="seguimiento">Seguimiento de tratamiento</option>
+          <option value="otros">Otros (consulta general no listada)</option>
         </select>
         <p style="font-size: 11px; color: var(--wf-gray-600); margin-top: 6px;">
           Seleccioná una categoría estandarizada (no es necesario describir síntomas por escrito).
@@ -363,16 +364,21 @@
       <!-- ==================== 4. CONSENTIMIENTO DIGITAL OBLIGATORIO (Lectura clara + Errores Inline) ==================== -->
       <section class="wf-consent-box" id="bloqueConsentimiento" data-gestalt="Región Común (Borde Punteado)" data-heuristic="Ayuda y Documentación (H10)">
         
-        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap;">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap;">
           <span class="wf-badge wf-badge-dark">Consentimiento Digital Obligatorio</span>
-          <span style="font-size: 12px; font-weight: 700; color: var(--wf-gray-900);">¿Cómo funciona la atención en Práctica Supervisada?</span>
+          <span style="font-size: 12px; font-weight: 700; color: var(--wf-gray-900);">Atención en Práctica Clínica Supervisada</span>
         </div>
 
-        <ul class="consent-list">
-          <li><strong>Atención dual:</strong> Un estudiante avanzado realiza la revisión inicial supervisado directamente por el médico docente.</li>
-          <li><strong>Uso académico anónimo:</strong> Tu turno acredita horas de práctica clínica sin exponer tus datos personales.</li>
-          <li><strong>Control en todo momento:</strong> Podés pedir la intervención exclusiva del médico titular cuando lo desees.</li>
-        </ul>
+        <details class="consent-accordion" style="margin-bottom: 12px; font-size: 12px; color: var(--wf-gray-700);">
+          <summary style="font-size: 11px; font-weight: 700; color: var(--wf-primary-hover); cursor: pointer; user-select: none;">Ver alcances y condiciones de la Práctica Supervisada ▾</summary>
+          <div style="margin-top: 8px; padding: 10px 12px; background: var(--wf-gray-50); border: 1px solid var(--wf-border-strong); border-radius: var(--radius-sm); line-height: 1.5;">
+            <ul class="consent-list" style="margin: 0; padding-left: 18px;">
+              <li style="margin-bottom: 4px;"><strong>Atención dual:</strong> Un estudiante avanzado realiza la anamnesis y exploración clínica preliminar supervisado en todo momento por el docente médico matriculado.</li>
+              <li style="margin-bottom: 4px;"><strong>Uso académico anónimo:</strong> Tu consulta acredita horas prácticas hospitalarias curriculares bajo estricta disociación de tus datos personales.</li>
+              <li><strong>Control en todo momento:</strong> Tenés derecho a requerir la intervención directa y exclusiva del profesional médico a cargo cuando lo consideres.</li>
+            </ul>
+          </div>
+        </details>
 
         <!-- Checkbox Consentimiento Obligatorio + Error Inline Adyacente -->
         <div class="checkbox-row-box" id="rowCheckConsentimiento">
@@ -564,15 +570,85 @@
       // Éxito inline
       const espNombre = document.getElementById('tituloEspecialidadSeleccionada').textContent;
       const motivoTexto = document.getElementById('selectMotivo').selectedOptions[0].text;
+
+      // Mapeo de profesionales por consultorio
+      const doctoresPorBox = {
+        '1': 'Supervisa: Dr. R. Gómez',
+        '2': 'Supervisa: Dra. M. Benítez',
+        '3': 'Supervisa: Dr. F. Rossi',
+        '4': 'Supervisa: Lic. C. Morales',
+        '5': 'Supervisa: Lic. G. López',
+        '6': 'Supervisa: Dra. A. Vega',
+        '7': 'Supervisa: Dr. E. Castro',
+        '8': 'Supervisa: Dr. S. Díaz',
+        '9': 'Supervisa: Dra. L. Romero',
+        '10': 'Supervisa: Dra. P. Navarro',
+        '11': 'Supervisa: Lic. M. Suárez',
+        '12': 'Supervisa: Lic. F. Herrera'
+      };
+
+      const docAsignado = (modParam === 'graduado')
+        ? ((doctoresPorBox[boxParam] || 'Dr. Roberto Gómez').replace('Supervisa: ', '') + ' (Médico de Planta)')
+        : (doctoresPorBox[boxParam] || 'Supervisa: Dra. Gómez');
+
+      const modalidadNombre = (modParam === 'graduado')
+        ? 'Profesional Graduado'
+        : 'Práctica Clínica Supervisada (PPS)';
+
+      const especialidadLimpia = espNombre.replace(/\s*\(Pabellón Salud\)\s*/g, '').trim();
+
+      const nuevoTurno = {
+        id: Date.now(),
+        especialidad: especialidadLimpia,
+        modalidad: modalidadNombre,
+        profesional: docAsignado,
+        fecha: diaSeleccionado,
+        hora: horaSeleccionada,
+        motivo: motivoTexto,
+        estado: 'PENDIENTE'
+      };
+
+      // Persistencia real en localStorage (unlam_turnos_pendientes)
+      const TURNO_DEFAULT = {
+        id: 1,
+        especialidad: 'Clínica Médica — Box 4',
+        modalidad: 'Práctica Clínica Supervisada (PPS)',
+        profesional: 'Supervisa: Dra. Gómez',
+        fecha: 'Jue 14 Nov',
+        hora: '10:00 hs',
+        motivo: 'Control preventivo anual',
+        estado: 'PENDIENTE'
+      };
+
+      let turnos = [];
+      const guardados = localStorage.getItem('unlam_turnos_pendientes');
+      if (guardados !== null) {
+        try {
+          const parsed = JSON.parse(guardados);
+          if (Array.isArray(parsed)) {
+            turnos = parsed;
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      } else {
+        turnos = [TURNO_DEFAULT];
+      }
+
+      turnos.unshift(nuevoTurno);
+      localStorage.setItem('unlam_turnos_pendientes', JSON.stringify(turnos));
+
       document.getElementById('reservaForm').style.display = 'none';
       document.getElementById('step2Badge').classList.remove('active');
       document.getElementById('step2Badge').classList.add('completed');
       document.getElementById('step3Badge').classList.add('active');
       document.getElementById('resumenTurnoConfirmado').innerHTML = `
-        <strong>${espNombre}</strong><br>
-        Fecha y hora: <strong>${diaSeleccionado} a las ${horaSeleccionada}</strong><br>
-        Motivo: ${motivoTexto}<br>
-        Comprobante enviado a <strong>tcanosa@alumno.unlam.edu.ar</strong>.
+        <div style="font-size: 14px; font-weight: 800; color: var(--wf-primary-hover); margin-bottom: 4px;">${espNombre}</div>
+        <div style="font-size: 13px; color: var(--wf-gray-800); margin-bottom: 2px;">Fecha y hora: <strong>${diaSeleccionado} a las ${horaSeleccionada}</strong></div>
+        <div style="font-size: 12px; color: var(--wf-gray-600);">Motivo: <strong>${motivoTexto}</strong></div>
+        <div style="margin-top: 12px; padding-top: 10px; border-top: 1px dashed #cbd5e1; font-size: 12px; color: #475569;">
+          Comprobante enviado a <strong>jose@alumno.unlam.edu.ar</strong>.
+        </div>
       `;
       document.getElementById('confirmacionExitosa').classList.add('visible');
       window.scrollTo({ top: 0, behavior: 'smooth' });

@@ -21,24 +21,33 @@
       box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
     }
 
+    .history-table-wrapper {
+      max-height: 420px;
+      overflow-y: auto;
+      border: 1px solid var(--wf-border-strong);
+      border-radius: var(--radius-md);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
+      margin-top: 14px;
+      background: var(--wf-surface);
+    }
     .history-table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 14px;
+      margin-top: 0;
       font-size: 12px;
       background: var(--wf-surface);
-      border: 1px solid var(--wf-border-strong);
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
+      border: none;
     }
     .history-table th {
       background: var(--wf-gray-100);
-      border-bottom: 2px solid var(--wf-divider);
+      border-bottom: 2px solid var(--wf-gray-800);
       padding: 12px 14px;
       text-align: left;
       font-weight: 700;
       color: var(--wf-gray-900);
+      position: sticky;
+      top: 0;
+      z-index: 5;
     }
     .history-table td {
       border-bottom: 1px solid var(--wf-divider);
@@ -126,10 +135,10 @@
 
       <div style="display: flex; align-items: center; gap: 12px;">
         <div class="wf-user-profile">
-          <div class="wf-avatar">TC</div>
+          <div class="wf-avatar">JP</div>
           <div>
-            <div style="font-weight: 700;">Tomás Canosa</div>
-            <div style="font-size: 10px; color: var(--wf-gray-500);">tcanosa@alumno.unlam.edu.ar</div>
+            <div style="font-weight: 700;">José Pérez</div>
+            <div style="font-size: 10px; color: var(--wf-gray-500);">jose@alumno.unlam.edu.ar</div>
           </div>
         </div>
       </div>
@@ -154,12 +163,12 @@
     <section class="profile-summary-card" data-gestalt="Región Común y Cerramiento">
       <div style="display: flex; align-items: center; gap: 14px;">
         <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--wf-primary-soft); border: 1.5px solid var(--wf-primary); color: var(--wf-primary); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 900;">
-          TC
+          JP
         </div>
         <div>
-          <div style="font-size: 15px; font-weight: 800;">Tomás Salvador Canosa</div>
+          <div style="font-size: 15px; font-weight: 800;">José Pérez</div>
           <div style="font-size: 12px; color: var(--wf-gray-700);">
-            Legajo: <strong>89421</strong> • DNI: 42.158.904 • Ing. en Informática (DIIT)
+            Legajo: <strong>91.402</strong> • DNI: 40.812.390 • Ing. en Informática (DIIT)
           </div>
           <div style="font-size: 11px; color: var(--wf-gray-500); margin-top: 2px;">
             Cobertura declarada: Sin obra social / Asistencia exclusiva en consultorios UNLaM.
@@ -175,131 +184,474 @@
       </div>
     </section>
 
+    <!-- ==================== SECCIÓN: MIS TURNOS PENDIENTES / PRÓXIMAS CITAS ==================== -->
+    <section id="seccionTurnosPendientes" style="margin-bottom: var(--space-6);" data-gestalt="Región Común y Cerramiento" data-heuristic="Visibilidad del Estado del Sistema (H1)">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+        <div>
+          <h2 style="font-size: 15px; font-weight: 800; margin: 0 0 4px 0; display: flex; align-items: center; gap: 8px;">
+            <svg class="wf-svg-icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="color: var(--wf-primary); width: 16px; height: 16px;">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            Turnos Pendientes / Próximas Citas
+          </h2>
+          <div style="font-size: 11px; color: var(--wf-gray-600);">Consultas médicas agendadas pendientes de atención en los consultorios del campus.</div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span class="wf-badge wf-badge-dark" id="badgeContadorPendientes">1 Turno Pendiente</span>
+          <a href="pantalla_2_cartilla.html" class="wf-btn wf-btn-primary wf-btn-sm" style="font-size: 11px;">+ Sacar Nuevo Turno</a>
+        </div>
+      </div>
+
+      <div id="contenedorTablaPendientes">
+        <!-- Renderizado dinámico con tabla responsiva o estado vacío -->
+      </div>
+    </section>
+
     <!-- ==================== LISTADO CRONOLÓGICO DE ATENCIONES (NIVEL 2 Y 3) ==================== -->
     <section style="margin-bottom: var(--space-6);" data-gestalt="Semejanza y Proximidad" data-heuristic="Control y Libertad (H3: Descarga de Comprobantes)">
       
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
-        <h2 style="font-size: 15px; font-weight: 800;">Consultas Médicas Registradas (Año Académico 2026)</h2>
-        <span class="wf-badge wf-badge-dark">3 Atenciones Concluidas</span>
+      <!-- Barra disparadora de divulgación progresiva (Heurística 8: Diseño Minimalista) -->
+      <div class="wf-card" style="border: 1px solid var(--wf-border-strong); background: var(--wf-surface); border-radius: var(--radius-md); padding: 16px 20px; cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;" onclick="toggleHistorialConcluido()" onmouseover="this.style.borderColor='var(--wf-primary)'" onmouseout="this.style.borderColor='var(--wf-border-strong)'">
+        <div>
+          <h2 style="font-size: 15px; font-weight: 800; margin: 0 0 4px 0; color: var(--wf-gray-900);">
+            Consultas Médicas Registradas (Año Académico 2026)
+          </h2>
+          <div style="font-size: 11px; color: var(--wf-gray-600);">
+            Historial de atenciones concluidas y descarga de certificados oficiales.
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;" onclick="event.stopPropagation()">
+          <span class="wf-badge wf-badge-dark" id="badgeTotalAtenciones">3 Atenciones Concluidas</span>
+          <button type="button" class="wf-btn wf-btn-secondary wf-btn-sm" id="btnToggleDespliegueHistorial" onclick="toggleHistorialConcluido()" style="font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
+            <span id="textoBtnDespliegue">Ver historial de consultas ▾</span>
+          </button>
+        </div>
       </div>
 
-      <table class="history-table">
-        <thead>
-          <tr>
-            <th>Fecha y Hora</th>
-            <th>Especialidad y Ubicación</th>
-            <th>Modalidad de Atención</th>
-            <th>Motivo Registrado</th>
-            <th>Estado</th>
-            <th style="text-align: right;">Comprobante</th>
-          </tr>
-        </thead>
-        <tbody>
-          
-          <!-- Consulta 1 -->
-          <tr>
-            <td>
-              <div style="font-weight: 700;">18 Oct 2026</div>
-              <div style="font-size: 11px; color: var(--wf-gray-600);">10:30 hs</div>
-            </td>
-            <td>
-              <div style="font-weight: 700;">Odontología Preventiva</div>
-              <div style="font-size: 11px; color: var(--wf-gray-600);">Box 2 • Pabellón Salud</div>
-            </td>
-            <td>
-              <span class="wf-badge" style="font-size: 10px;">Práctica PPS</span>
-              <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Dra. M. Benítez + 2 practicantes</div>
-            </td>
-            <td>Control preventivo y limpieza bucal</td>
-            <td>
-              <span class="wf-badge wf-badge-dark" style="font-size: 10px;">Completado</span>
-            </td>
-            <td style="text-align: right;">
-              <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="abrirCertificado('18/10/2026', 'Odontología Preventiva', 'Dra. M. Benítez (Mat. 48.912)', 'Control preventivo anual bucodental')">
-                <svg class="wf-svg-icon-sm" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                  <polyline points="14 2 14 8 20 8"/>
-                  <line x1="16" y1="13" x2="8" y2="13"/>
-                  <line x1="16" y1="17" x2="8" y2="17"/>
-                </svg>
-                Certificado
-              </button>
-            </td>
-          </tr>
+      <!-- Contenedor desplegable (Oculto por defecto para evitar sobrecarga visual - Divulgación Progresiva) -->
+      <div id="contenedorHistorialConcluido" style="display: none; margin-top: 14px;">
+        
+        <!-- Barra de control del historial extenso -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+          <div style="font-size: 12px; color: var(--wf-gray-700); font-weight: 600;">
+            Consultas previas concluidas y avaladas por profesionales docentes:
+          </div>
+          <button type="button" class="wf-btn wf-btn-secondary wf-btn-sm" id="btnToggleHistorial" onclick="alternarHistorialExtenso()">
+            Ver historial extenso (15 atenciones)
+          </button>
+        </div>
 
-          <!-- Consulta 2 -->
-          <tr>
-            <td>
-              <div style="font-weight: 700;">02 Sep 2026</div>
-              <div style="font-size: 11px; color: var(--wf-gray-600);">14:00 hs</div>
-            </td>
-            <td>
-              <div style="font-weight: 700;">Clínica Médica</div>
-              <div style="font-size: 11px; color: var(--wf-gray-600);">Box 1 • Pabellón Salud</div>
-            </td>
-            <td>
-              <span class="wf-badge" style="font-size: 10px;">Práctica PPS</span>
-              <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Dr. R. Gómez + 2 practicantes</div>
-            </td>
-            <td>Apto físico deportivo / torneos UNLaM</td>
-            <td>
-              <span class="wf-badge wf-badge-dark" style="font-size: 10px;">Apto Aprobado</span>
-            </td>
-            <td style="text-align: right;">
-              <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="abrirCertificado('02/09/2026', 'Clínica Médica', 'Dr. Roberto Gómez (Mat. 39.401)', 'Examen clínico para apto deportivo universitario')">
-                <svg class="wf-svg-icon-sm" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                  <polyline points="14 2 14 8 20 8"/>
-                  <line x1="16" y1="13" x2="8" y2="13"/>
-                  <line x1="16" y1="17" x2="8" y2="17"/>
-                </svg>
-                Certificado
-              </button>
-            </td>
-          </tr>
+        <div class="history-table-wrapper">
+        <table class="history-table">
+          <thead>
+            <tr>
+              <th>Fecha y Hora</th>
+              <th>Especialidad y Ubicación</th>
+              <th>Modalidad de Atención</th>
+              <th>Motivo Registrado</th>
+              <th>Estado</th>
+              <th style="text-align: right;">Comprobante</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            <!-- Consulta 1 -->
+            <tr>
+              <td>
+                <div style="font-weight: 700;">18 Oct 2026</div>
+                <div style="font-size: 11px; color: var(--wf-gray-600);">10:30 hs</div>
+              </td>
+              <td>
+                <div style="font-weight: 700;">Odontología Preventiva</div>
+                <div style="font-size: 11px; color: var(--wf-gray-600);">Box 2 • Pabellón Salud</div>
+              </td>
+              <td>
+                <span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 800; font-size: 10px;">Práctica PPS</span>
+                <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Dra. M. Benítez + 2 practicantes</div>
+              </td>
+              <td>Control preventivo y limpieza bucal</td>
+              <td>
+                <span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 700; font-size: 10px;">Completado</span>
+              </td>
+              <td style="text-align: right;">
+                <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="abrirCertificado('18/10/2026', 'Odontología Preventiva', 'Dra. M. Benítez (Mat. 48.912)', 'Control preventivo anual bucodental')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -1px; margin-right: 4px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Certificado
+                </button>
+              </td>
+            </tr>
 
-          <!-- Consulta 3 -->
-          <tr>
-            <td>
-              <div style="font-weight: 700;">22 Jun 2026</div>
-              <div style="font-size: 11px; color: var(--wf-gray-600);">09:00 hs</div>
-            </td>
-            <td>
-              <div style="font-weight: 700;">Oftalmología</div>
-              <div style="font-size: 11px; color: var(--wf-gray-600);">Box 3 • Pabellón Salud</div>
-            </td>
-            <td>
-              <span class="wf-badge wf-badge-outline" style="font-size: 10px;">Profesional Graduado</span>
-              <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Dr. F. Rossi (Médico de Planta)</div>
-            </td>
-            <td>Control de agudeza visual para lectura</td>
-            <td>
-              <span class="wf-badge wf-badge-dark" style="font-size: 10px;">Completado</span>
-            </td>
-            <td style="text-align: right;">
-              <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="abrirCertificado('22/06/2026', 'Oftalmología', 'Dr. Fernando Rossi (Mat. 51.203)', 'Evaluación de agudeza visual y prescripción refractiva')">
-                <svg class="wf-svg-icon-sm" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                  <polyline points="14 2 14 8 20 8"/>
-                  <line x1="16" y1="13" x2="8" y2="13"/>
-                  <line x1="16" y1="17" x2="8" y2="17"/>
-                </svg>
-                Certificado
-              </button>
-            </td>
-          </tr>
+            <!-- Consulta 2 -->
+            <tr>
+              <td>
+                <div style="font-weight: 700;">02 Sep 2026</div>
+                <div style="font-size: 11px; color: var(--wf-gray-600);">14:00 hs</div>
+              </td>
+              <td>
+                <div style="font-weight: 700;">Clínica Médica</div>
+                <div style="font-size: 11px; color: var(--wf-gray-600);">Box 1 • Pabellón Salud</div>
+              </td>
+              <td>
+                <span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 800; font-size: 10px;">Práctica PPS</span>
+                <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Dr. R. Gómez + 2 practicantes</div>
+              </td>
+              <td>Apto físico deportivo / torneos UNLaM</td>
+              <td>
+                <span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 700; font-size: 10px;">Apto Aprobado</span>
+              </td>
+              <td style="text-align: right;">
+                <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="abrirCertificado('02/09/2026', 'Clínica Médica', 'Dr. Roberto Gómez (Mat. 39.401)', 'Examen clínico para apto deportivo universitario')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -1px; margin-right: 4px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Certificado
+                </button>
+              </td>
+            </tr>
 
-        </tbody>
-      </table>
+            <!-- Consulta 3 -->
+            <tr>
+              <td>
+                <div style="font-weight: 700;">22 Jun 2026</div>
+                <div style="font-size: 11px; color: var(--wf-gray-600);">09:00 hs</div>
+              </td>
+              <td>
+                <div style="font-weight: 700;">Oftalmología</div>
+                <div style="font-size: 11px; color: var(--wf-gray-600);">Box 3 • Pabellón Salud</div>
+              </td>
+              <td>
+                <span class="wf-badge wf-badge-outline" style="font-size: 10px;">Profesional Graduado</span>
+                <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Dr. F. Rossi (Médico de Planta)</div>
+              </td>
+              <td>Control de agudeza visual para lectura</td>
+              <td>
+                <span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 700; font-size: 10px;">Completado</span>
+              </td>
+              <td style="text-align: right;">
+                <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="abrirCertificado('22/06/2026', 'Oftalmología', 'Dr. Fernando Rossi (Mat. 51.203)', 'Evaluación de agudeza visual y prescripción refractiva')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -1px; margin-right: 4px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Certificado
+                </button>
+              </td>
+            </tr>
 
-      <div style="margin-top: 14px; font-size: 11px; color: var(--wf-gray-500); line-height: 1.4; display: flex; align-items: flex-start; gap: 6px;">
-        <svg class="wf-svg-icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="color: var(--wf-primary); margin-top: 1px;">
-          <circle cx="12" cy="12" r="10"/>
-          <line x1="12" y1="16" x2="12" y2="12"/>
-          <line x1="12" y1="8" x2="12.01" y2="8"/>
-        </svg>
-        <span><strong>Nota de alcance institucional:</strong> Por motivos de privacidad médica y confidencialidad universitaria, la plataforma almacena únicamente comprobantes de asistencia y estados preventivos generales, sin prescripciones farmacológicas sensibles ni diagnósticos patológicos complejos.</span>
+            <!-- Filas extendidas (Caso extremo 15 atenciones para densidad de datos) -->
+            <!-- Consulta 4 -->
+            <tr class="row-extensa" style="display: none;">
+              <td>
+                <div style="font-weight: 700;">15 May 2026</div>
+                <div style="font-size: 11px; color: var(--wf-gray-600);">11:30 hs</div>
+              </td>
+              <td>
+                <div style="font-weight: 700;">Kinesiología y Postura</div>
+                <div style="font-size: 11px; color: var(--wf-gray-600);">Box 5 • Pabellón Salud</div>
+              </td>
+              <td>
+                <span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 800; font-size: 10px;">Práctica PPS</span>
+                <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Lic. G. López + 2 practicantes</div>
+              </td>
+              <td>Dolor cervical postural por estudio en PC</td>
+              <td>
+                <span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 700; font-size: 10px;">Completado</span>
+              </td>
+              <td style="text-align: right;">
+                <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="abrirCertificado('15/05/2026', 'Kinesiología y Postura', 'Lic. Gonzalo López (Mat. 29.804)', 'Evaluación ergonómica y plan de reeducación postural')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -1px; margin-right: 4px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Certificado
+                </button>
+              </td>
+            </tr>
+
+            <!-- Consulta 5 -->
+            <tr class="row-extensa" style="display: none;">
+              <td>
+                <div style="font-weight: 700;">08 May 2026</div>
+                <div style="font-size: 11px; color: var(--wf-gray-600);">16:00 hs</div>
+              </td>
+              <td>
+                <div style="font-weight: 700;">Nutrición y Hábitos</div>
+                <div style="font-size: 11px; color: var(--wf-gray-600);">Box 4 • Pabellón Salud</div>
+              </td>
+              <td>
+                <span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 800; font-size: 10px;">Práctica PPS</span>
+                <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Lic. C. Morales + 1 practicante</div>
+              </td>
+              <td>Plan nutricional y control calórico</td>
+              <td>
+                <span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 700; font-size: 10px;">Completado</span>
+              </td>
+              <td style="text-align: right;">
+                <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="abrirCertificado('08/05/2026', 'Nutrición y Hábitos', 'Lic. Cecilia Morales (Mat. 33.190)', 'Guía antropométrica y plan de hábitos saludables')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -1px; margin-right: 4px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Certificado
+                </button>
+              </td>
+            </tr>
+
+            <!-- Consulta 6 -->
+            <tr class="row-extensa" style="display: none;">
+              <td>
+                <div style="font-weight: 700;">24 Abr 2026</div>
+                <div style="font-size: 11px; color: var(--wf-gray-600);">10:00 hs</div>
+              </td>
+              <td>
+                <div style="font-weight: 700;">Clínica Médica</div>
+                <div style="font-size: 11px; color: var(--wf-gray-600);">Box 1 • Pabellón Salud</div>
+              </td>
+              <td>
+                <span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 800; font-size: 10px;">Práctica PPS</span>
+                <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Dr. R. Gómez + 2 practicantes</div>
+              </td>
+              <td>Cuadro gripal y constancia médica de reposo</td>
+              <td>
+                <span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 700; font-size: 10px;">Completado</span>
+              </td>
+              <td style="text-align: right;">
+                <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="abrirCertificado('24/04/2026', 'Clínica Médica', 'Dr. Roberto Gómez (Mat. 39.401)', 'Certificado médico de reposo y tratamiento sintomático')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -1px; margin-right: 4px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Certificado
+                </button>
+              </td>
+            </tr>
+
+            <!-- Consulta 7 -->
+            <tr class="row-extensa" style="display: none;">
+              <td>
+                <div style="font-weight: 700;">17 Abr 2026</div>
+                <div style="font-size: 11px; color: var(--wf-gray-600);">14:30 hs</div>
+              </td>
+              <td>
+                <div style="font-weight: 700;">Odontología Preventiva</div>
+                <div style="font-size: 11px; color: var(--wf-gray-600);">Box 2 • Pabellón Salud</div>
+              </td>
+              <td>
+                <span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 800; font-size: 10px;">Práctica PPS</span>
+                <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Dra. M. Benítez + 2 practicantes</div>
+              </td>
+              <td>Fluoración tópica y control de placa bacteriana</td>
+              <td>
+                <span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 700; font-size: 10px;">Completado</span>
+              </td>
+              <td style="text-align: right;">
+                <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="abrirCertificado('17/04/2026', 'Odontología Preventiva', 'Dra. Mariana Benítez (Mat. 48.912)', 'Topicación con flúor y profilaxis bucal')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -1px; margin-right: 4px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Certificado
+                </button>
+              </td>
+            </tr>
+
+            <!-- Consulta 8 -->
+            <tr class="row-extensa" style="display: none;">
+              <td>
+                <div style="font-weight: 700;">09 Abr 2026</div>
+                <div style="font-size: 11px; color: var(--wf-gray-600);">09:30 hs</div>
+              </td>
+              <td>
+                <div style="font-weight: 700;">Kinesiología y Postura</div>
+                <div style="font-size: 11px; color: var(--wf-gray-600);">Box 5 • Pabellón Salud</div>
+              </td>
+              <td>
+                <span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 800; font-size: 10px;">Práctica PPS</span>
+                <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Lic. G. López + 2 practicantes</div>
+              </td>
+              <td>Ejercicios de descompresión lumbar y pautas activas</td>
+              <td>
+                <span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 700; font-size: 10px;">Completado</span>
+              </td>
+              <td style="text-align: right;">
+                <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="abrirCertificado('09/04/2026', 'Kinesiología y Postura', 'Lic. Gonzalo López (Mat. 29.804)', 'Sesión de kinesioterapia motora y estiramiento activo')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -1px; margin-right: 4px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Certificado
+                </button>
+              </td>
+            </tr>
+
+            <!-- Consulta 9 -->
+            <tr class="row-extensa" style="display: none;">
+              <td>
+                <div style="font-weight: 700;">27 Mar 2026</div>
+                <div style="font-size: 11px; color: var(--wf-gray-600);">15:00 hs</div>
+              </td>
+              <td>
+                <div style="font-weight: 700;">Oftalmología</div>
+                <div style="font-size: 11px; color: var(--wf-gray-600);">Box 3 • Pabellón Salud</div>
+              </td>
+              <td>
+                <span class="wf-badge wf-badge-outline" style="font-size: 10px;">Profesional Graduado</span>
+                <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Dr. F. Rossi (Médico de Planta)</div>
+              </td>
+              <td>Fondo de ojos preventivo y presión ocular</td>
+              <td>
+                <span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 700; font-size: 10px;">Completado</span>
+              </td>
+              <td style="text-align: right;">
+                <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="abrirCertificado('27/03/2026', 'Oftalmología', 'Dr. Fernando Rossi (Mat. 51.203)', 'Fondo de ojo sin hallazgos patológicos, presión ocular normal')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -1px; margin-right: 4px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Certificado
+                </button>
+              </td>
+            </tr>
+
+            <!-- Consulta 10 -->
+            <tr class="row-extensa" style="display: none;">
+              <td>
+                <div style="font-weight: 700;">19 Mar 2026</div>
+                <div style="font-size: 11px; color: var(--wf-gray-600);">11:00 hs</div>
+              </td>
+              <td>
+                <div style="font-weight: 700;">Nutrición y Hábitos</div>
+                <div style="font-size: 11px; color: var(--wf-gray-600);">Box 4 • Pabellón Salud</div>
+              </td>
+              <td>
+                <span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 800; font-size: 10px;">Práctica PPS</span>
+                <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Lic. C. Morales + 1 practicante</div>
+              </td>
+              <td>Composición corporal e hidratación en cursada</td>
+              <td>
+                <span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 700; font-size: 10px;">Completado</span>
+              </td>
+              <td style="text-align: right;">
+                <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="abrirCertificado('19/03/2026', 'Nutrición y Hábitos', 'Lic. Cecilia Morales (Mat. 33.190)', 'Evaluación de composición corporal y cronograma nutricional')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -1px; margin-right: 4px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Certificado
+                </button>
+              </td>
+            </tr>
+
+            <!-- Consulta 11 -->
+            <tr class="row-extensa" style="display: none;">
+              <td>
+                <div style="font-weight: 700;">12 Mar 2026</div>
+                <div style="font-size: 11px; color: var(--wf-gray-600);">08:30 hs</div>
+              </td>
+              <td>
+                <div style="font-weight: 700;">Clínica Médica</div>
+                <div style="font-size: 11px; color: var(--wf-gray-600);">Box 1 • Pabellón Salud</div>
+              </td>
+              <td>
+                <span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 800; font-size: 10px;">Práctica PPS</span>
+                <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Dr. R. Gómez + 2 practicantes</div>
+              </td>
+              <td>Chequeo clínico de rutina previo a cursada</td>
+              <td>
+                <span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 700; font-size: 10px;">Apto Aprobado</span>
+              </td>
+              <td style="text-align: right;">
+                <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="abrirCertificado('12/03/2026', 'Clínica Médica', 'Dr. Roberto Gómez (Mat. 39.401)', 'Examen clínico general e indicación de análisis de laboratorio')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -1px; margin-right: 4px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Certificado
+                </button>
+              </td>
+            </tr>
+
+            <!-- Consulta 12 -->
+            <tr class="row-extensa" style="display: none;">
+              <td>
+                <div style="font-weight: 700;">05 Mar 2026</div>
+                <div style="font-size: 11px; color: var(--wf-gray-600);">16:30 hs</div>
+              </td>
+              <td>
+                <div style="font-weight: 700;">Odontología Preventiva</div>
+                <div style="font-size: 11px; color: var(--wf-gray-600);">Box 2 • Pabellón Salud</div>
+              </td>
+              <td>
+                <span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 800; font-size: 10px;">Práctica PPS</span>
+                <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Dra. M. Benítez + 2 practicantes</div>
+              </td>
+              <td>Limpieza por ultrasonido y pulido coronario</td>
+              <td>
+                <span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 700; font-size: 10px;">Completado</span>
+              </td>
+              <td style="text-align: right;">
+                <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="abrirCertificado('05/03/2026', 'Odontología Preventiva', 'Dra. Mariana Benítez (Mat. 48.912)', 'Limpieza de sarro y enseñanza de técnica de cepillado')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -1px; margin-right: 4px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Certificado
+                </button>
+              </td>
+            </tr>
+
+            <!-- Consulta 13 -->
+            <tr class="row-extensa" style="display: none;">
+              <td>
+                <div style="font-weight: 700;">20 Feb 2026</div>
+                <div style="font-size: 11px; color: var(--wf-gray-600);">10:00 hs</div>
+              </td>
+              <td>
+                <div style="font-weight: 700;">Kinesiología y Postura</div>
+                <div style="font-size: 11px; color: var(--wf-gray-600);">Box 5 • Pabellón Salud</div>
+              </td>
+              <td>
+                <span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 800; font-size: 10px;">Práctica PPS</span>
+                <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Lic. G. López + 2 practicantes</div>
+              </td>
+              <td>Rehabilitación funcional por esguince leve</td>
+              <td>
+                <span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 700; font-size: 10px;">Apto Aprobado</span>
+              </td>
+              <td style="text-align: right;">
+                <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="abrirCertificado('20/02/2026', 'Kinesiología y Postura', 'Lic. Gonzalo López (Mat. 29.804)', 'Alta de fisioterapia y reincorporación a actividad física')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -1px; margin-right: 4px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Certificado
+                </button>
+              </td>
+            </tr>
+
+            <!-- Consulta 14 -->
+            <tr class="row-extensa" style="display: none;">
+              <td>
+                <div style="font-weight: 700;">12 Feb 2026</div>
+                <div style="font-size: 11px; color: var(--wf-gray-600);">14:00 hs</div>
+              </td>
+              <td>
+                <div style="font-weight: 700;">Clínica Médica</div>
+                <div style="font-size: 11px; color: var(--wf-gray-600);">Box 6 • Pabellón Salud</div>
+              </td>
+              <td>
+                <span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 800; font-size: 10px;">Práctica PPS</span>
+                <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Dra. P. Martínez + 2 practicantes</div>
+              </td>
+              <td>Control de presión arterial y revisión médica</td>
+              <td>
+                <span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 700; font-size: 10px;">Completado</span>
+              </td>
+              <td style="text-align: right;">
+                <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="abrirCertificado('12/02/2026', 'Clínica Médica', 'Dra. Paula Martínez (Mat. 44.112)', 'Presión arterial normotensa (120/80) y constancia de control')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -1px; margin-right: 4px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Certificado
+                </button>
+              </td>
+            </tr>
+
+            <!-- Consulta 15 -->
+            <tr class="row-extensa" style="display: none;">
+              <td>
+                <div style="font-weight: 700;">03 Feb 2026</div>
+                <div style="font-size: 11px; color: var(--wf-gray-600);">09:00 hs</div>
+              </td>
+              <td>
+                <div style="font-weight: 700;">Odontología Preventiva</div>
+                <div style="font-size: 11px; color: var(--wf-gray-600);">Box 2 • Pabellón Salud</div>
+              </td>
+              <td>
+                <span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 800; font-size: 10px;">Práctica PPS</span>
+                <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">Dra. M. Benítez + 2 practicantes</div>
+              </td>
+              <td>Diagnóstico bucal preventivo de inicio de año</td>
+              <td>
+                <span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 700; font-size: 10px;">Completado</span>
+              </td>
+              <td style="text-align: right;">
+                <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="abrirCertificado('03/02/2026', 'Odontología Preventiva', 'Dra. Mariana Benítez (Mat. 48.912)', 'Examen odontológico preventivo sin lesiones activas')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -1px; margin-right: 4px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Certificado
+                </button>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+
+        <!-- Paginación y conteo institucional -->
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--wf-gray-50); border-top: 1px solid var(--wf-border-strong); font-size: 11px; color: var(--wf-gray-700);">
+          <span id="textoPaginacion">Mostrando 1–3 de 3 consultas registradas</span>
+          <span style="font-size: 10px; color: var(--wf-gray-500);">Año Académico 2026</span>
+        </div>
       </div>
+
+      <div style="margin-top: 14px; font-size: 11px; color: var(--wf-gray-500); line-height: 1.4; display: flex; align-items: flex-start; gap: 8px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 1px; color: var(--wf-primary);"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        <div>
+          <strong>Nota de alcance institucional:</strong> Por motivos de privacidad médica y confidencialidad universitaria, la plataforma almacena únicamente comprobantes de asistencia y estados preventivos generales, sin prescripciones farmacológicas sensibles ni diagnósticos patológicos complejos.
+        </div>
+      </div>
+
+      </div><!-- Fin #contenedorHistorialConcluido -->
     </section>
 
   </main>
@@ -325,7 +677,7 @@
       </div>
 
       <p style="font-size: 12px; line-height: 1.6; color: var(--wf-gray-800); margin-bottom: 14px;">
-        Por la presente se hace constar que el/la estudiante <strong>Tomás Salvador Canosa</strong>, DNI N° <strong>42.158.904</strong>, Legajo N° <strong>89421</strong>, concurrió para su atención médica en los Consultorios del Campus San Justo el día <strong id="certFecha">18/10/2026</strong>.
+        Por la presente se hace constar que el/la estudiante <strong>José Pérez</strong>, DNI N° <strong>40.812.390</strong>, Legajo N° <strong>91402</strong>, concurrió para su atención médica en los Consultorios del Campus San Justo el día <strong id="certFecha">18/10/2026</strong>.
       </p>
 
       <div style="background: var(--wf-gray-100); border: 1px solid var(--wf-gray-300); padding: 10px 14px; border-radius: var(--radius-sm); margin-bottom: 16px; font-size: 11px; line-height: 1.5;">
@@ -357,6 +709,171 @@
   </footer>
 
   <script>
+    // Gestión de Turnos Pendientes / Próximas Citas (localStorage)
+    const TURNO_DEFAULT = {
+      id: 1,
+      especialidad: 'Clínica Médica — Box 4',
+      modalidad: 'Práctica Clínica Supervisada (PPS)',
+      profesional: 'Supervisa: Dra. Gómez',
+      fecha: 'Jue 14 Nov',
+      hora: '10:00 hs',
+      motivo: 'Control preventivo anual',
+      estado: 'PENDIENTE'
+    };
+
+    function obtenerTurnosPendientes() {
+      const guardados = localStorage.getItem('unlam_turnos_pendientes');
+      if (guardados === null) {
+        const iniciales = [TURNO_DEFAULT];
+        localStorage.setItem('unlam_turnos_pendientes', JSON.stringify(iniciales));
+        return iniciales;
+      }
+      try {
+        const parsed = JSON.parse(guardados);
+        if (Array.isArray(parsed)) return parsed;
+      } catch (e) {
+        console.error(e);
+      }
+      return [];
+    }
+
+    function guardarTurnosPendientes(turnos) {
+      localStorage.setItem('unlam_turnos_pendientes', JSON.stringify(turnos));
+    }
+
+    function cancelarTurnoPendiente(id, fecha, hora) {
+      if (confirm(`¿Estás seguro de cancelar tu turno del ${fecha} a las ${hora}?`)) {
+        let turnos = obtenerTurnosPendientes();
+        turnos = turnos.filter(t => t.id !== id);
+        guardarTurnosPendientes(turnos);
+        renderizarTurnosPendientes();
+        alert('Turno cancelado correctamente. El consultorio fue liberado.');
+      }
+    }
+
+    function renderizarTurnosPendientes() {
+      const contenedor = document.getElementById('contenedorTablaPendientes');
+      const badge = document.getElementById('badgeContadorPendientes');
+      if (!contenedor) return;
+
+      const turnos = obtenerTurnosPendientes();
+
+      if (badge) {
+        badge.textContent = `${turnos.length} ${turnos.length === 1 ? 'Turno Pendiente' : 'Turnos Pendientes'}`;
+      }
+
+      if (turnos.length === 0) {
+        contenedor.innerHTML = `
+          <div style="background: var(--wf-surface); border: 1px dashed var(--wf-border-strong); border-radius: var(--radius-md); padding: 22px; text-align: center; color: var(--wf-gray-600); font-size: 12px;">
+            <p style="margin-bottom: 6px; font-weight: 700; color: var(--wf-gray-800);">No tenés turnos médicos pendientes actualmente.</p>
+            <span>Para agendar una nueva consulta de atención primaria, ingresá a la <a href="pantalla_2_cartilla.html" style="color: #0c7a61; font-weight: 700; text-decoration: underline;">Cartilla de Especialidades</a>.</span>
+          </div>
+        `;
+        return;
+      }
+
+      let html = `
+        <div class="history-table-wrapper" style="margin-top: 6px;">
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>Fecha y Hora</th>
+                <th>Especialidad y Ubicación</th>
+                <th>Modalidad de Atención</th>
+                <th>Motivo Registrado</th>
+                <th>Estado</th>
+                <th style="text-align: right;">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+      `;
+
+      turnos.forEach(t => {
+        const esPps = (t.modalidad && t.modalidad.includes('PPS')) || (!t.modalidad);
+        const badgeModalidad = esPps
+          ? `<span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 800; font-size: 10px;">PRÁCTICA PPS</span>`
+          : `<span class="wf-badge wf-badge-outline" style="font-size: 10px;">PROFESIONAL GRADUADO</span>`;
+
+        html += `
+          <tr>
+            <td>
+              <div style="font-weight: 800; color: var(--wf-primary-hover); font-size: 13px;">${t.fecha}</div>
+              <div style="font-size: 11px; font-weight: 700; color: var(--wf-gray-700);">${t.hora}</div>
+            </td>
+            <td>
+              <div style="font-weight: 700; font-size: 12px; color: var(--wf-gray-900);">${t.especialidad}</div>
+              <div style="font-size: 11px; color: var(--wf-gray-600);">Pabellón Ciencias de la Salud • PB</div>
+            </td>
+            <td>
+              ${badgeModalidad}
+              <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">${t.profesional}</div>
+            </td>
+            <td style="font-size: 12px; color: var(--wf-gray-800);">${t.motivo || 'Control preventivo anual'}</td>
+            <td>
+              <span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 800; font-size: 10px;">${t.estado || 'PENDIENTE'}</span>
+            </td>
+            <td style="text-align: right;">
+              <div style="display: inline-flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end;">
+                <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="abrirCertificado('${t.fecha} 2026', '${t.especialidad}', '${t.profesional}', '${t.motivo}')" title="Descargar comprobante de reserva">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -1px; margin-right: 4px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Constancia
+                </button>
+                <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="cancelarTurnoPendiente(${t.id}, '${t.fecha}', '${t.hora}')" style="color: #dc2626; border-color: #fca5a5;" title="Cancelar este turno">
+                  Cancelar
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      });
+
+      html += `
+            </tbody>
+          </table>
+        </div>
+      `;
+
+      contenedor.innerHTML = html;
+    }
+
+    // Inicializar renderizado de turnos pendientes
+    renderizarTurnosPendientes();
+
+    // Divulgación Progresiva de Consultas Concluidas (Heurística 8)
+    let historialConcluidoVisible = false;
+    function toggleHistorialConcluido() {
+      historialConcluidoVisible = !historialConcluidoVisible;
+      const contenedor = document.getElementById('contenedorHistorialConcluido');
+      const textoBtn = document.getElementById('textoBtnDespliegue');
+      if (historialConcluidoVisible) {
+        contenedor.style.display = 'block';
+        textoBtn.textContent = 'Ocultar historial ▴';
+      } else {
+        contenedor.style.display = 'none';
+        textoBtn.textContent = 'Ver historial de consultas ▾';
+      }
+    }
+
+    let historialExtensoActivo = false;
+    function alternarHistorialExtenso() {
+      historialExtensoActivo = !historialExtensoActivo;
+      const filas = document.querySelectorAll('.row-extensa');
+      filas.forEach(f => {
+        f.style.display = historialExtensoActivo ? 'table-row' : 'none';
+      });
+      const btn = document.getElementById('btnToggleHistorial');
+      const badge = document.getElementById('badgeTotalAtenciones');
+      const pag = document.getElementById('textoPaginacion');
+      if (historialExtensoActivo) {
+        btn.textContent = 'Vista resumida (3 atenciones)';
+        badge.textContent = '15 Atenciones Concluidas';
+        pag.textContent = 'Mostrando 1–15 de 15 consultas registradas';
+      } else {
+        btn.textContent = 'Ver historial extenso (15 atenciones)';
+        badge.textContent = '3 Atenciones Concluidas';
+        pag.textContent = 'Mostrando 1–3 de 3 consultas registradas';
+      }
+    }
+
     function abrirCertificado(fecha, especialidad, profesional, concepto) {
       document.getElementById('certFecha').textContent = fecha;
       document.getElementById('certEspecialidad').textContent = especialidad;
