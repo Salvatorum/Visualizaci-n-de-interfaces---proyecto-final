@@ -59,81 +59,6 @@
       max-width: 80px;
     }
 
-    /* Paso 1: Botones de Días Disponibles (Divulgación Progresiva) */
-    .days-selector-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin-top: 10px;
-    }
-    .day-card-btn {
-      background: var(--wf-surface);
-      border: 1px solid var(--wf-border-strong);
-      border-radius: var(--radius-sm);
-      padding: 12px 10px;
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.15s ease;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .day-card-btn:hover {
-      background: var(--wf-gray-100);
-      border-color: var(--wf-gray-900);
-    }
-    .day-card-btn.selected {
-      background: var(--wf-primary);
-      color: var(--wf-white);
-      border-color: var(--wf-primary);
-    }
-    .day-card-name {
-      font-size: 13px;
-      font-weight: 800;
-    }
-    .day-card-meta {
-      font-size: 11px;
-      color: var(--wf-gray-600);
-    }
-    .day-card-btn.selected .day-card-meta {
-      color: #e6f5f0;
-    }
-
-    /* Paso 2: Contenedor Desplegable de Horarios para el Día Seleccionado */
-    .times-reveal-box {
-      margin-top: 16px;
-      padding: 14px;
-      background: var(--wf-gray-50);
-      border: 1px solid var(--wf-gray-300);
-      border-radius: var(--radius-sm);
-    }
-    .times-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-top: 10px;
-    }
-    .time-slot-btn {
-      padding: 10px 8px;
-      background: var(--wf-surface);
-      border: 1px solid var(--wf-border-strong);
-      border-radius: var(--radius-sm);
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.15s ease;
-    }
-    .time-slot-btn:hover {
-      background: var(--wf-gray-200);
-      border-color: var(--wf-gray-900);
-    }
-    .time-slot-btn.selected {
-      background: var(--wf-primary);
-      color: var(--wf-white);
-      border-color: var(--wf-primary);
-    }
-
     /* Lista fácil de leer para el Consentimiento PPS */
     .consent-list {
       list-style: none;
@@ -186,9 +111,6 @@
     }
 
     @media (max-width: 768px) {
-      .days-selector-grid, .times-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
       .stepper-container {
         flex-direction: column;
         gap: 8px;
@@ -245,16 +167,16 @@
     <div class="stepper-container" data-gestalt="Buena Continuidad y Elemento Conectado" data-heuristic="Visibilidad del Estado del Sistema (H1)">
       <div class="step-item completed">
         <span class="step-badge">✓</span>
-        <span>1. Especialidad</span>
+        <span>1. Especialidad y Turno</span>
       </div>
       <div class="step-connector"></div>
       <div class="step-item active" id="step2Badge">
-        <span class="step-badge">2</span>
-        <span>2. Día, Horario y Motivo</span>
+        <span class="step-badge" id="step2Number">2</span>
+        <span>2. Motivo y Consentimiento</span>
       </div>
       <div class="step-connector"></div>
       <div class="step-item" id="step3Badge">
-        <span class="step-badge">3</span>
+        <span class="step-badge" id="step3Number">3</span>
         <span>3. Confirmación</span>
       </div>
     </div>
@@ -262,11 +184,12 @@
     <!-- Resumen de especialidad seleccionada (Heurística 3: Control del Usuario) -->
     <div class="wf-card" style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; padding: 12px 18px; flex-wrap: wrap; gap: 10px;" data-heuristic="Control y Libertad (H3)">
       <div>
-        <span class="wf-badge wf-badge-dark" style="margin-bottom: 4px;">Especialidad Seleccionada</span>
+        <span class="wf-badge wf-badge-dark" style="margin-bottom: 4px;">Turno Asignado en Cartilla</span>
         <div id="tituloEspecialidadSeleccionada" style="font-size: 15px; font-weight: 800;">Odontología Preventiva — Box 2 (Pabellón Salud)</div>
-        <div id="subtituloModalidad" style="font-size: 11px; color: var(--wf-gray-600);">Modalidad: Práctica Clínica Supervisada (PPS) • Espera estimada: menos de 48 hs</div>
+        <div style="font-size: 12px; color: var(--wf-primary); font-weight: 700; margin-top: 2px;">Fecha y Horario: <span id="resumenFechaHoraCabecera">Jue 14 Nov — 14:00 hs</span></div>
+        <div id="subtituloModalidad" style="font-size: 11px; color: var(--wf-gray-600); margin-top: 2px;">Modalidad: Práctica Clínica Supervisada (PPS) • Espera estimada: menos de 48 hs</div>
       </div>
-      <a href="pantalla_2_cartilla.html" class="wf-btn wf-btn-secondary wf-btn-sm" title="Modificar especialidad elegida">Cambiar</a>
+      <a href="pantalla_2_cartilla.html" class="wf-btn wf-btn-secondary wf-btn-sm" title="Modificar turno elegido en la cartilla">Cambiar en Cartilla</a>
     </div>
 
     <!-- ==================== CONFIRMACIÓN EXITOSA INLINE ==================== -->
@@ -285,69 +208,10 @@
 
     <form id="reservaForm" onsubmit="handleFormSubmit(event)" novalidate>
       
-      <!-- ==================== 2. SELECTOR PROGRESIVO DE DÍA Y HORARIO (Solo lo necesario) ==================== -->
-      <section class="wf-card" id="bloqueHorario" style="margin-bottom: 20px;" data-gestalt="Cerramiento y Proximidad" data-heuristic="Diseño Minimalista y Prevención (H8 y H5)">
-        <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
-          <div>
-            <h2 style="font-size: 15px; font-weight: 800;">1. Elegí Día y Horario Disponible</h2>
-            <p style="font-size: 12px; color: var(--wf-gray-600);">Preseleccionamos el próximo turno libre del consultorio elegido. Si lo necesitás, podés cambiar de día u horario haciendo clic abajo.</p>
-          </div>
-          <div style="font-size: 11px; font-weight: 700; color: var(--wf-gray-700);">
-            Seleccionado: <span id="slotElegidoTexto" class="wf-badge wf-badge-outline-green" style="text-transform: none; letter-spacing: 0;">Pendiente</span>
-          </div>
-        </div>
-
-        <!-- Sub-paso A: Solo los días con disponibilidad -->
-        <div class="days-selector-grid" role="group" aria-label="Días con disponibilidad">
-          <button type="button" class="day-card-btn" onclick="seleccionarDia(this, 'Lun 11 Nov', ['09:00 hs', '10:30 hs', '14:00 hs', '16:30 hs'])">
-            <span class="day-card-name">Lun 11 Nov</span>
-            <span class="day-card-meta">4 horarios libres</span>
-          </button>
-
-          <button type="button" class="day-card-btn" onclick="seleccionarDia(this, 'Mié 13 Nov', ['08:30 hs', '10:30 hs', '14:00 hs'])">
-            <span class="day-card-name">Mié 13 Nov</span>
-            <span class="day-card-meta">3 horarios libres</span>
-          </button>
-
-          <button type="button" class="day-card-btn" onclick="seleccionarDia(this, 'Jue 14 Nov', ['14:00 hs', '15:30 hs', '17:00 hs'])">
-            <span class="day-card-name">Jue 14 Nov</span>
-            <span class="day-card-meta">3 horarios libres</span>
-          </button>
-
-          <button type="button" class="day-card-btn" onclick="seleccionarDia(this, 'Vie 15 Nov', ['09:30 hs', '11:30 hs', '16:00 hs'])">
-            <span class="day-card-name">Vie 15 Nov</span>
-            <span class="day-card-meta">3 horarios libres</span>
-          </button>
-        </div>
-
-        <!-- Sub-paso B: Horarios desplegados dinámicamente al elegir el día -->
-        <div class="times-reveal-box" id="contenedorHorariosDia">
-          <div id="promptSinDia" style="font-size: 12px; color: var(--wf-gray-600); text-align: center; padding: 8px 0;">
-            ↑ Seleccioná uno de los días disponibles para desplegar sus horarios.
-          </div>
-          <div id="zonaHorariosActiva" style="display: none;">
-            <div style="font-size: 12px; font-weight: 700; color: var(--wf-gray-900);">
-              Horarios disponibles para el <span id="nombreDiaElegido"></span>:
-            </div>
-            <div class="times-grid" id="gridBotonesHorarios"></div>
-          </div>
-        </div>
-
-        <!-- Mensaje de error INLINE adyacente al selector de horario -->
-        <div class="wf-inline-error" id="errorHorario" role="alert">
-          <svg class="wf-svg-icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="color: #dc2626;">
-            <circle cx="12" cy="12" r="10"/>
-            <line x1="12" y1="8" x2="12" y2="12"/>
-            <line x1="12" y1="16" x2="12.01" y2="16"/>
-          </svg>
-          <span>Falta elegir fecha y horario: seleccioná un día disponible y luego uno de los horarios desplegados.</span>
-        </div>
-      </section>
-
-      <!-- ==================== 3. MOTIVO DE CONSULTA (Select simplificado - Heurística 6) ==================== -->
+      <!-- ==================== MOTIVO DE CONSULTA (Select simplificado - Heurística 6) ==================== -->
       <section class="wf-card" style="margin-bottom: 20px;" data-gestalt="Proximidad" data-heuristic="Reconocimiento antes que Recuerdo (H6)">
         <label class="wf-label" for="selectMotivo" style="font-size: 13px; text-transform: none; color: var(--wf-gray-900); margin-bottom: 6px;">
-          2. Motivo de la Consulta
+          Motivo de la Consulta
         </label>
         <select id="selectMotivo" class="wf-select" onchange="actualizarMotivo()">
           <option value="preventivo" selected>Control preventivo anual</option>
@@ -361,7 +225,7 @@
         </p>
       </section>
 
-      <!-- ==================== 4. CONSENTIMIENTO DIGITAL OBLIGATORIO (Lectura clara + Errores Inline) ==================== -->
+      <!-- ==================== 3. CONSENTIMIENTO DIGITAL OBLIGATORIO (Lectura clara + Errores Inline) ==================== -->
       <section class="wf-consent-box" id="bloqueConsentimiento" data-gestalt="Región Común (Borde Punteado)" data-heuristic="Ayuda y Documentación (H10)">
         
         <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap;">
@@ -414,7 +278,7 @@
 
       </section>
 
-      <!-- ==================== 5. ACCIONES DEL FORMULARIO ==================== -->
+      <!-- ==================== 4. ACCIONES DEL FORMULARIO ==================== -->
       <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 22px; flex-wrap: wrap; gap: 12px;">
         <a href="pantalla_2_cartilla.html" class="wf-btn wf-btn-secondary">
           ← Volver a Cartilla
@@ -461,61 +325,15 @@
       document.getElementById('subtituloModalidad').textContent = 'Modalidad: Profesional Graduado • Espera estimada: 7 a 14 días';
     }
 
-    // 2. Divulgación Progresiva: Selección de Día -> Despliega Horarios Disponibles
-    let diaSeleccionado = null;
-    let horaSeleccionada = null;
-
-    function seleccionarDia(btn, nombreDia, horarios) {
-      document.querySelectorAll('.day-card-btn').forEach(b => b.classList.remove('selected'));
-      btn.classList.add('selected');
-
-      diaSeleccionado = nombreDia;
-      horaSeleccionada = null;
-      document.getElementById('slotElegidoTexto').textContent = nombreDia + ' (elegí horario)';
-
-      // Mostrar sub-paso B con los horarios disponibles de ese día
-      document.getElementById('promptSinDia').style.display = 'none';
-      document.getElementById('zonaHorariosActiva').style.display = 'block';
-      document.getElementById('nombreDiaElegido').textContent = nombreDia;
-
-      const grid = document.getElementById('gridBotonesHorarios');
-      grid.innerHTML = '';
-      horarios.forEach(h => {
-        const b = document.createElement('button');
-        b.type = 'button';
-        b.className = 'time-slot-btn';
-        b.textContent = h;
-        b.onclick = () => seleccionarHora(b, h);
-        grid.appendChild(b);
-      });
-
-      limpiarErrorHorario();
-    }
-
-    function seleccionarHora(btn, hora) {
-      if (btn.classList.contains('selected')) {
-        btn.classList.remove('selected');
-        horaSeleccionada = null;
-        document.getElementById('slotElegidoTexto').textContent = `${diaSeleccionado} (elegí horario)`;
-        return;
-      }
-      document.querySelectorAll('.time-slot-btn').forEach(b => b.classList.remove('selected'));
-      btn.classList.add('selected');
-      horaSeleccionada = hora;
-      document.getElementById('slotElegidoTexto').textContent = `${diaSeleccionado} — ${horaSeleccionada}`;
-      limpiarErrorHorario();
-    }
+    let diaSeleccionado = diaParam || 'Jue 14 Nov';
+    let horaSeleccionada = horaParam || '14:00 hs';
+    document.getElementById('resumenFechaHoraCabecera').textContent = `${diaSeleccionado} — ${horaSeleccionada}`;
 
     function actualizarMotivo() {
       limpiarErrorAyuno();
     }
 
     // 3. Funciones de limpieza y validación INLINE adyacente al input (Sin popups de error)
-    function limpiarErrorHorario() {
-      document.getElementById('bloqueHorario').classList.remove('wf-section-error');
-      document.getElementById('errorHorario').classList.remove('visible');
-    }
-
     function limpiarErrorConsentimiento() {
       if (document.getElementById('checkConsentimiento').checked) {
         document.getElementById('rowCheckConsentimiento').classList.remove('field-invalid');
@@ -536,13 +354,6 @@
     function handleFormSubmit(e) {
       e.preventDefault();
       let primerError = null;
-
-      // Validar Día y Horario
-      if (!diaSeleccionado || !horaSeleccionada) {
-        document.getElementById('bloqueHorario').classList.add('wf-section-error');
-        document.getElementById('errorHorario').classList.add('visible');
-        primerError = document.getElementById('bloqueHorario');
-      }
 
       // Validar Consentimiento Digital Obligatorio
       const checkCons = document.getElementById('checkConsentimiento');
@@ -641,7 +452,9 @@
       document.getElementById('reservaForm').style.display = 'none';
       document.getElementById('step2Badge').classList.remove('active');
       document.getElementById('step2Badge').classList.add('completed');
-      document.getElementById('step3Badge').classList.add('active');
+      document.getElementById('step2Number').textContent = '✓';
+      document.getElementById('step3Badge').classList.add('completed');
+      document.getElementById('step3Number').textContent = '✓';
       document.getElementById('resumenTurnoConfirmado').innerHTML = `
         <div style="font-size: 14px; font-weight: 800; color: var(--wf-primary-hover); margin-bottom: 4px;">${espNombre}</div>
         <div style="font-size: 13px; color: var(--wf-gray-800); margin-bottom: 2px;">Fecha y hora: <strong>${diaSeleccionado} a las ${horaSeleccionada}</strong></div>
@@ -654,44 +467,11 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Preselección inteligente de día y horario (Heurísticas 6 y 7), salvo demostración de error de horario
-    function preseleccionarTurno(diaTarget, horaTarget) {
-      const dayBtns = document.querySelectorAll('.day-card-btn');
-      let matchedDayBtn = null;
-      dayBtns.forEach(btn => {
-        const nameEl = btn.querySelector('.day-card-name');
-        if (nameEl && nameEl.textContent.trim() === diaTarget) {
-          matchedDayBtn = btn;
-        }
-      });
-      if (!matchedDayBtn) return;
-
-      matchedDayBtn.click();
-
-      if (horaTarget) {
-        const timeBtns = document.querySelectorAll('#gridBotonesHorarios .time-slot-btn');
-        timeBtns.forEach(tb => {
-          if (tb.textContent.trim() === horaTarget) {
-            seleccionarHora(tb, horaTarget);
-          }
-        });
-      }
-    }
-
-    if (errorParam !== 'horario') {
-      const diaInicial = diaParam || 'Jue 14 Nov';
-      const horaInicial = horaParam || (diaParam ? null : '14:00 hs');
-      preseleccionarTurno(diaInicial, horaInicial);
-    }
-
     // Mostrar estado inline pre-activado si llega por URL de demostración (?error=...)
     if (errorParam === 'consentimiento') {
       document.getElementById('bloqueConsentimiento').classList.add('has-error');
       document.getElementById('rowCheckConsentimiento').classList.add('field-invalid');
       document.getElementById('errorConsentimiento').classList.add('visible');
-    } else if (errorParam === 'horario') {
-      document.getElementById('bloqueHorario').classList.add('wf-section-error');
-      document.getElementById('errorHorario').classList.add('visible');
     }
 
     // Script del Menú Hamburguesa

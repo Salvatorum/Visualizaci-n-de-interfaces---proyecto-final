@@ -347,6 +347,68 @@ a.wf-btn-primary:hover {
   border: 1px solid var(--wf-border-strong);
 }
 
+/* Indicador Lineal de Pasos / Stepper (Gestalt: Continuidad) */
+.stepper-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-5);
+  padding: 14px;
+  background: var(--wf-surface);
+  border: 1px solid var(--wf-border-strong);
+  border-radius: var(--radius-md);
+}
+.step-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--wf-gray-500);
+}
+.step-item.active {
+  color: var(--wf-primary);
+}
+.step-item.completed {
+  color: var(--wf-gray-700);
+}
+.step-badge {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--wf-gray-400);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+.step-item.active .step-badge {
+  border-color: var(--wf-primary);
+  background: var(--wf-primary);
+  color: var(--wf-white);
+}
+.step-item.completed .step-badge {
+  border-color: var(--wf-primary);
+  background: #e6f5f0;
+  color: var(--wf-primary-hover);
+}
+.step-connector {
+  flex: 1;
+  height: 2px;
+  background: var(--wf-gray-300);
+  margin: 0 16px;
+  max-width: 80px;
+}
+@media (max-width: 768px) {
+  .stepper-container {
+    padding: 10px;
+    gap: 6px;
+  }
+  .step-connector {
+    margin: 0 6px;
+  }
+}
+
 /* Textura Rayada Gestáltica para Horarios Bloqueados (Prevención de Errores) */
 .wf-slot-disabled {
   background: repeating-linear-gradient(

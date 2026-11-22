@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,7 +23,11 @@
       font-display: swap;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
       font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -52,6 +57,7 @@
       align-items: center;
       gap: 12px;
     }
+
     .badge-tag {
       background: var(--ui-accent);
       color: white;
@@ -72,6 +78,7 @@
       border: 1px solid var(--ui-border);
       overflow-x: auto;
     }
+
     .screen-tab-btn {
       background: transparent;
       border: none;
@@ -84,10 +91,12 @@
       transition: all 0.15s ease;
       white-space: nowrap;
     }
+
     .screen-tab-btn:hover {
       color: var(--ui-text);
-      background: rgba(255,255,255,0.06);
+      background: rgba(255, 255, 255, 0.06);
     }
+
     .screen-tab-btn.active {
       background: var(--ui-accent);
       color: white;
@@ -101,6 +110,7 @@
       gap: 6px;
       flex-wrap: wrap;
     }
+
     .view-btn {
       background: var(--ui-bar);
       border: 1px solid var(--ui-border);
@@ -116,10 +126,12 @@
       transition: all 0.15s ease;
       user-select: none;
     }
+
     .view-btn:hover {
       color: var(--ui-text);
       border-color: var(--ui-accent);
     }
+
     .view-btn.active {
       border-color: var(--ui-accent);
       background: rgba(15, 153, 119, 0.15);
@@ -132,6 +144,7 @@
       background: rgba(2, 132, 199, 0.2);
       color: #38bdf8;
     }
+
     .view-btn-heuristic.active {
       border-color: #10b981;
       background: rgba(16, 185, 129, 0.2);
@@ -175,7 +188,7 @@
       height: 740px;
       border-radius: 36px;
       border: 10px solid #27272a;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.8), inset 0 0 0 2px #52525b;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), inset 0 0 0 2px #52525b;
     }
 
     /* Modo Libre (100%) */
@@ -205,18 +218,27 @@
       padding: 14px 18px;
       max-width: 520px;
       font-size: 12px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(8px);
       z-index: 500;
       display: none;
     }
+
     .ux-annotation-drawer.visible {
       display: block;
       animation: fadeIn 0.2s ease-out;
     }
+
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* Grilla de 12 Columnas Overlay */
@@ -234,9 +256,11 @@
       gap: 20px;
       padding: 0 16px;
     }
+
     .grid-overlay-layer.visible {
       display: grid;
     }
+
     .grid-overlay-col {
       background: rgba(239, 68, 68, 0.08);
       border-left: 1px dashed rgba(239, 68, 68, 0.35);
@@ -255,17 +279,19 @@
     }
   </style>
 </head>
+
 <body>
 
   <!-- ==================== BARRA SUPERIOR DE CONTROL ==================== -->
   <header class="presenter-bar">
-    
+
     <!-- Info del Proyecto -->
     <div class="project-info">
       <span class="badge-tag">UNLaM • DIIT</span>
       <div>
         <div style="font-size: 13px; font-weight: 800; color: white;">Sistema de Salud y Prácticas Clínicas (PPS)</div>
-        <div style="font-size: 11px; color: var(--ui-text-muted);">Visualización e Interfaces • Cátedra: Heliana Vera • 7 Pantallas (5 requeridas + 2 complementarias de cierre de arquitectura)</div>
+        <div style="font-size: 11px; color: var(--ui-text-muted);">Visualización e Interfaces • Cátedra: Heliana Vera •
+          7 Pantallas (5 requeridas + 2 complementarias de cierre de arquitectura)</div>
       </div>
     </div>
 
@@ -286,10 +312,12 @@
       <button class="screen-tab-btn" onclick="loadScreen('pantalla_5_grafico.html', 5, this)">
         5. Gráfico y KPIs
       </button>
-      <button class="screen-tab-btn" onclick="loadScreen('pantalla_6_historial.html', 6, this)" title="Pantalla complementaria: Cierre de arquitectura Nivel 2">
+      <button class="screen-tab-btn" onclick="loadScreen('pantalla_6_historial.html', 6, this)"
+        title="Pantalla complementaria: Cierre de arquitectura Nivel 2">
         6. Mi Historial [Cierre Arq]
       </button>
-      <button class="screen-tab-btn" onclick="loadScreen('pantalla_7_programa_pps.html', 7, this)" title="Pantalla complementaria: Cierre de arquitectura Nivel 3">
+      <button class="screen-tab-btn" onclick="loadScreen('pantalla_7_programa_pps.html', 7, this)"
+        title="Pantalla complementaria: Cierre de arquitectura Nivel 3">
         7. Programa PPS [Cierre Arq]
       </button>
     </nav>
@@ -297,21 +325,25 @@
     <!-- Controles de Capas Teóricas & Viewport -->
     <div class="viewport-controls">
       <!-- Capas de Inspección Teórica de Cátedra -->
-      <button class="view-btn view-btn-gestalt" id="btnGestaltToggle" onclick="toggleGestaltLayer()" title="Resaltar Leyes de la Gestalt aplicadas en pantalla">
+      <button class="view-btn view-btn-gestalt" id="btnGestaltToggle" onclick="toggleGestaltLayer()"
+        title="Resaltar Leyes de la Gestalt aplicadas en pantalla">
         🧠 Leyes Gestalt
       </button>
 
-      <button class="view-btn view-btn-heuristic" id="btnHeuristicToggle" onclick="toggleHeuristicLayer()" title="Resaltar Heurísticas de Usabilidad de Nielsen aplicadas">
+      <button class="view-btn view-btn-heuristic" id="btnHeuristicToggle" onclick="toggleHeuristicLayer()"
+        title="Resaltar Heurísticas de Usabilidad de Nielsen aplicadas">
         🔍 Heurísticas Nielsen
       </button>
 
       <!-- Toggle Grilla 12 Columnas -->
-      <button class="view-btn" id="btnGridToggle" onclick="toggleGridOverlay()" title="Superponer grilla de 12 columnas">
+      <button class="view-btn" id="btnGridToggle" onclick="toggleGridOverlay()"
+        title="Superponer grilla de 12 columnas">
         ▦ Grilla 12 Cols
       </button>
 
       <!-- Toggle Especificaciones UX -->
-      <button class="view-btn active" id="btnNotesToggle" onclick="toggleNotes()" title="Ver justificación técnica y pedagógica">
+      <button class="view-btn active" id="btnNotesToggle" onclick="toggleNotes()"
+        title="Ver justificación técnica y pedagógica">
         💡 Criterios Cátedra
       </button>
 
@@ -328,7 +360,8 @@
         ⛶ Libre
       </button>
 
-      <a id="btnOpenRaw" href="pantalla_1_home.html" target="_blank" class="view-btn" style="color: var(--ui-accent); text-decoration: none;">
+      <a id="btnOpenRaw" href="pantalla_1_home.html" target="_blank" class="view-btn"
+        style="color: var(--ui-accent); text-decoration: none;">
         ↗ Pestaña
       </a>
     </div>
@@ -337,10 +370,10 @@
 
   <!-- ==================== CANVAS Y SIMULADOR DE VIEWPORT ==================== -->
   <main class="canvas-area">
-    
+
     <!-- Marco de previsualización -->
     <div class="viewport-frame desktop-mode" id="frameContainer">
-      
+
       <!-- Overlay de Grilla de 12 Columnas -->
       <div class="grid-overlay-layer" id="gridOverlay">
         <div class="grid-overlay-col"></div>
@@ -358,7 +391,8 @@
       </div>
 
       <!-- Iframe contenedor de la pantalla activa -->
-      <iframe id="wireframeViewer" class="wireframe-iframe" src="pantalla_1_home.html" onload="onIframeLoaded()"></iframe>
+      <iframe id="wireframeViewer" class="wireframe-iframe" src="pantalla_1_home.html"
+        onload="onIframeLoaded()"></iframe>
     </div>
 
     <!-- Cajón Flotante de Especificaciones y Justificación de Cátedra -->
@@ -367,7 +401,8 @@
         <span style="font-weight: 800; color: var(--ui-accent); text-transform: uppercase; font-size: 11px;">
           📌 Fundamentación Teórica y Correcciones de Cátedra
         </span>
-        <button onclick="toggleNotes()" style="background: none; border: none; color: var(--ui-text-muted); cursor: pointer; font-size: 14px;">✕</button>
+        <button onclick="toggleNotes()"
+          style="background: none; border: none; color: var(--ui-text-muted); cursor: pointer; font-size: 14px;">✕</button>
       </div>
       <div id="uxDrawerContent" style="color: #cbd5e1; line-height: 1.45;"></div>
     </aside>
@@ -378,10 +413,12 @@
   <footer class="meta-footer">
     <div>
       <span>Arquitectura Completa del Prototipo: </span>
-      <strong style="color: #38bdf8;">7 Pantallas Responsivas</strong> (5 de requerimiento mínimo de cátedra + 2 complementarias de cierre de arquitectura)
+      <strong style="color: #38bdf8;">7 Pantallas Responsivas</strong> (5 de requerimiento mínimo de cátedra + 2
+      complementarias de cierre de arquitectura)
     </div>
     <div>
-      <span>Grilla: </span> 12 columnas desktop / 1 col mobile apilada • Diseño UI de Alta Fidelidad — Sistema Visual UNLaM Salud & PPS
+      <span>Grilla: </span> 12 columnas desktop / 1 col mobile apilada • Diseño UI de Alta Fidelidad — Sistema Visual
+      UNLaM Salud & PPS
     </div>
   </footer>
 
@@ -392,8 +429,9 @@
           • <em>Modelo Miro, Leo, Pienso (Mordecki):</em> <em>Miro</em> (fecha y hora destacadas con contorno verde y sin relleno <strong>Jue 14 Nov — 10:00 hs</strong> + íconos vectoriales representativos en especialidades), <em>Leo</em> (demoras expresadas en lenguaje claro: "menos de 24/48 hs"), <em>Pienso</em> (descarga de constancia o acceso a especialidades).<br>
           • <em>Gestalt aplicadas:</em> <strong>Región Común y Cerramiento</strong> en "Próximo Turno Agendado"; <strong>Semejanza y Simetría (Prägnanz)</strong> en las 5 tarjetas de especialidades.`,
 
-      2: `<strong>Pantalla 2: Cartilla y Filtro de Modalidad ("Filtrar Primero")</strong><br>
-          • <em>Correcciones de Cátedra:</em> El filtro de Modalidad ahora es un <code>&lt;select&gt;</code> con <strong>Práctica Clínica Supervisada (menos de 48 hs)</strong> por defecto; además, los consultorios no se despliegan todos juntos para evitar saturación visual, apareciendo recién tras elegir una especialidad.<br>
+      2: `<strong>Pantalla 2: Cartilla y Filtros de Consultorios y Modalidad ("Filtrar Primero")</strong><br>
+          • <em>Proceso Lineal (Gestalt Continuidad):</em> Incorpora el <strong>Stepper de 3 pasos (Paso 1: Especialidad y Turno)</strong> para dar visibilidad de avance desde el inicio del embudo de reserva.<br>
+          • <em>Correcciones de Cátedra:</em> Selección de fecha y turno en la cartilla; el filtro de Modalidad es un <code>&lt;select&gt;</code> con <strong>Práctica Clínica Supervisada (menos de 48 hs)</strong> por defecto; además, los consultorios no se despliegan todos juntos para evitar saturación visual, apareciendo tras elegir una especialidad.<br>
           • <em>Gestalt aplicadas:</em> <strong>Región Común</strong> delimitando la barra de filtros; <strong>Semejanza</strong> en las tarjetas modulares homogéneas de 3 a 4 líneas.<br>
           • <em>Heurísticas:</em> <strong>Visibilidad del Estado (H1)</strong> con conteo dinámico de resultados y <strong>Diseño Minimalista (H8)</strong>.`,
 
@@ -528,4 +566,5 @@
     document.getElementById('uxDrawerContent').innerHTML = annotations[1];
   </script>
 </body>
+
 </html>

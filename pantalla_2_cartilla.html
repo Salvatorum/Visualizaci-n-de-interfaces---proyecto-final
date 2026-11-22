@@ -190,6 +190,24 @@
   <!-- ==================== CONTENIDO PRINCIPAL ==================== -->
   <main class="container">
 
+    <!-- ==================== 1. INDICADOR LINEAL DE PASOS (Gestalt: Continuidad) ==================== -->
+    <div class="stepper-container" data-gestalt="Buena Continuidad y Elemento Conectado" data-heuristic="Visibilidad del Estado del Sistema (H1)">
+      <div class="step-item active">
+        <span class="step-badge">1</span>
+        <span>1. Especialidad y Turno</span>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step-item">
+        <span class="step-badge">2</span>
+        <span>2. Motivo y Consentimiento</span>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step-item">
+        <span class="step-badge">3</span>
+        <span>3. Confirmación</span>
+      </div>
+    </div>
+
     <!-- Título de Sección y migas de pan (Heurística 1) -->
     <div style="margin-bottom: 16px;">
       <div style="font-size: 11px; color: var(--wf-gray-600); margin-bottom: 4px;">
@@ -257,8 +275,8 @@
           Elegí una especialidad en el filtro superior para ver los consultorios disponibles.
         </div>
         <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-          <button type="button" class="wf-btn wf-btn-secondary wf-btn-sm" onclick="simularAltaDemanda()" style="font-size: 11px;">
-            Simular alta demanda (12 consultorios)
+          <button type="button" class="wf-btn wf-btn-secondary wf-btn-sm" onclick="simularAltaOferta()" style="font-size: 11px;">
+            Simular alta oferta de turnos disponibles (12 consultorios)
           </button>
           <span class="wf-badge wf-badge-dark" id="badgeModalidadActiva">Modalidad: Práctica Supervisada (PPS)</span>
           <span style="font-size: 11px; color: var(--wf-gray-600);" id="subtituloModalidad">Espera en menos de 48 hs</span>
@@ -558,11 +576,12 @@
       aplicarFiltros();
     }
 
-    function simularAltaDemanda() {
+    function simularAltaOferta() {
       document.getElementById('selectEspecialidad').value = 'todas';
       document.getElementById('selectFecha').value = 'todas';
       aplicarFiltros();
     }
+    const simularAltaDemanda = simularAltaOferta;
 
     function aplicarFiltros() {
       const esp = document.getElementById('selectEspecialidad').value;
