@@ -186,7 +186,7 @@
       <div>
         <span class="wf-badge wf-badge-dark" style="margin-bottom: 4px;">Turno Asignado en Cartilla</span>
         <div id="tituloEspecialidadSeleccionada" style="font-size: 15px; font-weight: 800;">Odontología Preventiva — Box 2 (Pabellón Salud)</div>
-        <div style="font-size: 12px; color: var(--wf-primary); font-weight: 700; margin-top: 2px;">Fecha y Horario: <span id="resumenFechaHoraCabecera">Jue 14 Nov — 14:00 hs</span></div>
+        <div style="font-size: 12px; color: var(--wf-primary); font-weight: 700; margin-top: 2px;">Fecha y Horario: <span id="resumenFechaHoraCabecera">Jue 26 Nov — 14:00 hs</span></div>
         <div id="subtituloModalidad" style="font-size: 11px; color: var(--wf-gray-600); margin-top: 2px;">Modalidad: Práctica Clínica Supervisada (PPS) • Espera estimada: menos de 48 hs</div>
       </div>
       <a href="pantalla_2_cartilla.html" class="wf-btn wf-btn-secondary wf-btn-sm" title="Modificar turno elegido en la cartilla">Cambiar en Cartilla</a>
@@ -325,7 +325,7 @@
       document.getElementById('subtituloModalidad').textContent = 'Modalidad: Profesional Graduado • Espera estimada: 7 a 14 días';
     }
 
-    let diaSeleccionado = diaParam || 'Jue 14 Nov';
+    let diaSeleccionado = diaParam || 'Jue 26 Nov';
     let horaSeleccionada = horaParam || '14:00 hs';
     document.getElementById('resumenFechaHoraCabecera').textContent = `${diaSeleccionado} — ${horaSeleccionada}`;
 
@@ -349,6 +349,44 @@
         document.getElementById('rowCheckAyuno').classList.remove('field-invalid');
         document.getElementById('errorAyuno').classList.remove('visible');
       }
+    }
+
+    // Helper de ordenamiento cronológico ascendente (Heurística 7 y 8)
+    function obtenerValorCronologico(turno) {
+      const meses = {
+        'ene': 1, 'feb': 2, 'mar': 3, 'abr': 4, 'may': 5, 'jun': 6,
+        'jul': 7, 'ago': 8, 'sep': 9, 'oct': 10, 'nov': 11, 'dic': 12
+      };
+      const fStr = (turno.fecha || '').trim();
+      let dia = 1, mes = 11, anio = 2026;
+
+      if (fStr.includes('/')) {
+        const partes = fStr.split('/');
+        dia = parseInt(partes[0], 10) || 1;
+        mes = parseInt(partes[1], 10) || 11;
+        if (partes[2]) anio = parseInt(partes[2], 10) || 2026;
+      } else {
+        const partesFecha = fStr.split(/\s+/);
+        if (partesFecha.length >= 3) {
+          dia = parseInt(partesFecha[1], 10) || 1;
+          const mesStr = (partesFecha[2] || 'nov').toLowerCase().slice(0, 3);
+          mes = meses[mesStr] || 11;
+        } else if (partesFecha.length === 2) {
+          dia = parseInt(partesFecha[0], 10) || 1;
+          const mesStr = (partesFecha[1] || 'nov').toLowerCase().slice(0, 3);
+          mes = meses[mesStr] || 11;
+        }
+      }
+
+      const matchHora = (turno.hora || '00:00').match(/(\d{1,2}):(\d{2})/);
+      const horas = matchHora ? parseInt(matchHora[1], 10) : 0;
+      const minutos = matchHora ? parseInt(matchHora[2], 10) : 0;
+
+      return new Date(anio, mes - 1, dia, horas, minutos).getTime();
+    }
+
+    function ordenarTurnosCronologicamente(turnos) {
+      return [...turnos].sort((a, b) => obtenerValorCronologico(a) - obtenerValorCronologico(b));
     }
 
     function handleFormSubmit(e) {
@@ -425,7 +463,7 @@
         especialidad: 'Clínica Médica — Box 4',
         modalidad: 'Práctica Clínica Supervisada (PPS)',
         profesional: 'Supervisa: Dra. Gómez',
-        fecha: 'Jue 14 Nov',
+        fecha: 'Jue 26 Nov',
         hora: '10:00 hs',
         motivo: 'Control preventivo anual',
         estado: 'PENDIENTE'
@@ -446,7 +484,8 @@
         turnos = [TURNO_DEFAULT];
       }
 
-      turnos.unshift(nuevoTurno);
+      turnos.push(nuevoTurno);
+      turnos = ordenarTurnosCronologicamente(turnos);
       localStorage.setItem('unlam_turnos_pendientes', JSON.stringify(turnos));
 
       document.getElementById('reservaForm').style.display = 'none';

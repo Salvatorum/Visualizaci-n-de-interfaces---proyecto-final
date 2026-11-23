@@ -709,13 +709,51 @@
   </footer>
 
   <script>
+    // Helper de ordenamiento cronológico ascendente (Heurística 7 y 8)
+    function obtenerValorCronologico(turno) {
+      const meses = {
+        'ene': 1, 'feb': 2, 'mar': 3, 'abr': 4, 'may': 5, 'jun': 6,
+        'jul': 7, 'ago': 8, 'sep': 9, 'oct': 10, 'nov': 11, 'dic': 12
+      };
+      const fStr = (turno.fecha || '').trim();
+      let dia = 1, mes = 11, anio = 2026;
+
+      if (fStr.includes('/')) {
+        const partes = fStr.split('/');
+        dia = parseInt(partes[0], 10) || 1;
+        mes = parseInt(partes[1], 10) || 11;
+        if (partes[2]) anio = parseInt(partes[2], 10) || 2026;
+      } else {
+        const partesFecha = fStr.split(/\s+/);
+        if (partesFecha.length >= 3) {
+          dia = parseInt(partesFecha[1], 10) || 1;
+          const mesStr = (partesFecha[2] || 'nov').toLowerCase().slice(0, 3);
+          mes = meses[mesStr] || 11;
+        } else if (partesFecha.length === 2) {
+          dia = parseInt(partesFecha[0], 10) || 1;
+          const mesStr = (partesFecha[1] || 'nov').toLowerCase().slice(0, 3);
+          mes = meses[mesStr] || 11;
+        }
+      }
+
+      const matchHora = (turno.hora || '00:00').match(/(\d{1,2}):(\d{2})/);
+      const horas = matchHora ? parseInt(matchHora[1], 10) : 0;
+      const minutos = matchHora ? parseInt(matchHora[2], 10) : 0;
+
+      return new Date(anio, mes - 1, dia, horas, minutos).getTime();
+    }
+
+    function ordenarTurnosCronologicamente(turnos) {
+      return [...turnos].sort((a, b) => obtenerValorCronologico(a) - obtenerValorCronologico(b));
+    }
+
     // Gestión de Turnos Pendientes / Próximas Citas (localStorage)
     const TURNO_DEFAULT = {
       id: 1,
       especialidad: 'Clínica Médica — Box 4',
       modalidad: 'Práctica Clínica Supervisada (PPS)',
       profesional: 'Supervisa: Dra. Gómez',
-      fecha: 'Jue 14 Nov',
+      fecha: 'Jue 26 Nov',
       hora: '10:00 hs',
       motivo: 'Control preventivo anual',
       estado: 'PENDIENTE'
@@ -729,8 +767,20 @@
         return iniciales;
       }
       try {
-        const parsed = JSON.parse(guardados);
-        if (Array.isArray(parsed)) return parsed;
+        let parsed = JSON.parse(guardados);
+        if (Array.isArray(parsed)) {
+          let modificado = false;
+          parsed = parsed.map(t => {
+            if (t.fecha === 'Jue 14 Nov') { t.fecha = 'Jue 26 Nov'; modificado = true; }
+            else if (t.fecha === 'Lun 11 Nov') { t.fecha = 'Mié 25 Nov'; modificado = true; }
+            else if (t.fecha === 'Mié 13 Nov') { t.fecha = 'Mié 25 Nov'; modificado = true; }
+            else if (t.fecha === 'Vie 15 Nov') { t.fecha = 'Vie 27 Nov'; modificado = true; }
+            return t;
+          });
+          parsed = ordenarTurnosCronologicamente(parsed);
+          localStorage.setItem('unlam_turnos_pendientes', JSON.stringify(parsed));
+          return parsed;
+        }
       } catch (e) {
         console.error(e);
       }
@@ -738,7 +788,8 @@
     }
 
     function guardarTurnosPendientes(turnos) {
-      localStorage.setItem('unlam_turnos_pendientes', JSON.stringify(turnos));
+      const ordenados = ordenarTurnosCronologicamente(turnos);
+      localStorage.setItem('unlam_turnos_pendientes', JSON.stringify(ordenados));
     }
 
     function cancelarTurnoPendiente(id, fecha, hora) {
