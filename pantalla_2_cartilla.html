@@ -168,9 +168,9 @@
       <nav aria-label="Navegación principal">
         <ul class="wf-nav" id="mainNav">
           <li><a href="pantalla_1_home.html">Inicio</a></li>
-          <li><a href="pantalla_2_cartilla.html" class="active">Especialidades y Turnos</a></li>
+          <li><a href="pantalla_2_cartilla.html" class="active">Reservar Turno</a></li>
           <li><a href="pantalla_5_grafico.html">Estadísticas</a></li>
-          <li><a href="pantalla_6_historial.html">Mi Historial</a></li>
+          <li><a href="pantalla_6_historial.html">Mis Turnos</a></li>
           <li><a href="pantalla_7_programa_pps.html">Programa PPS</a></li>
         </ul>
       </nav>
@@ -211,9 +211,9 @@
     <!-- Título de Sección y migas de pan (Heurística 1) -->
     <div style="margin-bottom: 16px;">
       <div style="font-size: 11px; color: var(--wf-gray-600); margin-bottom: 4px;">
-        <a href="pantalla_1_home.html" style="color: inherit; text-decoration: none;">Inicio</a> / Especialidades y Turnos
+        <a href="pantalla_1_home.html" style="color: inherit; text-decoration: none;">Inicio</a> / Reservar Turno
       </div>
-      <h1 style="font-size: 20px; font-weight: 800; letter-spacing: -0.5px;">Cartilla de Consultorios y Especialidades</h1>
+      <h1 style="font-size: 20px; font-weight: 800; letter-spacing: -0.5px;">Reservar Turno — Cartilla de Consultorios</h1>
       <p style="font-size: 12px; color: var(--wf-gray-600);">Seleccioná el servicio médico y la modalidad de tu preferencia para desplegar los consultorios disponibles.</p>
     </div>
 
@@ -231,7 +231,6 @@
             <option value="oftalmologia">Oftalmología</option>
             <option value="nutricion">Nutrición</option>
             <option value="kinesiologia">Kinesiología</option>
-            <option value="todas">Ver todas las especialidades (6)</option>
           </select>
         </div>
 
@@ -275,7 +274,7 @@
         </div>
         <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
           <button type="button" class="wf-btn wf-btn-secondary wf-btn-sm" onclick="simularAltaOferta()" style="font-size: 11px;">
-            Simular alta oferta de turnos disponibles (12 consultorios)
+            Simular alta demanda (Clínica Médica: 6 consultorios)
           </button>
           <span class="wf-badge wf-badge-dark" id="badgeModalidadActiva">Modalidad: Práctica Supervisada (PPS)</span>
           <span style="font-size: 11px; color: var(--wf-gray-600);" id="subtituloModalidad">Espera en menos de 48 hs</span>
@@ -544,6 +543,47 @@
           </div>
         </article>
 
+        <!-- Tarjeta 13: Clínica Médica — Consulta de Demanda Espontánea -->
+        <article class="consultorio-card" data-esp="clinica" data-box="4" data-doctor="Dra. S. Méndez" data-slot-pps="Vie 27 Nov — 15:00 hs" data-dia="Vie 27 Nov" data-hora="15:00 hs">
+          <div class="card-line-1">
+            <div class="card-title">Clínica Médica — Demanda Espontánea</div>
+            <div class="card-location">Box 4 • PB Salud</div>
+          </div>
+          <div class="card-line-2">
+            <strong>Práctica PPS:</strong> Supervisa Dra. S. Méndez + 2 practicantes.
+          </div>
+          <div class="card-line-3">
+            <span>Próximo turno: <strong>Vie 27 Nov — 15:00 hs</strong></span>
+            <span class="wf-badge" style="font-size: 9px;">Disponible</span>
+          </div>
+          <div class="card-line-4">
+            <a href="pantalla_3_formulario.html?esp=clinica&box=4&mod=pps&dia=Vie%2027%20Nov&hora=15%3A00%20hs" class="wf-btn wf-btn-primary wf-btn-block">
+              Continuar con este turno →
+            </a>
+          </div>
+        </article>
+
+        <!-- Tarjeta 14: Clínica Médica — Prevención Cardiovascular -->
+        <article class="consultorio-card" data-esp="clinica" data-box="8" data-doctor="Dr. H. Blanco" data-slot-pps="Jue 26 Nov — 16:30 hs" data-dia="Jue 26 Nov" data-hora="16:30 hs">
+          <div class="card-line-1">
+            <div class="card-title">Clínica Médica — Prevención</div>
+            <div class="card-location">Box 8 • PB Salud</div>
+          </div>
+          <div class="card-line-2">
+            <strong>Práctica PPS:</strong> Supervisa Dr. H. Blanco + 2 practicantes.
+          </div>
+          <div class="card-line-3">
+            <span>Próximo turno: <strong>Jue 26 Nov — 16:30 hs</strong></span>
+            <span class="wf-badge" style="font-size: 9px;">Disponible</span>
+          </div>
+          <div class="card-line-4">
+            <a href="pantalla_3_formulario.html?esp=clinica&box=8&mod=pps&dia=Jue%2026%20Nov&hora=16%3A30%20hs" class="wf-btn wf-btn-primary wf-btn-block">
+              Continuar con este turno →
+            </a>
+          </div>
+        </article>
+
+
       </div>
     </section>
 
@@ -576,7 +616,7 @@
     }
 
     function simularAltaOferta() {
-      document.getElementById('selectEspecialidad').value = 'todas';
+      document.getElementById('selectEspecialidad').value = 'clinica';
       document.getElementById('selectFecha').value = 'todas';
       aplicarFiltros();
     }

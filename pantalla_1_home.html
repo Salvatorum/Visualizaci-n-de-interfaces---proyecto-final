@@ -220,9 +220,9 @@
       <nav aria-label="Navegación principal">
         <ul class="wf-nav" id="mainNav">
           <li><a href="pantalla_1_home.html" class="active">Inicio</a></li>
-          <li><a href="pantalla_2_cartilla.html">Especialidades y Turnos</a></li>
+          <li><a href="pantalla_2_cartilla.html">Reservar Turno</a></li>
           <li><a href="pantalla_5_grafico.html">Estadísticas</a></li>
-          <li><a href="pantalla_6_historial.html">Mi Historial</a></li>
+          <li><a href="pantalla_6_historial.html">Mis Turnos</a></li>
           <li><a href="pantalla_7_programa_pps.html">Programa PPS</a></li>
         </ul>
       </nav>
@@ -311,7 +311,7 @@
                 </svg>
                 Descargar Constancia
               </button>
-              <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="if(confirm('¿Estás seguro de cancelar tu turno del Jueves 26 Nov 10:00 hs?')) { alert('Turno cancelado correctamente.'); }">
+              <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="abrirModalCancelarHome(1, 'Clínica Médica — Box 4', 'Jue 26 Nov', '10:00 hs')">
                 <svg class="wf-svg-icon-sm" viewBox="0 0 24 24" aria-hidden="true">
                   <circle cx="12" cy="12" r="10"/>
                   <line x1="15" y1="9" x2="9" y2="15"/>
@@ -483,31 +483,174 @@
     </div>
   </footer>
 
-  <!-- ==================== POPAPP MODAL DE UBICACIÓN EN CAMPUS SAN JUSTO ==================== -->
-  <div class="map-popup-modal" id="modalUbicacionCampus" role="dialog" aria-modal="true" aria-labelledby="tituloModalMapa">
-    <div class="wf-modal-card">
-      <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--wf-gray-300); padding-bottom: 10px;">
+  <!-- ==================== MODAL DE CONFIRMACIÓN DE CANCELACIÓN (Heurística 5: Prevención de Errores) ==================== -->
+  <div class="map-popup-modal" id="modalConfirmarCancelacionHome" role="dialog" aria-modal="true" aria-labelledby="tituloModalCancelarHome">
+    <div style="background: var(--wf-surface); border: 2px solid #dc2626; border-radius: var(--radius-md); padding: 24px; max-width: 480px; width: 100%; box-shadow: 0 10px 25px rgba(220, 38, 38, 0.18); font-size: 13px; position: relative;">
+      
+      <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px;">
+        <div style="width: 44px; height: 44px; border-radius: 50%; background: #fef2f2; border: 1.5px solid #fca5a5; color: #dc2626; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </div>
         <div>
-          <span class="wf-badge wf-badge-outline-green" style="font-size: 9px; margin-bottom: 4px;">Plano Esquemático UNLaM</span>
-          <h3 id="tituloModalMapa" style="font-size: 16px; font-weight: 800; color: var(--wf-gray-900);">
-            Ubicación de Consultorios — Campus San Justo
+          <h3 id="tituloModalCancelarHome" style="font-size: 16px; font-weight: 800; color: var(--wf-gray-900); margin: 0 0 4px 0;">
+            ¿Confirmás la cancelación de este turno?
+          </h3>
+          <p style="font-size: 12px; color: var(--wf-gray-600); margin: 0; line-height: 1.4;">
+            Esta acción liberará el horario seleccionado para otro estudiante de la UNLaM y no se puede deshacer.
+          </p>
+        </div>
+      </div>
+
+      <!-- Detalle exacto del turno a cancelar -->
+      <div style="background: var(--wf-gray-50); border: 1px solid var(--wf-border-strong); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 20px; font-size: 12px; line-height: 1.5;">
+        <div id="detalleTurnoCancelarHome">
+          <div>• <strong>Especialidad:</strong> <span id="cancelarEspecialidadHome">Clínica Médica — Box 1</span></div>
+          <div>• <strong>Fecha y Horario:</strong> <span id="cancelarFechaHoraHome" style="font-weight: 700; color: var(--wf-gray-900);">Mié 25 Nov — 10:30 hs</span></div>
+          <div>• <strong>Lugar:</strong> Pabellón Ciencias de la Salud (Planta Baja)</div>
+        </div>
+      </div>
+
+      <!-- Botones de Acción -->
+      <div style="display: flex; justify-content: flex-end; gap: 10px; flex-wrap: wrap;">
+        <button type="button" class="wf-btn wf-btn-secondary" onclick="cerrarModalCancelarHome()" style="font-weight: 600;">
+          Mantener Turno
+        </button>
+        <button type="button" class="wf-btn" id="btnConfirmarCancelarHome" onclick="confirmarCancelacionTurnoHome()" style="background: #dc2626; color: #ffffff; border: 1px solid #b91c1c; font-weight: 700; padding: 8px 18px;">
+          Sí, Cancelar Turno
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== POPUP MODAL DE UBICACIÓN Y PLANO DEL PABELLÓN ==================== -->
+  <div class="map-popup-modal" id="modalUbicacionCampus" role="dialog" aria-modal="true" aria-labelledby="tituloModalMapa">
+    <div class="wf-modal-card" style="max-width: 620px; width: 100%;">
+      
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--wf-gray-300); padding-bottom: 10px; margin-bottom: 12px;">
+        <div>
+          <span class="wf-badge wf-badge-outline-green" style="font-size: 9px; margin-bottom: 4px;">Plano Dinámico de Consultorios</span>
+          <h3 id="tituloModalMapa" style="font-size: 16px; font-weight: 800; color: var(--wf-gray-900); margin: 0;">
+            Ubicación en Campus San Justo • Pabellón Ciencias de la Salud
           </h3>
         </div>
         <button type="button" onclick="cerrarModalMapa()" aria-label="Cerrar mapa" style="background: none; border: none; font-size: 18px; font-weight: bold; cursor: pointer; color: var(--wf-gray-700);">✕</button>
       </div>
 
-      <div class="campus-map-schematic">
-        <div class="map-grid-preview">
-          <div class="map-box highlight">
-            Pabellón Ciencias de la Salud<br>(Consultorios Boxes 1 al 6)
+      <!-- Croquis 1: Ubicación en Campus UNLaM -->
+      <div class="campus-map-schematic" style="margin: 0 0 14px 0; padding: 10px 14px;">
+        <div style="font-size: 11px; font-weight: 700; color: var(--wf-gray-800); margin-bottom: 6px;">1. Sector Campus San Justo (Acceso Peatonal: Florencio Varela 1903)</div>
+        <div class="map-grid-preview" style="height: 60px;">
+          <div class="map-box highlight" style="background: var(--wf-primary-soft); font-size: 11px;">
+            Pabellón Ciencias de la Salud<br><strong style="color: var(--wf-primary-hover); font-size: 10px;">(Consultorios PB)</strong>
           </div>
-          <div class="map-box">
+          <div class="map-box" style="font-size: 10px;">
             Biblioteca Leopoldo Marechal
           </div>
-          <div class="map-box">
+          <div class="map-box" style="font-size: 10px;">
             Patio de las Américas
           </div>
         </div>
+      </div>
+
+      <!-- Croquis 2: Plano Interno Esquemático de Boxes (1 al 10) -->
+      <div style="background: var(--wf-surface); border: 1.5px solid var(--wf-border-strong); border-radius: var(--radius-md); padding: 12px 14px; margin-bottom: 14px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 6px;">
+          <div style="font-size: 12px; font-weight: 800; color: var(--wf-gray-900); display: flex; align-items: center; gap: 6px;">
+            <svg class="wf-svg-icon-sm" viewBox="0 0 24 24" style="color: var(--wf-primary); width: 14px; height: 14px;"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+            2. Distribución Interna de Consultorios (Planta Baja)
+          </div>
+          <span class="wf-badge wf-badge-dark" style="font-size: 10px;">Tu Box Asignado: <span id="mapaBoxNumeroTexto" style="color: #6ee7b7; font-weight: 800;">Box 1</span></span>
+        </div>
+
+        <div style="font-size: 11px; color: var(--wf-gray-700); margin-bottom: 10px; background: var(--wf-primary-soft); padding: 6px 10px; border-radius: var(--radius-sm); border-left: 3px solid var(--wf-primary);">
+          Orientación en pabellón: <strong id="mapaEspecialidadTexto" style="color: var(--wf-primary-hover);">Clínica Médica — Box 1</strong>. Ingresá al hall central y anunciate en recepción.
+        </div>
+
+        <!-- Disposición de Boxes 1 al 10 -->
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <!-- Fila Superior: Boxes 1 al 5 -->
+          <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px;">
+            <div id="boxPlano-1" style="border: 1px solid var(--wf-gray-300); background: var(--wf-gray-100); border-radius: var(--radius-sm); padding: 6px 2px; text-align: center; font-size: 10px; transition: all 0.2s;">
+              <strong>Box 1</strong>
+              <div class="box-desc" style="font-size: 9px; color: var(--wf-gray-500); margin-top: 1px;">Consultorio</div>
+            </div>
+            <div id="boxPlano-2" style="border: 1px solid var(--wf-gray-300); background: var(--wf-gray-100); border-radius: var(--radius-sm); padding: 6px 2px; text-align: center; font-size: 10px; transition: all 0.2s;">
+              <strong>Box 2</strong>
+              <div class="box-desc" style="font-size: 9px; color: var(--wf-gray-500); margin-top: 1px;">Consultorio</div>
+            </div>
+            <div id="boxPlano-3" style="border: 1px solid var(--wf-gray-300); background: var(--wf-gray-100); border-radius: var(--radius-sm); padding: 6px 2px; text-align: center; font-size: 10px; transition: all 0.2s;">
+              <strong>Box 3</strong>
+              <div class="box-desc" style="font-size: 9px; color: var(--wf-gray-500); margin-top: 1px;">Consultorio</div>
+            </div>
+            <div id="boxPlano-4" style="border: 1px solid var(--wf-gray-300); background: var(--wf-gray-100); border-radius: var(--radius-sm); padding: 6px 2px; text-align: center; font-size: 10px; transition: all 0.2s;">
+              <strong>Box 4</strong>
+              <div class="box-desc" style="font-size: 9px; color: var(--wf-gray-500); margin-top: 1px;">Consultorio</div>
+            </div>
+            <div id="boxPlano-5" style="border: 1px solid var(--wf-gray-300); background: var(--wf-gray-100); border-radius: var(--radius-sm); padding: 6px 2px; text-align: center; font-size: 10px; transition: all 0.2s;">
+              <strong>Box 5</strong>
+              <div class="box-desc" style="font-size: 9px; color: var(--wf-gray-500); margin-top: 1px;">Consultorio</div>
+            </div>
+          </div>
+
+          <!-- Pasillo Central / Recepción -->
+          <div style="background: #e2e8f0; border: 1px dashed #94a3b8; border-radius: var(--radius-sm); padding: 5px; text-align: center; font-size: 10px; font-weight: 700; color: #475569; letter-spacing: 0.5px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+            <span>🚪 Entrada</span>
+            <span>━━━━</span>
+            <span>PASILLO CENTRAL • SALA DE ESPERA & RECEPCIÓN PPS</span>
+            <span>━━━━</span>
+            <span>Triage 🩺</span>
+          </div>
+
+          <!-- Fila Inferior: Boxes 6 al 10 -->
+          <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px;">
+            <div id="boxPlano-6" style="border: 1px solid var(--wf-gray-300); background: var(--wf-gray-100); border-radius: var(--radius-sm); padding: 6px 2px; text-align: center; font-size: 10px; transition: all 0.2s;">
+              <strong>Box 6</strong>
+              <div class="box-desc" style="font-size: 9px; color: var(--wf-gray-500); margin-top: 1px;">Consultorio</div>
+            </div>
+            <div id="boxPlano-7" style="border: 1px solid var(--wf-gray-300); background: var(--wf-gray-100); border-radius: var(--radius-sm); padding: 6px 2px; text-align: center; font-size: 10px; transition: all 0.2s;">
+              <strong>Box 7</strong>
+              <div class="box-desc" style="font-size: 9px; color: var(--wf-gray-500); margin-top: 1px;">Consultorio</div>
+            </div>
+            <div id="boxPlano-8" style="border: 1px solid var(--wf-gray-300); background: var(--wf-gray-100); border-radius: var(--radius-sm); padding: 6px 2px; text-align: center; font-size: 10px; transition: all 0.2s;">
+              <strong>Box 8</strong>
+              <div class="box-desc" style="font-size: 9px; color: var(--wf-gray-500); margin-top: 1px;">Consultorio</div>
+            </div>
+            <div id="boxPlano-9" style="border: 1px solid var(--wf-gray-300); background: var(--wf-gray-100); border-radius: var(--radius-sm); padding: 6px 2px; text-align: center; font-size: 10px; transition: all 0.2s;">
+              <strong>Box 9</strong>
+              <div class="box-desc" style="font-size: 9px; color: var(--wf-gray-500); margin-top: 1px;">Consultorio</div>
+            </div>
+            <div id="boxPlano-10" style="border: 1px solid var(--wf-gray-300); background: var(--wf-gray-100); border-radius: var(--radius-sm); padding: 6px 2px; text-align: center; font-size: 10px; transition: all 0.2s;">
+              <strong>Box 10</strong>
+              <div class="box-desc" style="font-size: 9px; color: var(--wf-gray-500); margin-top: 1px;">Consultorio</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: center; align-items: center; gap: 14px; margin-top: 8px; font-size: 10px; color: var(--wf-gray-600); flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 4px;">
+            <div style="width: 10px; height: 10px; background: #0f9977; border-radius: 2px;"></div>
+            <span><strong>Tu Box Asignado (Verde)</strong></span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 4px;">
+            <div style="width: 10px; height: 10px; background: var(--wf-gray-100); border: 1px solid var(--wf-gray-300); border-radius: 2px;"></div>
+            <span>Otros consultorios</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end;">
+        <button type="button" class="wf-btn wf-btn-primary wf-btn-sm" onclick="cerrarModalMapa()">
+          Entendido, cerrar
+        </button>
+      </div>
+
+    </div>
+  </div>
         <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--wf-gray-700); padding-top: 4px;">
           <span><strong>Acceso peatonal:</strong> Av. Pres. J. D. Perón / Florencio Varela 1903</span>
           <span><strong>Planta Baja</strong></span>
@@ -610,14 +753,40 @@
       localStorage.setItem('unlam_turnos_pendientes', JSON.stringify(ordenados));
     }
 
-    function cancelarTurnoHome(id, fecha, hora) {
-      if (confirm(`¿Estás seguro de cancelar tu turno del ${fecha} a las ${hora}?`)) {
+    // Modal de Confirmación de Cancelación en Home (Heurística 5: Prevención de Errores)
+    let turnoIdACancelarHome = null;
+
+    function abrirModalCancelarHome(id, especialidad, fecha, hora) {
+      turnoIdACancelarHome = id;
+      const elEsp = document.getElementById('cancelarEspecialidadHome');
+      const elFH = document.getElementById('cancelarFechaHoraHome');
+      if (elEsp) elEsp.textContent = especialidad || 'Consulta Médica UNLaM';
+      if (elFH) elFH.textContent = `${fecha} — ${hora}`;
+      const modal = document.getElementById('modalConfirmarCancelacionHome');
+      if (modal) modal.classList.add('active');
+    }
+
+    function cerrarModalCancelarHome() {
+      turnoIdACancelarHome = null;
+      const modal = document.getElementById('modalConfirmarCancelacionHome');
+      if (modal) modal.classList.remove('active');
+    }
+
+    function confirmarCancelacionTurnoHome() {
+      if (turnoIdACancelarHome !== null) {
         let turnos = obtenerTurnosPendientes();
-        turnos = turnos.filter(t => t.id !== id);
+        turnos = turnos.filter(t => t.id !== turnoIdACancelarHome);
         guardarTurnosPendientes(turnos);
+        cerrarModalCancelarHome();
         renderizarTurnosHome();
-        alert('Turno cancelado correctamente. El consultorio fue liberado.');
       }
+    }
+
+    function cancelarTurnoHome(id, fecha, hora) {
+      const turnos = obtenerTurnosPendientes();
+      const t = turnos.find(item => item.id === id);
+      const esp = t ? t.especialidad : 'Consulta Médica UNLaM';
+      abrirModalCancelarHome(id, esp, fecha, hora);
     }
 
     function renderizarTurnosHome() {
@@ -645,7 +814,8 @@
       }
 
       const t0 = turnos[0];
-      const otrosTurnos = turnos.slice(1);
+      const matchBox0 = (t0.especialidad || '').match(/box\s*(\d+)/i);
+      const boxNum0 = matchBox0 ? matchBox0[1] : '1';
 
       let html = `
         <div class="wf-card" style="border-left: 4px solid var(--wf-primary); padding: 20px;">
@@ -674,13 +844,13 @@
                     <circle cx="12" cy="10" r="3"/>
                   </svg>
                   <span>Pabellón Ciencias de la Salud (Planta Baja, San Justo)</span>
-                  <button type="button" onclick="abrirModalMapa()" style="background: none; border: none; padding: 0; font-size: 12px; font-weight: 700; color: #0c7a61; text-decoration: underline; cursor: pointer;">
-                    Ver ubicación en el mapa
+                  <button type="button" onclick="abrirModalMapa('${boxNum0}', '${t0.especialidad.replace(/'/g, "\\'")}')" style="background: none; border: none; padding: 0; font-size: 12px; font-weight: 700; color: #0c7a61; text-decoration: underline; cursor: pointer;">
+                    Ver ubicación en el mapa y Box asignado
                   </button>
                 </div>
               </div>
 
-              <!-- Acciones Directas -->
+              <!-- Acciones Directas del Turno Próximo -->
               <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px;">
                 <button class="wf-btn wf-btn-primary wf-btn-sm" onclick="alert('Descargando Constancia oficial de Turno (PDF)...')">
                   <svg class="wf-svg-icon-sm" viewBox="0 0 24 24" aria-hidden="true">
@@ -691,7 +861,7 @@
                   </svg>
                   Descargar Constancia
                 </button>
-                <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="cancelarTurnoHome(${t0.id}, '${t0.fecha}', '${t0.hora}')">
+                <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="abrirModalCancelarHome(${t0.id}, '${t0.especialidad.replace(/'/g, "\\'")}', '${t0.fecha}', '${t0.hora}')">
                   <svg class="wf-svg-icon-sm" viewBox="0 0 24 24" aria-hidden="true">
                     <circle cx="12" cy="12" r="10"/>
                     <line x1="15" y1="9" x2="9" y2="15"/>
@@ -713,44 +883,40 @@
         </div>
       `;
 
-      if (otrosTurnos.length > 0) {
-        html += `
-          <div style="margin-top: 14px; background: var(--wf-surface); border: 1px solid var(--wf-border-strong); border-radius: var(--radius-md); padding: 16px; box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
-              <div style="font-size: 13px; font-weight: 800; color: var(--wf-gray-900); display: flex; align-items: center; gap: 8px;">
-                <span>Otros turnos pendientes agendados</span>
-                <span class="wf-badge wf-badge-dark" style="font-size: 10px;">${otrosTurnos.length} ${otrosTurnos.length === 1 ? 'adicional' : 'adicionales'}</span>
-              </div>
-              <a href="pantalla_6_historial.html" style="font-size: 11px; font-weight: 700; color: #0c7a61; text-decoration: underline;">Ver todos en Mi Historial →</a>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 10px;">
-        `;
+      // Bloque Inferior: Siguiente turno agendado (Únicamente turnos[1] en vista previa compacta)
+      if (turnos.length > 1) {
+        const t1 = turnos[1];
+        const matchBox1 = (t1.especialidad || '').match(/box\s*(\d+)/i);
+        const boxNum1 = matchBox1 ? matchBox1[1] : '';
 
-        otrosTurnos.forEach(t => {
-          html += `
-            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--wf-gray-50); border: 1px solid var(--wf-border-strong); border-radius: var(--radius-sm); flex-wrap: wrap; gap: 10px;">
+        html += `
+          <div style="margin-top: 14px; background: var(--wf-surface); border: 1px solid var(--wf-border-strong); border-radius: var(--radius-md); padding: 14px 18px; box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+              <div style="font-size: 13px; font-weight: 800; color: var(--wf-gray-900); display: flex; align-items: center; gap: 8px;">
+                <svg class="wf-svg-icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="color: var(--wf-primary); width: 15px; height: 15px;">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6"/>
+                  <line x1="8" y1="2" x2="8" y2="6"/>
+                  <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+                <span>Siguiente turno agendado</span>
+              </div>
+              <a href="pantalla_6_historial.html" style="font-size: 11px; font-weight: 700; color: #0c7a61; text-decoration: underline;">Ver todos en Mis Turnos →</a>
+            </div>
+
+            <div style="padding: 10px 14px; background: var(--wf-gray-50); border: 1px solid var(--wf-border-strong); border-radius: var(--radius-sm); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
               <div>
                 <div style="display: flex; align-items: center; gap: 8px;">
-                  <span style="font-weight: 800; font-size: 13px; color: var(--wf-gray-900);">${t.especialidad}</span>
-                  <span class="wf-badge wf-badge-dark" style="font-size: 9px; padding: 2px 6px;">${t.estado || 'PENDIENTE'}</span>
+                  <span style="font-weight: 800; font-size: 13px; color: var(--wf-gray-900);">${t1.especialidad}</span>
+                  <span class="wf-badge wf-badge-dark" style="font-size: 9px; padding: 2px 6px;">${t1.estado || 'PENDIENTE'}</span>
                 </div>
                 <div style="font-size: 11px; color: var(--wf-gray-600); margin-top: 2px;">
-                  <strong>${t.fecha} — ${t.hora}</strong> • ${t.profesional} • Motivo: ${t.motivo}
+                  <strong>${t1.fecha} — ${t1.hora}</strong> • ${t1.profesional}
                 </div>
               </div>
-              <div style="display: flex; gap: 8px;">
-                <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="alert('Descargando constancia para ${t.especialidad}...')">
-                  Descargar Constancia
-                </button>
-                <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="cancelarTurnoHome(${t.id}, '${t.fecha}', '${t.hora}')" style="color: #dc2626; border-color: #fca5a5;">
-                  Cancelar
-                </button>
+              <div style="font-size: 11px; color: var(--wf-gray-500); font-style: italic;">
+                Vista previa • Gestionar en Mis Turnos
               </div>
-            </div>
-          `;
-        });
-
-        html += `
             </div>
           </div>
         `;
@@ -770,7 +936,43 @@
       });
     }
 
-    function abrirModalMapa() {
+    function abrirModalMapa(boxNumero, especialidad) {
+      let bNum = 1;
+      if (boxNumero) {
+        const m = String(boxNumero).match(/\d+/);
+        if (m) bNum = parseInt(m[0], 10);
+      } else {
+        const turnos = obtenerTurnosPendientes();
+        if (turnos.length > 0) {
+          const m = (turnos[0].especialidad || '').match(/box\s*(\d+)/i);
+          if (m) bNum = parseInt(m[1], 10);
+          if (!especialidad) especialidad = turnos[0].especialidad;
+        }
+      }
+
+      const txtBox = document.getElementById('mapaBoxNumeroTexto');
+      const txtEsp = document.getElementById('mapaEspecialidadTexto');
+      if (txtBox) txtBox.textContent = `Box ${bNum}`;
+      if (txtEsp) txtEsp.textContent = especialidad || 'Consulta de Práctica Clínica UNLaM';
+
+      for (let i = 1; i <= 10; i++) {
+        const el = document.getElementById(`boxPlano-${i}`);
+        if (!el) continue;
+        if (i === bNum) {
+          el.style.background = '#0f9977';
+          el.style.color = '#ffffff';
+          el.style.border = '2px solid #09664f';
+          el.style.boxShadow = '0 3px 8px rgba(15, 153, 119, 0.4)';
+          el.innerHTML = `<strong>Box ${i}</strong><div style="background: #ffffff; color: #0f9977; font-size: 8px; font-weight: 900; border-radius: 2px; padding: 1px 3px; margin-top: 1px;">TU TURNO</div>`;
+        } else {
+          el.style.background = 'var(--wf-gray-100)';
+          el.style.color = 'var(--wf-gray-700)';
+          el.style.border = '1px solid var(--wf-gray-300)';
+          el.style.boxShadow = 'none';
+          el.innerHTML = `<strong>Box ${i}</strong><div style="font-size: 9px; color: var(--wf-gray-500); margin-top: 1px;">Consultorio</div>`;
+        }
+      }
+
       document.getElementById('modalUbicacionCampus').classList.add('active');
     }
 
@@ -778,10 +980,26 @@
       document.getElementById('modalUbicacionCampus').classList.remove('active');
     }
 
-    // Cerrar modal al hacer clic fuera del cuadro
+    // Cerrar modal al hacer clic fuera del cuadro o pulsar Escape (Heurística 3 y 5)
     document.getElementById('modalUbicacionCampus').addEventListener('click', (e) => {
       if (e.target.id === 'modalUbicacionCampus') {
         cerrarModalMapa();
+      }
+    });
+
+    const modalCancelHome = document.getElementById('modalConfirmarCancelacionHome');
+    if (modalCancelHome) {
+      modalCancelHome.addEventListener('click', (e) => {
+        if (e.target.id === 'modalConfirmarCancelacionHome') {
+          cerrarModalCancelarHome();
+        }
+      });
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        cerrarModalMapa();
+        cerrarModalCancelarHome();
       }
     });
   </script>

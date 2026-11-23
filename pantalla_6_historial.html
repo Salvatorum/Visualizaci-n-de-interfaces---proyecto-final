@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pantalla 6: Mi Historial Médico y Constancias - Wireframe UNLaM Salud</title>
+  <title>Pantalla 6: Mis Turnos y Constancias - Wireframe UNLaM Salud</title>
   <link rel="stylesheet" href="wireframe-system.css">
   <style>
     /* Estilos específicos de Historial */
@@ -73,6 +73,51 @@
     .modal-cert.active {
       display: flex;
     }
+    /* Modal de Ubicación y Plano */
+    .map-popup-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background-color: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(2px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .map-popup-modal.active {
+      display: flex;
+    }
+    .campus-map-schematic {
+      background: var(--wf-gray-50);
+      border: 1px dashed var(--wf-gray-500);
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+      font-size: 11px;
+      margin: 10px 0;
+    }
+    .map-grid-preview {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 8px;
+    }
+    .map-box {
+      border: 1px solid var(--wf-gray-400);
+      background: var(--wf-surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6px;
+      font-weight: 600;
+      border-radius: 3px;
+    }
+    .map-box.highlight {
+      background: var(--wf-primary-soft);
+      color: var(--wf-primary-hover);
+      border-color: var(--wf-primary);
+    }
+
     .cert-paper {
       background: white;
       border: 1px solid var(--wf-primary);
@@ -118,7 +163,7 @@
           <img class="wf-logo-image" src="assets/logo-unlam-negro-300x68.png" alt="Universidad Nacional de La Matanza">
           <div>
             <div style="font-size: 13px; font-weight: 800; line-height: 1.1;">UNLaM SALUD</div>
-            <div style="font-size: 10px; color: var(--wf-gray-500); font-weight: 600;">Mi Historial de Atenciones</div>
+            <div style="font-size: 10px; color: var(--wf-gray-500); font-weight: 600;">Mis Turnos y Constancias</div>
           </div>
         </a>
       </div>
@@ -126,9 +171,9 @@
       <nav aria-label="Navegación principal">
         <ul class="wf-nav" id="mainNav">
           <li><a href="pantalla_1_home.html">Inicio</a></li>
-          <li><a href="pantalla_2_cartilla.html">Especialidades y Turnos</a></li>
+          <li><a href="pantalla_2_cartilla.html">Reservar Turno</a></li>
           <li><a href="pantalla_5_grafico.html">Estadísticas</a></li>
-          <li><a href="pantalla_6_historial.html" class="active">Mi Historial</a></li>
+          <li><a href="pantalla_6_historial.html" class="active">Mis Turnos</a></li>
           <li><a href="pantalla_7_programa_pps.html">Programa PPS</a></li>
         </ul>
       </nav>
@@ -151,9 +196,9 @@
     <!-- Migas de pan y título -->
     <div style="margin-bottom: 16px;">
       <div style="font-size: 11px; color: var(--wf-gray-600); margin-bottom: 4px;">
-        <a href="pantalla_1_home.html" style="color: inherit; text-decoration: none;">Inicio</a> / Mi Perfil y Consultas
+        <a href="pantalla_1_home.html" style="color: inherit; text-decoration: none;">Inicio</a> / Mis Turnos y Constancias
       </div>
-      <h1 style="font-size: 20px; font-weight: 800; letter-spacing: -0.5px;">Mi Historial Médico y Constancias</h1>
+      <h1 style="font-size: 20px; font-weight: 800; letter-spacing: -0.5px;">Mis Turnos y Constancias</h1>
       <p style="font-size: 12px; color: var(--wf-gray-600);">
         Registro de consultas de atención primaria realizadas en el campus y descarga de certificados oficiales de asistencia.
       </p>
@@ -701,10 +746,176 @@
     </div>
   </div>
 
+  <!-- ==================== MODAL DE CONFIRMACIÓN DE CANCELACIÓN (Heurística 5) ==================== -->
+  <div class="modal-cert" id="modalConfirmarCancelacion" role="dialog" aria-modal="true" aria-labelledby="tituloModalCancelar">
+    <div style="background: white; border: 2px solid #dc2626; border-radius: var(--radius-md); padding: 24px; max-width: 480px; width: 100%; box-shadow: 0 10px 25px rgba(220, 38, 38, 0.15); font-size: 13px; position: relative;">
+      
+      <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px;">
+        <div style="width: 44px; height: 44px; border-radius: 50%; background: #fef2f2; border: 1.5px solid #fca5a5; color: #dc2626; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </div>
+        <div>
+          <h3 id="tituloModalCancelar" style="font-size: 16px; font-weight: 800; color: var(--wf-gray-900); margin: 0 0 4px 0;">
+            ¿Confirmás la cancelación de este turno?
+          </h3>
+          <p style="font-size: 12px; color: var(--wf-gray-600); margin: 0; line-height: 1.4;">
+            Esta acción liberará el horario seleccionado para otro estudiante de la UNLaM y no se puede deshacer.
+          </p>
+        </div>
+      </div>
+
+      <!-- Detalle exacto del turno a cancelar -->
+      <div style="background: var(--wf-gray-50); border: 1px solid var(--wf-border-strong); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 20px; font-size: 12px; line-height: 1.5;">
+        <div>• <strong>Especialidad:</strong> <span id="cancelarEspecialidad">Clínica Médica — Box 1</span></div>
+        <div>• <strong>Fecha y Horario:</strong> <span id="cancelarFechaHora" style="font-weight: 700; color: var(--wf-gray-900);">Mié 25 Nov — 10:30 hs</span></div>
+        <div>• <strong>Lugar:</strong> Pabellón Ciencias de la Salud (Planta Baja)</div>
+      </div>
+
+      <!-- Botones de Acción -->
+      <div style="display: flex; justify-content: flex-end; gap: 10px; flex-wrap: wrap;">
+        <button type="button" class="wf-btn wf-btn-secondary" onclick="cerrarModalCancelar()" style="font-weight: 600;">
+          Mantener Turno
+        </button>
+        <button type="button" class="wf-btn" id="btnEjecutarCancelacion" onclick="confirmarCancelacionTurno()" style="background: #dc2626; color: #ffffff; border: 1px solid #b91c1c; font-weight: 700; padding: 8px 18px;">
+          Sí, Cancelar Turno
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== POPUP MODAL DE UBICACIÓN Y PLANO DEL PABELLÓN ==================== -->
+  <div class="map-popup-modal" id="modalUbicacionCampus" role="dialog" aria-modal="true" aria-labelledby="tituloModalMapa">
+    <div class="wf-modal-card" style="max-width: 620px; width: 100%;">
+      
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--wf-gray-300); padding-bottom: 10px; margin-bottom: 12px;">
+        <div>
+          <span class="wf-badge wf-badge-outline-green" style="font-size: 9px; margin-bottom: 4px;">Plano Dinámico de Consultorios</span>
+          <h3 id="tituloModalMapa" style="font-size: 16px; font-weight: 800; color: var(--wf-gray-900); margin: 0;">
+            Ubicación en Campus San Justo • Pabellón Ciencias de la Salud
+          </h3>
+        </div>
+        <button type="button" onclick="cerrarModalMapa()" aria-label="Cerrar mapa" style="background: none; border: none; font-size: 18px; font-weight: bold; cursor: pointer; color: var(--wf-gray-700);">✕</button>
+      </div>
+
+      <!-- Croquis 1: Ubicación en Campus UNLaM -->
+      <div class="campus-map-schematic" style="margin: 0 0 14px 0; padding: 10px 14px;">
+        <div style="font-size: 11px; font-weight: 700; color: var(--wf-gray-800); margin-bottom: 6px;">1. Sector Campus San Justo (Acceso Peatonal: Florencio Varela 1903)</div>
+        <div class="map-grid-preview" style="height: 60px;">
+          <div class="map-box highlight" style="background: var(--wf-primary-soft); font-size: 11px;">
+            Pabellón Ciencias de la Salud<br><strong style="color: var(--wf-primary-hover); font-size: 10px;">(Consultorios PB)</strong>
+          </div>
+          <div class="map-box" style="font-size: 10px;">
+            Biblioteca Leopoldo Marechal
+          </div>
+          <div class="map-box" style="font-size: 10px;">
+            Patio de las Américas
+          </div>
+        </div>
+      </div>
+
+      <!-- Croquis 2: Plano Interno Esquemático de Boxes (1 al 10) -->
+      <div style="background: var(--wf-surface); border: 1.5px solid var(--wf-border-strong); border-radius: var(--radius-md); padding: 12px 14px; margin-bottom: 14px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 6px;">
+          <div style="font-size: 12px; font-weight: 800; color: var(--wf-gray-900); display: flex; align-items: center; gap: 6px;">
+            <svg class="wf-svg-icon-sm" viewBox="0 0 24 24" style="color: var(--wf-primary); width: 14px; height: 14px;"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+            2. Distribución Interna de Consultorios (Planta Baja)
+          </div>
+          <span class="wf-badge wf-badge-dark" style="font-size: 10px;">Tu Box Asignado: <span id="mapaBoxNumeroTexto" style="color: #6ee7b7; font-weight: 800;">Box 1</span></span>
+        </div>
+
+        <div style="font-size: 11px; color: var(--wf-gray-700); margin-bottom: 10px; background: var(--wf-primary-soft); padding: 6px 10px; border-radius: var(--radius-sm); border-left: 3px solid var(--wf-primary);">
+          Orientación en pabellón: <strong id="mapaEspecialidadTexto" style="color: var(--wf-primary-hover);">Clínica Médica — Box 1</strong>. Ingresá al hall central y anunciate en recepción.
+        </div>
+
+        <!-- Disposición de Boxes 1 al 10 -->
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <!-- Fila Superior: Boxes 1 al 5 -->
+          <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px;">
+            <div id="boxPlano-1" style="border: 1px solid var(--wf-gray-300); background: var(--wf-gray-100); border-radius: var(--radius-sm); padding: 6px 2px; text-align: center; font-size: 10px; transition: all 0.2s;">
+              <strong>Box 1</strong>
+              <div class="box-desc" style="font-size: 9px; color: var(--wf-gray-500); margin-top: 1px;">Consultorio</div>
+            </div>
+            <div id="boxPlano-2" style="border: 1px solid var(--wf-gray-300); background: var(--wf-gray-100); border-radius: var(--radius-sm); padding: 6px 2px; text-align: center; font-size: 10px; transition: all 0.2s;">
+              <strong>Box 2</strong>
+              <div class="box-desc" style="font-size: 9px; color: var(--wf-gray-500); margin-top: 1px;">Consultorio</div>
+            </div>
+            <div id="boxPlano-3" style="border: 1px solid var(--wf-gray-300); background: var(--wf-gray-100); border-radius: var(--radius-sm); padding: 6px 2px; text-align: center; font-size: 10px; transition: all 0.2s;">
+              <strong>Box 3</strong>
+              <div class="box-desc" style="font-size: 9px; color: var(--wf-gray-500); margin-top: 1px;">Consultorio</div>
+            </div>
+            <div id="boxPlano-4" style="border: 1px solid var(--wf-gray-300); background: var(--wf-gray-100); border-radius: var(--radius-sm); padding: 6px 2px; text-align: center; font-size: 10px; transition: all 0.2s;">
+              <strong>Box 4</strong>
+              <div class="box-desc" style="font-size: 9px; color: var(--wf-gray-500); margin-top: 1px;">Consultorio</div>
+            </div>
+            <div id="boxPlano-5" style="border: 1px solid var(--wf-gray-300); background: var(--wf-gray-100); border-radius: var(--radius-sm); padding: 6px 2px; text-align: center; font-size: 10px; transition: all 0.2s;">
+              <strong>Box 5</strong>
+              <div class="box-desc" style="font-size: 9px; color: var(--wf-gray-500); margin-top: 1px;">Consultorio</div>
+            </div>
+          </div>
+
+          <!-- Pasillo Central / Recepción -->
+          <div style="background: #e2e8f0; border: 1px dashed #94a3b8; border-radius: var(--radius-sm); padding: 5px; text-align: center; font-size: 10px; font-weight: 700; color: #475569; letter-spacing: 0.5px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+            <span>🚪 Entrada</span>
+            <span>━━━━</span>
+            <span>PASILLO CENTRAL • SALA DE ESPERA & RECEPCIÓN PPS</span>
+            <span>━━━━</span>
+            <span>Triage 🩺</span>
+          </div>
+
+          <!-- Fila Inferior: Boxes 6 al 10 -->
+          <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px;">
+            <div id="boxPlano-6" style="border: 1px solid var(--wf-gray-300); background: var(--wf-gray-100); border-radius: var(--radius-sm); padding: 6px 2px; text-align: center; font-size: 10px; transition: all 0.2s;">
+              <strong>Box 6</strong>
+              <div class="box-desc" style="font-size: 9px; color: var(--wf-gray-500); margin-top: 1px;">Consultorio</div>
+            </div>
+            <div id="boxPlano-7" style="border: 1px solid var(--wf-gray-300); background: var(--wf-gray-100); border-radius: var(--radius-sm); padding: 6px 2px; text-align: center; font-size: 10px; transition: all 0.2s;">
+              <strong>Box 7</strong>
+              <div class="box-desc" style="font-size: 9px; color: var(--wf-gray-500); margin-top: 1px;">Consultorio</div>
+            </div>
+            <div id="boxPlano-8" style="border: 1px solid var(--wf-gray-300); background: var(--wf-gray-100); border-radius: var(--radius-sm); padding: 6px 2px; text-align: center; font-size: 10px; transition: all 0.2s;">
+              <strong>Box 8</strong>
+              <div class="box-desc" style="font-size: 9px; color: var(--wf-gray-500); margin-top: 1px;">Consultorio</div>
+            </div>
+            <div id="boxPlano-9" style="border: 1px solid var(--wf-gray-300); background: var(--wf-gray-100); border-radius: var(--radius-sm); padding: 6px 2px; text-align: center; font-size: 10px; transition: all 0.2s;">
+              <strong>Box 9</strong>
+              <div class="box-desc" style="font-size: 9px; color: var(--wf-gray-500); margin-top: 1px;">Consultorio</div>
+            </div>
+            <div id="boxPlano-10" style="border: 1px solid var(--wf-gray-300); background: var(--wf-gray-100); border-radius: var(--radius-sm); padding: 6px 2px; text-align: center; font-size: 10px; transition: all 0.2s;">
+              <strong>Box 10</strong>
+              <div class="box-desc" style="font-size: 9px; color: var(--wf-gray-500); margin-top: 1px;">Consultorio</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: center; align-items: center; gap: 14px; margin-top: 8px; font-size: 10px; color: var(--wf-gray-600); flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 4px;">
+            <div style="width: 10px; height: 10px; background: #0f9977; border-radius: 2px;"></div>
+            <span><strong>Tu Box Asignado (Verde)</strong></span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 4px;">
+            <div style="width: 10px; height: 10px; background: var(--wf-gray-100); border: 1px solid var(--wf-gray-300); border-radius: 2px;"></div>
+            <span>Otros consultorios</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end;">
+        <button type="button" class="wf-btn wf-btn-primary wf-btn-sm" onclick="cerrarModalMapa()">
+          Entendido, cerrar
+        </button>
+      </div>
+
+    </div>
+  </div>
   <!-- ==================== FOOTER ==================== -->
   <footer class="wf-footer">
     <div class="container" style="text-align: center; font-size: 11px; color: var(--wf-gray-500);">
-      UNLaM - DIIT • Visualización e Interfaces • Prototipo de Wireframe: Pantalla 6 (Mi Historial y Constancias)
+      UNLaM - DIIT • Visualización e Interfaces • Prototipo de Wireframe: Pantalla 6 (Mis Turnos y Constancias)
     </div>
   </footer>
 
@@ -845,6 +1056,9 @@
           ? `<span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 800; font-size: 10px;">PRÁCTICA PPS</span>`
           : `<span class="wf-badge wf-badge-outline" style="font-size: 10px;">PROFESIONAL GRADUADO</span>`;
 
+        const matchBox = (t.especialidad || '').match(/box\s*(\d+)/i);
+        const boxNum = matchBox ? matchBox[1] : '1';
+
         html += `
           <tr>
             <td>
@@ -853,7 +1067,12 @@
             </td>
             <td>
               <div style="font-weight: 700; font-size: 12px; color: var(--wf-gray-900);">${t.especialidad}</div>
-              <div style="font-size: 11px; color: var(--wf-gray-600);">Pabellón Ciencias de la Salud • PB</div>
+              <div style="font-size: 11px; color: var(--wf-gray-600); display: flex; align-items: center; gap: 4px; flex-wrap: wrap;">
+                <span>Pabellón Salud • PB</span>
+                <button type="button" onclick="abrirModalMapa('${boxNum}', '${t.especialidad.replace(/'/g, "\\'")}')" style="background: none; border: none; padding: 0; font-size: 11px; font-weight: 700; color: #0c7a61; text-decoration: underline; cursor: pointer; display: inline-flex; align-items: center; gap: 3px;">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Ver Box en plano
+                </button>
+              </div>
             </td>
             <td>
               ${badgeModalidad}
@@ -868,7 +1087,7 @@
                 <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="abrirCertificado('${t.fecha} 2026', '${t.especialidad}', '${t.profesional}', '${t.motivo}')" title="Descargar comprobante de reserva">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -1px; margin-right: 4px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Constancia
                 </button>
-                <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="cancelarTurnoPendiente(${t.id}, '${t.fecha}', '${t.hora}')" style="color: #dc2626; border-color: #fca5a5;" title="Cancelar este turno">
+                <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="solicitarCancelarTurno(${t.id}, '${t.especialidad.replace(/'/g, "\\'")}', '${t.fecha}', '${t.hora}')" style="color: #dc2626; border-color: #fca5a5;" title="Cancelar este turno">
                   Cancelar
                 </button>
               </div>
@@ -923,6 +1142,76 @@
         badge.textContent = '3 Atenciones Concluidas';
         pag.textContent = 'Mostrando 1–3 de 3 consultas registradas';
       }
+    }
+
+    // Modal de Confirmación de Cancelación (Heurística 5: Prevención de Errores)
+    let turnoIdACancelar = null;
+
+    function solicitarCancelarTurno(id, especialidad, fecha, hora) {
+      turnoIdACancelar = id;
+      document.getElementById('cancelarEspecialidad').textContent = especialidad;
+      document.getElementById('cancelarFechaHora').textContent = `${fecha} — ${hora}`;
+      document.getElementById('modalConfirmarCancelacion').classList.add('active');
+    }
+
+    function cerrarModalCancelar() {
+      turnoIdACancelar = null;
+      document.getElementById('modalConfirmarCancelacion').classList.remove('active');
+    }
+
+    function confirmarCancelacionTurno() {
+      if (turnoIdACancelar !== null) {
+        let turnos = obtenerTurnosPendientes();
+        turnos = turnos.filter(t => t.id !== turnoIdACancelar);
+        guardarTurnosPendientes(turnos);
+        cerrarModalCancelar();
+        renderizarTurnosPendientes();
+      }
+    }
+
+    // Modal de Ubicación y Plano Dinámico de Consultorios
+    function abrirModalMapa(boxNumero, especialidad) {
+      let bNum = 1;
+      if (boxNumero) {
+        const m = String(boxNumero).match(/\d+/);
+        if (m) bNum = parseInt(m[0], 10);
+      } else {
+        const turnos = obtenerTurnosPendientes();
+        if (turnos.length > 0) {
+          const m = (turnos[0].especialidad || '').match(/box\s*(\d+)/i);
+          if (m) bNum = parseInt(m[1], 10);
+          if (!especialidad) especialidad = turnos[0].especialidad;
+        }
+      }
+
+      const txtBox = document.getElementById('mapaBoxNumeroTexto');
+      const txtEsp = document.getElementById('mapaEspecialidadTexto');
+      if (txtBox) txtBox.textContent = `Box ${bNum}`;
+      if (txtEsp) txtEsp.textContent = especialidad || 'Consulta de Práctica Clínica UNLaM';
+
+      for (let i = 1; i <= 10; i++) {
+        const el = document.getElementById(`boxPlano-${i}`);
+        if (!el) continue;
+        if (i === bNum) {
+          el.style.background = '#0f9977';
+          el.style.color = '#ffffff';
+          el.style.border = '2px solid #09664f';
+          el.style.boxShadow = '0 3px 8px rgba(15, 153, 119, 0.4)';
+          el.innerHTML = `<strong>Box ${i}</strong><div style="background: #ffffff; color: #0f9977; font-size: 8px; font-weight: 900; border-radius: 2px; padding: 1px 3px; margin-top: 1px;">TU TURNO</div>`;
+        } else {
+          el.style.background = 'var(--wf-gray-100)';
+          el.style.color = 'var(--wf-gray-700)';
+          el.style.border = '1px solid var(--wf-gray-300)';
+          el.style.boxShadow = 'none';
+          el.innerHTML = `<strong>Box ${i}</strong><div style="font-size: 9px; color: var(--wf-gray-500); margin-top: 1px;">Consultorio</div>`;
+        }
+      }
+
+      document.getElementById('modalUbicacionCampus').classList.add('active');
+    }
+
+    function cerrarModalMapa() {
+      document.getElementById('modalUbicacionCampus').classList.remove('active');
     }
 
     function abrirCertificado(fecha, especialidad, profesional, concepto) {
