@@ -8,26 +8,30 @@
   <style>
     .caso-switcher {
       display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
+      gap: 12px;
+      margin-bottom: 24px;
       flex-wrap: wrap;
     }
 
     .caso-btn {
-      padding: 8px 14px;
-      border: 1px solid var(--wf-gray-800);
-      background: var(--wf-surface);
-      color: var(--wf-gray-800);
+      padding: 9px 16px;
+      border: 1.5px solid var(--verde-borde);
+      background: var(--verde-fondo-suave);
+      color: var(--verde-oscuro);
       font-size: 12px;
       font-weight: 700;
       border-radius: var(--radius-sm);
       cursor: pointer;
       user-select: none;
+      transition: all 0.15s ease;
+    }
+    .caso-btn:hover {
+      border-color: var(--verde-principal);
     }
     .caso-btn.active {
-      background: var(--wf-primary);
+      background: var(--verde-principal);
       color: var(--wf-white);
-      border-color: var(--wf-primary);
+      border-color: var(--verde-principal);
     }
 
     .days-demo-grid {
@@ -58,9 +62,23 @@
       background-color: #fff5f5;
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 640px) {
       .days-demo-grid {
         grid-template-columns: repeat(2, 1fr);
+      }
+      .caso-switcher {
+        flex-direction: column;
+      }
+      .caso-btn {
+        width: 100%;
+        text-align: left;
+      }
+      .alert-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .alert-actions .wf-btn {
+        width: 100%;
       }
     }
   </style>
@@ -74,9 +92,18 @@
         <button class="wf-menu-toggle" id="menuToggle" aria-label="Abrir menú">☰</button>
         <a href="pantalla_1_home.html" class="wf-logo">
           <img class="wf-logo-image" src="assets/logo-unlam-negro-300x68.png" alt="Universidad Nacional de La Matanza">
-          <div>
-            <div style="font-size: 13px; font-weight: 800; line-height: 1.1;">UNLaM SALUD</div>
-            <div style="font-size: 10px; color: var(--wf-gray-500); font-weight: 600;">Validación Inline</div>
+          <div class="wf-logo-brand">
+            <span class="wf-logo-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                <path d="M12 7v5"/>
+                <path d="M9.5 9.5h5"/>
+              </svg>
+            </span>
+            <div>
+              <div class="wf-logo-title">UNLaM SALUD</div>
+              <div class="wf-logo-subtitle" style="font-size: 10px; color: var(--wf-gray-500); font-weight: 600; white-space: nowrap;">Validación Inline</div>
+            </div>
           </div>
         </a>
       </div>
@@ -91,11 +118,14 @@
         </ul>
       </nav>
 
-      <div style="display: flex; align-items: center; gap: 12px;">
-        <div class="wf-user-profile">
-          <div class="wf-avatar">JP</div>
-          <div>
-            <div style="font-weight: 700;">José Pérez</div>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div class="wf-user-profile" title="José Pérez (jose@alumno.unlam.edu.ar)">
+          <div class="wf-avatar">
+            <img src="assets/avatars/jose-perez.jpg" alt="Foto de perfil de José Pérez" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <span class="wf-avatar-fallback">JP</span>
+          </div>
+          <div class="wf-user-info">
+            <div style="font-weight: 700; line-height: 1;">José Pérez</div>
             <div style="font-size: 10px; color: var(--wf-gray-500);">jose@alumno.unlam.edu.ar</div>
           </div>
         </div>
@@ -106,11 +136,11 @@
   <!-- ==================== CONTENIDO PRINCIPAL ==================== -->
   <main class="container" style="max-width: 820px;">
 
-    <div style="margin-bottom: 16px;">
-      <span class="wf-badge wf-badge-dark" style="margin-bottom: 6px;">Corrección Aplicada — Sin Popups Emergentes</span>
-      <h1 style="font-size: 20px; font-weight: 800; letter-spacing: -0.5px;">Validación Inline Adyacente al Input</h1>
-      <p style="font-size: 12px; color: var(--wf-gray-600);">
-        Siguiendo la devolución de la cátedra, se reemplazaron las ventanas emergentes (popups) por mensajes de error inline ubicados directamente debajo del campo afectado.
+    <div style="margin-bottom: 24px;">
+      <span class="wf-badge wf-badge-dark" style="margin-bottom: 8px;">Validación Amigable — Sin Popups Molestos</span>
+      <h1 style="font-size: 22px; font-weight: 800; letter-spacing: -0.5px; color: var(--verde-oscuro); margin-bottom: 4px;">Ayudas y Validación Inline junto a cada campo</h1>
+      <p style="font-size: 13px; color: var(--wf-gray-600);">
+        Para que no pierdas el contexto al sacar tu turno, los avisos aparecen justo debajo del campo que falta completar, sin ventanas emergentes que te interrumpan.
       </p>
     </div>
 
@@ -190,7 +220,7 @@
     </section>
 
     <!-- Acciones de retorno al formulario en vivo -->
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px; flex-wrap: wrap; gap: 12px;">
+    <div class="alert-actions" style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px; flex-wrap: wrap; gap: 12px;">
       <a href="pantalla_2_cartilla.html?mod=graduado" class="wf-btn wf-btn-secondary">
         Cambiar a profesional graduado
       </a>

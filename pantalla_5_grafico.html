@@ -40,24 +40,25 @@
       background: var(--wf-surface);
       border: 1px solid var(--wf-border-strong);
       border-radius: var(--radius-md);
-      padding: 20px;
-      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
       height: 100%;
     }
     .chart-headline-banner {
-      background: var(--wf-gray-100);
-      border: 1px solid var(--wf-border-strong);
-      border-left: 4px solid var(--wf-primary);
-      border-radius: var(--radius-sm);
-      padding: 12px 16px;
-      margin-bottom: 20px;
+      background: var(--verde-fondo-suave);
+      border: 1.5px solid var(--verde-borde);
+      border-left: 5px solid var(--verde-principal);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      margin-bottom: 24px;
       font-size: 13px;
-      color: var(--wf-gray-900);
+      color: var(--verde-oscuro);
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 12px;
+      box-shadow: var(--shadow-accent-sm);
     }
 
     /* Estructura del Gráfico de Barras Verticales (1 barra por categoría) */
@@ -136,8 +137,8 @@
       transition: height 0.35s ease;
     }
     .vbar-fill-pps {
-      background: linear-gradient(180deg, #10b981 0%, #0f9977 100%);
-      border: 1px solid #0b7a5e;
+      background: linear-gradient(180deg, #00875A 0%, #065F46 100%);
+      border: 1px solid #065F46;
       border-bottom: none;
     }
     .vbar-fill-graduado {
@@ -163,36 +164,39 @@
     .kpi-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      gap: 24px;
     }
     .kpi-card {
       background: var(--wf-surface);
       border: 1px solid var(--wf-border-strong);
-      border-top: 3px solid var(--wf-primary);
+      border-top: 4px solid var(--verde-principal);
       border-radius: var(--radius-md);
-      padding: 20px;
+      padding: 24px 20px;
       text-align: center;
-      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     .kpi-value {
-      font-size: 32px;
+      font-size: 34px;
       font-weight: 900;
-      color: var(--wf-primary-hover);
+      color: var(--verde-oscuro);
       line-height: 1.1;
-      margin-bottom: 6px;
+      margin: 12px 0 6px;
     }
     .kpi-title {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--wf-gray-700);
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--verde-principal);
       text-transform: uppercase;
       letter-spacing: 0.5px;
       margin-bottom: 6px;
     }
     .kpi-desc {
-      font-size: 11px;
-      color: var(--wf-gray-600);
-      line-height: 1.3;
+      font-size: 12px;
+      color: var(--wf-gray-700);
+      line-height: 1.4;
     }
 
     @media (max-width: 768px) {
@@ -200,10 +204,57 @@
         grid-template-columns: 1fr;
       }
       .vbar-fill {
-        width: 24px;
+        width: 24px !important;
       }
       .vchart-xlabel {
         font-size: 10px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .tabs-wrapper {
+        flex-direction: column;
+        gap: 4px;
+      }
+      .tab-item {
+        width: 100%;
+        text-align: left;
+        padding: 12px 14px;
+        min-height: 44px;
+      }
+      .chart-card {
+        padding: 16px 12px;
+      }
+      .vchart-wrapper {
+        gap: 6px;
+      }
+      .vchart-yaxis {
+        min-width: 28px;
+        font-size: 9px;
+      }
+      .vchart-bars-zone {
+        padding: 0 2px;
+      }
+      .vchart-xaxis-labels {
+        padding: 8px 2px 0;
+        gap: 2px;
+      }
+      .vbar-col {
+        padding: 0 2px;
+      }
+      .vbar-value-top {
+        font-size: 9.5px;
+      }
+      .vbar-fill {
+        width: 22px !important;
+      }
+      .vchart-xlabel {
+        font-size: 9px;
+        line-height: 1.2;
+        overflow-wrap: break-word;
+      }
+      [aria-label="Modalidad del gráfico"] .wf-btn {
+        width: 100%;
       }
     }
   </style>
@@ -217,9 +268,18 @@
         <button class="wf-menu-toggle" id="menuToggle" aria-label="Abrir menú">☰</button>
         <a href="pantalla_1_home.html" class="wf-logo">
           <img class="wf-logo-image" src="assets/logo-unlam-negro-300x68.png" alt="Universidad Nacional de La Matanza">
-          <div>
-            <div style="font-size: 13px; font-weight: 800; line-height: 1.1;">UNLaM SALUD</div>
-            <div style="font-size: 10px; color: var(--wf-gray-500); font-weight: 600;">Estadísticas e Impacto</div>
+          <div class="wf-logo-brand">
+            <span class="wf-logo-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                <path d="M12 7v5"/>
+                <path d="M9.5 9.5h5"/>
+              </svg>
+            </span>
+            <div>
+              <div class="wf-logo-title">UNLaM SALUD</div>
+              <div class="wf-logo-subtitle" style="font-size: 10px; color: var(--wf-gray-500); font-weight: 600; white-space: nowrap;">Estadísticas e Impacto</div>
+            </div>
           </div>
         </a>
       </div>
@@ -234,11 +294,14 @@
         </ul>
       </nav>
 
-      <div style="display: flex; align-items: center; gap: 12px;">
-        <div class="wf-user-profile">
-          <div class="wf-avatar">JP</div>
-          <div>
-            <div style="font-weight: 700;">José Pérez</div>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div class="wf-user-profile" title="José Pérez (jose@alumno.unlam.edu.ar)">
+          <div class="wf-avatar">
+            <img src="assets/avatars/jose-perez.jpg" alt="Foto de perfil de José Pérez" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <span class="wf-avatar-fallback">JP</span>
+          </div>
+          <div class="wf-user-info">
+            <div style="font-weight: 700; line-height: 1;">José Pérez</div>
             <div style="font-size: 10px; color: var(--wf-gray-500);">jose@alumno.unlam.edu.ar</div>
           </div>
         </div>
@@ -250,13 +313,13 @@
   <main class="container">
 
     <!-- Encabezado de la Sección -->
-    <div style="margin-bottom: 18px;">
-      <div style="font-size: 11px; color: var(--wf-gray-600); margin-bottom: 4px;">
-        <a href="pantalla_1_home.html" style="color: inherit; text-decoration: none;">Inicio</a> / Estadísticas
+    <div style="margin-bottom: 24px;">
+      <div style="font-size: 12px; color: var(--wf-gray-600); margin-bottom: 6px;">
+        <a href="pantalla_1_home.html" style="color: var(--verde-principal); text-decoration: none; font-weight: 600;">Inicio</a> / Estadísticas
       </div>
-      <h1 style="font-size: 20px; font-weight: 800; letter-spacing: -0.5px;">Estadísticas de Atención y Tiempos de Espera</h1>
-      <p style="font-size: 12px; color: var(--wf-gray-600);">
-        Visualización clara de días de espera por especialidad según modalidad y demanda mensual de turnos.
+      <h1 style="font-size: 23px; font-weight: 800; letter-spacing: -0.5px; color: var(--verde-oscuro); margin-bottom: 4px;">Estadísticas de Atención y Tiempos de Espera</h1>
+      <p style="font-size: 13px; color: var(--wf-gray-600);">
+        Mirá cuántos días se espera según la modalidad que elijas y cómo crece la atención gratuita en el campus.
       </p>
     </div>
 
@@ -404,44 +467,53 @@
     </section>
 
     <!-- ==================== TARJETAS DE MÉTRICAS (KPIS INFERIORES EN ENTEROS) ==================== -->
-    <section style="margin-bottom: var(--space-6);" data-gestalt="Simetría y Región Común">
-      <h3 style="font-size: 14px; font-weight: 800; margin-bottom: 14px;">Impacto Institucional del Programa Universitario</h3>
+    <section style="margin-top: 32px; margin-bottom: var(--space-6);" data-gestalt="Simetría y Región Común">
+      <h2 style="font-size: 17px; font-weight: 800; color: var(--verde-oscuro); margin-bottom: 18px;">Impacto del Programa en la Comunidad UNLaM</h2>
 
       <div class="kpi-grid">
         
         <!-- KPI 1 -->
         <div class="kpi-card">
+          <div class="wf-icon-circle-lg" aria-hidden="true">
+            <svg class="wf-svg-icon" style="width: 28px; height: 28px;" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="m9 16 2 2 4-4"/></svg>
+          </div>
           <div class="kpi-value">1.420</div>
           <div class="kpi-title">Turnos Atendidos</div>
           <div class="kpi-desc">
-            Consultas efectivas realizadas durante el 2do Cuatrimestre 2026 en San Justo.
+            Consultas realizadas durante el 2do Cuatrimestre 2026 en San Justo.
           </div>
-          <div style="margin-top: 8px;">
-            <span class="wf-badge wf-badge-dark" style="font-size: 9px;">100% Gratuitos</span>
+          <div style="margin-top: 10px;">
+            <span class="wf-badge wf-badge-dark" style="font-size: 10px;">100% Gratuitos</span>
           </div>
         </div>
 
         <!-- KPI 2 -->
         <div class="kpi-card">
+          <div class="wf-icon-circle-lg" aria-hidden="true">
+            <svg class="wf-svg-icon" style="width: 28px; height: 28px;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
           <div class="kpi-value">3.850 hs</div>
           <div class="kpi-title">Horas PPS Acreditadas</div>
           <div class="kpi-desc">
-            Computadas por 72 estudiantes avanzados de ciencias de la salud bajo tutoría docente.
+            Sumadas por 72 estudiantes avanzados de Salud con acompañamiento docente.
           </div>
-          <div style="margin-top: 8px;">
-            <span class="wf-badge wf-badge-dark" style="font-size: 9px;">Formación Clínica</span>
+          <div style="margin-top: 10px;">
+            <span class="wf-badge wf-badge-dark" style="font-size: 10px;">Formación Clínica</span>
           </div>
         </div>
 
         <!-- KPI 3 -->
         <div class="kpi-card">
+          <div class="wf-icon-circle-lg" aria-hidden="true">
+            <svg class="wf-svg-icon" style="width: 28px; height: 28px;" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg>
+          </div>
           <div class="kpi-value">95%</div>
           <div class="kpi-title">Asistencia Estudiantil</div>
           <div class="kpi-desc">
-            Estudiantes que concurren puntualmente al turno reservado dentro del campus.
+            Compañeros y compañeras que asisten puntualmente a su turno reservado.
           </div>
-          <div style="margin-top: 8px;">
-            <span class="wf-badge wf-badge-dark" style="font-size: 9px;">Presentismo Efectivo</span>
+          <div style="margin-top: 10px;">
+            <span class="wf-badge wf-badge-dark" style="font-size: 10px;">Presentismo Efectivo</span>
           </div>
         </div>
 

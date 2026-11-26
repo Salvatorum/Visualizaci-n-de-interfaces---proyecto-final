@@ -8,26 +8,44 @@
   <style>
     /* Estilos específicos de Historial */
     .profile-summary-card {
-      background: var(--wf-surface);
-      border: 1px solid var(--wf-border-strong);
+      background: var(--verde-fondo-suave);
+      border: 1.5px solid var(--verde-borde);
       border-radius: var(--radius-md);
-      padding: var(--space-4);
-      margin-bottom: var(--space-5);
+      padding: 20px 24px;
+      margin-bottom: 28px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 16px;
+      gap: 20px;
       flex-wrap: wrap;
-      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
+      box-shadow: var(--shadow-accent-sm);
+    }
+
+    .sort-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      background: var(--verde-fondo-suave);
+      border: 1px solid var(--verde-borde);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      margin-bottom: 12px;
+    }
+
+    .badge-icon-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
     }
 
     .history-table-wrapper {
-      max-height: 420px;
-      overflow-y: auto;
-      border: 1px solid var(--wf-border-strong);
+      overflow: hidden;
+      border: 1px solid var(--verde-borde);
       border-radius: var(--radius-md);
-      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
-      margin-top: 14px;
+      box-shadow: var(--shadow-sm);
+      margin-top: 10px;
       background: var(--wf-surface);
     }
     .history-table {
@@ -39,23 +57,23 @@
       border: none;
     }
     .history-table th {
-      background: var(--wf-gray-100);
-      border-bottom: 2px solid var(--wf-gray-800);
-      padding: 12px 14px;
+      background: var(--verde-fondo-suave);
+      border-bottom: 2px solid var(--verde-principal);
+      padding: 13px 14px;
       text-align: left;
-      font-weight: 700;
-      color: var(--wf-gray-900);
-      position: sticky;
-      top: 0;
-      z-index: 5;
+      font-weight: 800;
+      color: var(--verde-oscuro);
     }
     .history-table td {
       border-bottom: 1px solid var(--wf-divider);
-      padding: 12px 14px;
+      padding: 13px 14px;
       vertical-align: middle;
     }
+    .history-table tbody tr:last-child td {
+      border-bottom: none;
+    }
     .history-table tr:hover {
-      background: var(--wf-gray-50);
+      background: var(--verde-fondo-suave);
     }
 
     /* Modal de Detalle de Atención / Certificado */
@@ -131,6 +149,23 @@
     }
 
     @media (max-width: 768px) {
+      .profile-summary-card {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 18px 16px;
+      }
+      .profile-hours-box {
+        width: 100%;
+      }
+      .history-table-wrapper {
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        overflow: visible;
+      }
+      .history-table {
+        background: transparent;
+      }
       .history-table thead {
         display: none;
       }
@@ -140,14 +175,54 @@
       }
       .history-table tr {
         margin-bottom: 14px;
-        border: 1px solid var(--wf-border-strong);
-        border-radius: var(--radius-sm);
-        padding: 10px;
-        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
+        background: var(--wf-surface);
+        border: 1.5px solid var(--verde-borde);
+        border-radius: var(--radius-md);
+        padding: 14px 16px;
+        box-shadow: var(--shadow-sm);
       }
       .history-table td {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        border-bottom: 1px dashed var(--verde-borde);
+        padding: 8px 0;
+        text-align: left !important;
+      }
+      .history-table td:last-child {
         border-bottom: none;
-        padding: 6px 0;
+        padding-top: 10px;
+      }
+      .history-table td::before {
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        color: var(--verde-principal);
+      }
+      .history-table td:nth-of-type(1)::before { content: "Fecha y Hora"; }
+      .history-table td:nth-of-type(2)::before { content: "Especialidad y Ubicación"; }
+      .history-table td:nth-of-type(3)::before { content: "Modalidad de Atención"; }
+      .history-table td:nth-of-type(4)::before { content: "Motivo Registrado"; }
+      .history-table td:nth-of-type(5)::before { content: "Estado"; }
+      .history-table td:nth-of-type(6)::before { content: "Acciones"; }
+      .history-table td:nth-of-type(6) > div {
+        width: 100%;
+        justify-content: stretch !important;
+      }
+      .history-table td:nth-of-type(6) .wf-btn {
+        min-height: 44px;
+        flex: 1;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .sort-toolbar select,
+      .sort-toolbar .wf-btn {
+        width: 100% !important;
+        min-width: 0 !important;
       }
     }
   </style>
@@ -161,9 +236,18 @@
         <button class="wf-menu-toggle" id="menuToggle" aria-label="Abrir menú">☰</button>
         <a href="pantalla_1_home.html" class="wf-logo">
           <img class="wf-logo-image" src="assets/logo-unlam-negro-300x68.png" alt="Universidad Nacional de La Matanza">
-          <div>
-            <div style="font-size: 13px; font-weight: 800; line-height: 1.1;">UNLaM SALUD</div>
-            <div style="font-size: 10px; color: var(--wf-gray-500); font-weight: 600;">Mis Turnos y Constancias</div>
+          <div class="wf-logo-brand">
+            <span class="wf-logo-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                <path d="M12 7v5"/>
+                <path d="M9.5 9.5h5"/>
+              </svg>
+            </span>
+            <div>
+              <div class="wf-logo-title">UNLaM SALUD</div>
+              <div class="wf-logo-subtitle" style="font-size: 10px; color: var(--wf-gray-500); font-weight: 600; white-space: nowrap;">Mis Turnos y Constancias</div>
+            </div>
           </div>
         </a>
       </div>
@@ -178,11 +262,14 @@
         </ul>
       </nav>
 
-      <div style="display: flex; align-items: center; gap: 12px;">
-        <div class="wf-user-profile">
-          <div class="wf-avatar">JP</div>
-          <div>
-            <div style="font-weight: 700;">José Pérez</div>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div class="wf-user-profile" title="José Pérez (jose@alumno.unlam.edu.ar)">
+          <div class="wf-avatar">
+            <img src="assets/avatars/jose-perez.jpg" alt="Foto de perfil de José Pérez" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <span class="wf-avatar-fallback">JP</span>
+          </div>
+          <div class="wf-user-info">
+            <div style="font-weight: 700; line-height: 1;">José Pérez</div>
             <div style="font-size: 10px; color: var(--wf-gray-500);">jose@alumno.unlam.edu.ar</div>
           </div>
         </div>
@@ -194,47 +281,53 @@
   <main class="container">
 
     <!-- Migas de pan y título -->
-    <div style="margin-bottom: 16px;">
-      <div style="font-size: 11px; color: var(--wf-gray-600); margin-bottom: 4px;">
-        <a href="pantalla_1_home.html" style="color: inherit; text-decoration: none;">Inicio</a> / Mis Turnos y Constancias
+    <div style="margin-bottom: 24px;">
+      <div style="font-size: 12px; color: var(--wf-gray-600); margin-bottom: 6px;">
+        <a href="pantalla_1_home.html" style="color: var(--verde-principal); text-decoration: none; font-weight: 600;">Inicio</a> / Mis Turnos y Constancias
       </div>
-      <h1 style="font-size: 20px; font-weight: 800; letter-spacing: -0.5px;">Mis Turnos y Constancias</h1>
-      <p style="font-size: 12px; color: var(--wf-gray-600);">
-        Registro de consultas de atención primaria realizadas en el campus y descarga de certificados oficiales de asistencia.
+      <h1 style="font-size: 23px; font-weight: 800; letter-spacing: -0.5px; color: var(--verde-oscuro); margin-bottom: 4px;">Mis Turnos y Constancias</h1>
+      <p style="font-size: 13px; color: var(--wf-gray-600);">
+        Revisá tus próximos turnos, descargá tus constancias en PDF y consultá tus atenciones anteriores.
       </p>
     </div>
 
     <!-- ==================== FICHA RESUMEN DEL ESTUDIANTE ==================== -->
     <section class="profile-summary-card" data-gestalt="Región Común y Cerramiento">
-      <div style="display: flex; align-items: center; gap: 14px;">
-        <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--wf-primary-soft); border: 1.5px solid var(--wf-primary); color: var(--wf-primary); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 900;">
-          JP
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <div style="width: 58px; height: 58px; border-radius: 50%; background: var(--verde-principal); border: 2px solid var(--verde-principal); color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 900; flex-shrink: 0; overflow: hidden; box-shadow: var(--shadow-accent-sm);">
+          <img src="assets/avatars/jose-perez.jpg" alt="Foto de perfil de José Pérez" style="width: 100%; height: 100%; object-fit: cover; display: block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <span style="display: none; width: 100%; height: 100%; align-items: center; justify-content: center;">JP</span>
         </div>
         <div>
-          <div style="font-size: 15px; font-weight: 800;">José Pérez</div>
-          <div style="font-size: 12px; color: var(--wf-gray-700);">
+          <div style="font-size: 17px; font-weight: 800; color: var(--verde-oscuro);">José Pérez</div>
+          <div style="font-size: 12.5px; color: var(--wf-gray-700); margin-top: 2px;">
             Legajo: <strong>91.402</strong> • DNI: 40.812.390 • Ing. en Informática (DIIT)
           </div>
-          <div style="font-size: 11px; color: var(--wf-gray-500); margin-top: 2px;">
-            Cobertura declarada: Sin obra social / Asistencia exclusiva en consultorios UNLaM.
+          <div style="font-size: 11.5px; color: var(--verde-oscuro); margin-top: 3px; font-weight: 600;">
+            Cobertura declarada: Sin obra social / Atención gratuita en consultorios UNLaM.
           </div>
         </div>
       </div>
 
       <!-- Métricas personales solidarias (Diseño Emocional - Don Norman) -->
-      <div style="background: var(--wf-gray-100); border: 1px solid var(--wf-gray-300); padding: 10px 14px; border-radius: var(--radius-sm); text-align: right;">
-        <div style="font-size: 11px; font-weight: 700; color: var(--wf-gray-600); text-transform: uppercase;">Aporte a la Formación PPS</div>
-        <div style="font-size: 18px; font-weight: 900; color: var(--wf-gray-900);">6 Horas Cátedra</div>
-        <div style="font-size: 10px; color: var(--wf-gray-600);">Acreditadas a estudiantes avanzados en 3 turnos</div>
+      <div class="profile-hours-box" style="background: var(--wf-surface); border: 1.5px solid var(--verde-borde); padding: 12px 18px; border-radius: var(--radius-sm); display: flex; align-items: center; gap: 12px;">
+        <div class="wf-icon-circle" aria-hidden="true">
+          <svg class="wf-svg-icon" style="width: 22px; height: 22px;" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <div>
+          <div style="font-size: 10px; font-weight: 800; color: var(--verde-principal); text-transform: uppercase; letter-spacing: 0.4px;">Tu aporte a la formación PPS</div>
+          <div style="font-size: 20px; font-weight: 900; color: var(--verde-oscuro); line-height: 1.15;">6 Horas Cátedra</div>
+          <div style="font-size: 11px; color: var(--wf-gray-600);">Acreditadas a estudiantes de Salud en 3 turnos</div>
+        </div>
       </div>
     </section>
 
     <!-- ==================== SECCIÓN: MIS TURNOS PENDIENTES / PRÓXIMAS CITAS ==================== -->
-    <section id="seccionTurnosPendientes" style="margin-bottom: var(--space-6);" data-gestalt="Región Común y Cerramiento" data-heuristic="Visibilidad del Estado del Sistema (H1)">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+    <section id="seccionTurnosPendientes" style="margin-bottom: 36px;" data-gestalt="Región Común y Cerramiento" data-heuristic="Visibilidad del Estado del Sistema (H1)">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 12px;">
         <div>
-          <h2 style="font-size: 15px; font-weight: 800; margin: 0 0 4px 0; display: flex; align-items: center; gap: 8px;">
-            <svg class="wf-svg-icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="color: var(--wf-primary); width: 16px; height: 16px;">
+          <h2 style="font-size: 18px; font-weight: 800; margin: 0 0 4px 0; color: var(--verde-oscuro); display: flex; align-items: center; gap: 8px;">
+            <svg class="wf-svg-icon-sm" viewBox="0 0 24 24" aria-hidden="true" style="color: var(--verde-principal); width: 18px; height: 18px;">
               <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
               <line x1="16" y1="2" x2="16" y2="6"/>
               <line x1="8" y1="2" x2="8" y2="6"/>
@@ -242,12 +335,25 @@
             </svg>
             Turnos Pendientes / Próximas Citas
           </h2>
-          <div style="font-size: 11px; color: var(--wf-gray-600);">Consultas médicas agendadas pendientes de atención en los consultorios del campus.</div>
+          <div style="font-size: 12px; color: var(--wf-gray-600);">Tus turnos agendados para asistir al Pabellón Ciencias de la Salud.</div>
         </div>
-        <div style="display: flex; align-items: center; gap: 8px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
           <span class="wf-badge wf-badge-dark" id="badgeContadorPendientes">1 Turno Pendiente</span>
-          <a href="pantalla_2_cartilla.html" class="wf-btn wf-btn-primary wf-btn-sm" style="font-size: 11px;">+ Sacar Nuevo Turno</a>
+          <a href="pantalla_2_cartilla.html" class="wf-btn wf-btn-primary wf-btn-sm" style="font-size: 12px;">+ Sacar Nuevo Turno</a>
         </div>
+      </div>
+
+      <!-- Barra de ordenamiento para turnos pendientes (controles próximos entre sí) -->
+      <div class="sort-toolbar" id="barraOrdenPendientes" style="justify-content: flex-start; gap: 12px;">
+        <label for="selectOrdenPendientes" style="font-size: 12px; font-weight: 700; color: var(--verde-oscuro); display: flex; align-items: center; gap: 6px; margin: 0;">
+          <svg class="wf-svg-icon-sm" viewBox="0 0 24 24" aria-hidden="true"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="14" y2="12"/><line x1="4" y1="18" x2="9" y2="18"/></svg>
+          <span>Ordenar próximos turnos:</span>
+        </label>
+        <select id="selectOrdenPendientes" class="wf-select" style="width: auto; min-width: 230px; padding: 6px 10px; font-size: 12px;" onchange="renderizarTurnosPendientes()">
+          <option value="fecha_asc" selected>Fecha: Más próxima primero</option>
+          <option value="fecha_desc">Fecha: Más lejana primero</option>
+          <option value="especialidad">Tipo de Práctica / Especialidad (A–Z)</option>
+        </select>
       </div>
 
       <div id="contenedorTablaPendientes">
@@ -259,13 +365,13 @@
     <section style="margin-bottom: var(--space-6);" data-gestalt="Semejanza y Proximidad" data-heuristic="Control y Libertad (H3: Descarga de Comprobantes)">
       
       <!-- Barra disparadora de divulgación progresiva (Heurística 8: Diseño Minimalista) -->
-      <div class="wf-card" style="border: 1px solid var(--wf-border-strong); background: var(--wf-surface); border-radius: var(--radius-md); padding: 16px 20px; cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;" onclick="toggleHistorialConcluido()" onmouseover="this.style.borderColor='var(--wf-primary)'" onmouseout="this.style.borderColor='var(--wf-border-strong)'">
+      <div class="wf-card" style="border: 1.5px solid var(--verde-borde); background: var(--verde-fondo-suave); border-radius: var(--radius-md); padding: 18px 22px; cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;" onclick="toggleHistorialConcluido()" onmouseover="this.style.borderColor='var(--verde-principal)'" onmouseout="this.style.borderColor='var(--verde-borde)'">
         <div>
-          <h2 style="font-size: 15px; font-weight: 800; margin: 0 0 4px 0; color: var(--wf-gray-900);">
+          <h2 style="font-size: 17px; font-weight: 800; margin: 0 0 4px 0; color: var(--verde-oscuro);">
             Consultas Médicas Registradas (Año Académico 2026)
           </h2>
-          <div style="font-size: 11px; color: var(--wf-gray-600);">
-            Historial de atenciones concluidas y descarga de certificados oficiales.
+          <div style="font-size: 12px; color: var(--wf-gray-700);">
+            Historial de tus atenciones ya concluidas y descarga de certificados oficiales.
           </div>
         </div>
         <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;" onclick="event.stopPropagation()">
@@ -277,12 +383,17 @@
       </div>
 
       <!-- Contenedor desplegable (Oculto por defecto para evitar sobrecarga visual - Divulgación Progresiva) -->
-      <div id="contenedorHistorialConcluido" style="display: none; margin-top: 14px;">
+      <div id="contenedorHistorialConcluido" style="display: none; margin-top: 16px;">
         
-        <!-- Barra de control del historial extenso -->
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
-          <div style="font-size: 12px; color: var(--wf-gray-700); font-weight: 600;">
-            Consultas previas concluidas y avaladas por profesionales docentes:
+        <!-- Barra de control y ordenamiento del historial -->
+        <div class="sort-toolbar">
+          <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <span style="font-size: 12px; color: var(--verde-oscuro); font-weight: 700;">Ordenar historial:</span>
+            <select id="selectOrdenHistorial" class="wf-select" style="width: auto; min-width: 220px; padding: 6px 10px; font-size: 12px;" onchange="ordenarTablaHistorial()">
+              <option value="fecha_desc" selected>Fecha: Más reciente primero</option>
+              <option value="fecha_asc">Fecha: Más antigua primero</option>
+              <option value="especialidad">Tipo de Práctica / Especialidad (A–Z)</option>
+            </select>
           </div>
           <button type="button" class="wf-btn wf-btn-secondary wf-btn-sm" id="btnToggleHistorial" onclick="alternarHistorialExtenso()">
             Ver historial extenso (15 atenciones)
@@ -683,9 +794,9 @@
         </table>
 
         <!-- Paginación y conteo institucional -->
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--wf-gray-50); border-top: 1px solid var(--wf-border-strong); font-size: 11px; color: var(--wf-gray-700);">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: var(--verde-fondo-suave); border-top: 1px solid var(--verde-borde); font-size: 11px; color: var(--verde-oscuro); font-weight: 600; border-radius: 0 0 var(--radius-md) var(--radius-md);">
           <span id="textoPaginacion">Mostrando 1–3 de 3 consultas registradas</span>
-          <span style="font-size: 10px; color: var(--wf-gray-500);">Año Académico 2026</span>
+          <span style="font-size: 10px; color: var(--wf-gray-600);">Año Académico 2026</span>
         </div>
       </div>
 
@@ -894,7 +1005,7 @@
 
         <div style="display: flex; justify-content: center; align-items: center; gap: 14px; margin-top: 8px; font-size: 10px; color: var(--wf-gray-600); flex-wrap: wrap;">
           <div style="display: flex; align-items: center; gap: 4px;">
-            <div style="width: 10px; height: 10px; background: #0f9977; border-radius: 2px;"></div>
+            <div style="width: 10px; height: 10px; background: var(--verde-principal); border-radius: 2px;"></div>
             <span><strong>Tu Box Asignado (Verde)</strong></span>
           </div>
           <div style="display: flex; align-items: center; gap: 4px;">
@@ -988,6 +1099,14 @@
             else if (t.fecha === 'Vie 15 Nov') { t.fecha = 'Vie 27 Nov'; modificado = true; }
             return t;
           });
+          // Limpiar posibles turnos duplicados en mismo día y hora
+          const vistos = new Set();
+          parsed = parsed.filter(t => {
+            const clave = `${(t.fecha || '').trim()}|${(t.hora || '').trim()}`;
+            if (vistos.has(clave)) return false;
+            vistos.add(clave);
+            return true;
+          });
           parsed = ordenarTurnosCronologicamente(parsed);
           localStorage.setItem('unlam_turnos_pendientes', JSON.stringify(parsed));
           return parsed;
@@ -1016,22 +1135,55 @@
     function renderizarTurnosPendientes() {
       const contenedor = document.getElementById('contenedorTablaPendientes');
       const badge = document.getElementById('badgeContadorPendientes');
+      const barraOrden = document.getElementById('barraOrdenPendientes');
+      const selectOrden = document.getElementById('selectOrdenPendientes');
       if (!contenedor) return;
 
-      const turnos = obtenerTurnosPendientes();
+      let turnos = obtenerTurnosPendientes();
 
       if (badge) {
         badge.textContent = `${turnos.length} ${turnos.length === 1 ? 'Turno Pendiente' : 'Turnos Pendientes'}`;
       }
 
+      if (barraOrden) {
+        barraOrden.style.display = turnos.length > 0 ? 'flex' : 'none';
+      }
+
       if (turnos.length === 0) {
         contenedor.innerHTML = `
-          <div style="background: var(--wf-surface); border: 1px dashed var(--wf-border-strong); border-radius: var(--radius-md); padding: 22px; text-align: center; color: var(--wf-gray-600); font-size: 12px;">
-            <p style="margin-bottom: 6px; font-weight: 700; color: var(--wf-gray-800);">No tenés turnos médicos pendientes actualmente.</p>
-            <span>Para agendar una nueva consulta de atención primaria, ingresá a la <a href="pantalla_2_cartilla.html" style="color: #0c7a61; font-weight: 700; text-decoration: underline;">Cartilla de Especialidades</a>.</span>
+          <div style="background: var(--verde-fondo-suave); border: 1.5px dashed var(--verde-borde); border-radius: var(--radius-md); padding: 36px 24px; text-align: center;">
+            <div style="width: 72px; height: 72px; border-radius: 50%; background: var(--verde-menta); border: 2px solid var(--verde-borde); color: var(--verde-principal); display: flex; align-items: center; justify-content: center; margin: 0 auto 14px;">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+                <path d="M9 15l2 2 4-4"/>
+              </svg>
+            </div>
+            <h3 style="font-size: 17px; font-weight: 800; color: var(--verde-oscuro); margin-bottom: 6px;">No tenés turnos pendientes</h3>
+            <p style="font-size: 13px; color: var(--wf-gray-700); max-width: 440px; margin: 0 auto 18px; line-height: 1.5;">
+              Cuando necesites una consulta en el campus, podés elegir especialidad y horario en menos de un minuto.
+            </p>
+            <a href="pantalla_2_cartilla.html" class="wf-btn wf-btn-primary" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px;">
+              <span>+</span> Sacar Turno ahora
+            </a>
           </div>
         `;
         return;
+      }
+
+      // Aplicar criterio de ordenamiento seleccionado (default: fecha_asc)
+      const criterio = selectOrden ? selectOrden.value : 'fecha_asc';
+      if (criterio === 'fecha_desc') {
+        turnos = [...turnos].sort((a, b) => obtenerValorCronologico(b) - obtenerValorCronologico(a));
+      } else if (criterio === 'especialidad') {
+        turnos = [...turnos].sort((a, b) => {
+          const cmp = (a.especialidad || '').localeCompare(b.especialidad || '', 'es');
+          return cmp !== 0 ? cmp : obtenerValorCronologico(a) - obtenerValorCronologico(b);
+        });
+      } else {
+        turnos = ordenarTurnosCronologicamente(turnos);
       }
 
       let html = `
@@ -1053,8 +1205,14 @@
       turnos.forEach(t => {
         const esPps = (t.modalidad && t.modalidad.includes('PPS')) || (!t.modalidad);
         const badgeModalidad = esPps
-          ? `<span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 800; font-size: 10px;">PRÁCTICA PPS</span>`
-          : `<span class="wf-badge wf-badge-outline" style="font-size: 10px;">PROFESIONAL GRADUADO</span>`;
+          ? `<span class="wf-badge badge-icon-pill" style="background: var(--verde-fondo-suave); color: var(--verde-oscuro); border: 1px solid var(--verde-borde); font-weight: 800; font-size: 10px;">
+               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+               PRÁCTICA PPS
+             </span>`
+          : `<span class="wf-badge wf-badge-outline badge-icon-pill" style="font-size: 10px;">
+               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+               PROFESIONAL GRADUADO
+             </span>`;
 
         const matchBox = (t.especialidad || '').match(/box\s*(\d+)/i);
         const boxNum = matchBox ? matchBox[1] : '1';
@@ -1062,33 +1220,39 @@
         html += `
           <tr>
             <td>
-              <div style="font-weight: 800; color: var(--wf-primary-hover); font-size: 13px;">${t.fecha}</div>
-              <div style="font-size: 11px; font-weight: 700; color: var(--wf-gray-700);">${t.hora}</div>
+              <div style="font-weight: 800; color: var(--verde-oscuro); font-size: 13.5px; display: flex; align-items: center; gap: 5px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="color: var(--verde-principal);"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                <span>${t.fecha}</span>
+              </div>
+              <div style="font-size: 11.5px; font-weight: 700; color: var(--verde-principal); margin-left: 18px;">${t.hora}</div>
             </td>
             <td>
-              <div style="font-weight: 700; font-size: 12px; color: var(--wf-gray-900);">${t.especialidad}</div>
-              <div style="font-size: 11px; color: var(--wf-gray-600); display: flex; align-items: center; gap: 4px; flex-wrap: wrap;">
+              <div style="font-weight: 700; font-size: 12.5px; color: var(--wf-gray-900);">${t.especialidad}</div>
+              <div style="font-size: 11px; color: var(--wf-gray-600); display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 2px;">
                 <span>Pabellón Salud • PB</span>
-                <button type="button" onclick="abrirModalMapa('${boxNum}', '${t.especialidad.replace(/'/g, "\\'")}')" style="background: none; border: none; padding: 0; font-size: 11px; font-weight: 700; color: #0c7a61; text-decoration: underline; cursor: pointer; display: inline-flex; align-items: center; gap: 3px;">
+                <button type="button" onclick="abrirModalMapa('${boxNum}', '${t.especialidad.replace(/'/g, "\\'")}')" style="background: none; border: none; padding: 0; font-size: 11px; font-weight: 700; color: var(--verde-principal); text-decoration: underline; cursor: pointer; display: inline-flex; align-items: center; gap: 3px;">
                   <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Ver Box en plano
                 </button>
               </div>
             </td>
             <td>
               ${badgeModalidad}
-              <div style="font-size: 10px; color: var(--wf-gray-600); margin-top: 2px;">${t.profesional}</div>
+              <div style="font-size: 10.5px; color: var(--wf-gray-600); margin-top: 3px;">${t.profesional}</div>
             </td>
             <td style="font-size: 12px; color: var(--wf-gray-800);">${t.motivo || 'Control preventivo anual'}</td>
             <td>
-              <span class="wf-badge" style="background: var(--wf-primary-soft); color: var(--wf-primary-hover); border: 1px solid var(--wf-primary); font-weight: 800; font-size: 10px;">${t.estado || 'PENDIENTE'}</span>
+              <span class="wf-badge badge-icon-pill" style="background: var(--verde-menta); color: var(--verde-oscuro); border: 1px solid var(--verde-borde); font-weight: 800; font-size: 10px;">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                ${t.estado || 'PENDIENTE'}
+              </span>
             </td>
             <td style="text-align: right;">
               <div style="display: inline-flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end;">
                 <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="abrirCertificado('${t.fecha} 2026', '${t.especialidad}', '${t.profesional}', '${t.motivo}')" title="Descargar comprobante de reserva">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -1px; margin-right: 4px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Constancia
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Constancia
                 </button>
                 <button class="wf-btn wf-btn-secondary wf-btn-sm" onclick="solicitarCancelarTurno(${t.id}, '${t.especialidad.replace(/'/g, "\\'")}', '${t.fecha}', '${t.hora}')" style="color: #dc2626; border-color: #fca5a5;" title="Cancelar este turno">
-                  Cancelar
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Cancelar
                 </button>
               </div>
             </td>
@@ -1103,6 +1267,44 @@
       `;
 
       contenedor.innerHTML = html;
+    }
+
+    // Ordenamiento del historial concluido
+    function ordenarTablaHistorial() {
+      const tbody = document.querySelector('#contenedorHistorialConcluido tbody');
+      const select = document.getElementById('selectOrdenHistorial');
+      if (!tbody || !select) return;
+
+      const criterio = select.value;
+      const filas = Array.from(tbody.querySelectorAll('tr'));
+      const meses = { 'ene': 1, 'feb': 2, 'mar': 3, 'abr': 4, 'may': 5, 'jun': 6, 'jul': 7, 'ago': 8, 'sep': 9, 'oct': 10, 'nov': 11, 'dic': 12 };
+
+      function getRowTime(tr) {
+        const dateEl = tr.querySelector('td:first-child div:first-child');
+        const timeEl = tr.querySelector('td:first-child div:nth-child(2)');
+        const parts = (dateEl ? dateEl.textContent.trim() : '').split(/\s+/);
+        const dia = parseInt(parts[0], 10) || 1;
+        const mes = meses[(parts[1] || 'ene').toLowerCase().slice(0, 3)] || 1;
+        const anio = parseInt(parts[2], 10) || 2026;
+        const mHora = (timeEl ? timeEl.textContent : '00:00').match(/(\d{1,2}):(\d{2})/);
+        return new Date(anio, mes - 1, dia, mHora ? parseInt(mHora[1], 10) : 0, mHora ? parseInt(mHora[2], 10) : 0).getTime();
+      }
+
+      function getRowEsp(tr) {
+        const espEl = tr.querySelector('td:nth-child(2) div:first-child');
+        return espEl ? espEl.textContent.trim() : '';
+      }
+
+      filas.sort((a, b) => {
+        if (criterio === 'fecha_asc') return getRowTime(a) - getRowTime(b);
+        if (criterio === 'especialidad') {
+          const cmp = getRowEsp(a).localeCompare(getRowEsp(b), 'es');
+          return cmp !== 0 ? cmp : getRowTime(b) - getRowTime(a);
+        }
+        return getRowTime(b) - getRowTime(a);
+      });
+
+      filas.forEach(tr => tbody.appendChild(tr));
     }
 
     // Inicializar renderizado de turnos pendientes
@@ -1193,11 +1395,11 @@
         const el = document.getElementById(`boxPlano-${i}`);
         if (!el) continue;
         if (i === bNum) {
-          el.style.background = '#0f9977';
+          el.style.background = '#00875A';
           el.style.color = '#ffffff';
-          el.style.border = '2px solid #09664f';
-          el.style.boxShadow = '0 3px 8px rgba(15, 153, 119, 0.4)';
-          el.innerHTML = `<strong>Box ${i}</strong><div style="background: #ffffff; color: #0f9977; font-size: 8px; font-weight: 900; border-radius: 2px; padding: 1px 3px; margin-top: 1px;">TU TURNO</div>`;
+          el.style.border = '2px solid #065F46';
+          el.style.boxShadow = '0 3px 8px rgba(0, 135, 90, 0.4)';
+          el.innerHTML = `<strong>Box ${i}</strong><div style="background: #ffffff; color: #00875A; font-size: 8px; font-weight: 900; border-radius: 2px; padding: 1px 3px; margin-top: 1px;">TU TURNO</div>`;
         } else {
           el.style.background = 'var(--wf-gray-100)';
           el.style.color = 'var(--wf-gray-700)';
